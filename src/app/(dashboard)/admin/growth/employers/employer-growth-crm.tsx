@@ -551,8 +551,8 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                   <strong className="text-slate-800">{selectedBreakdown.freshnessStatus}</strong>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Zero-Scraping Policy:</span>
-                  <strong className="text-emerald-700">COMPLIANT (PUBLIC CAREERS / DIRECT CONTACT)</strong>
+                  <span>Privacy & Outreach Compliance Controls:</span>
+                  <strong className="text-emerald-700">COMPLIANT (Zero-Scraping / Direct Outreach Controls)</strong>
                 </div>
               </div>
             </div>
@@ -586,7 +586,7 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                 Assurance Capacity Pitch: {selectedPitch.companyName}
               </DialogTitle>
               <DialogDescription className="text-xs">
-                Zero-upfront, performance-contingent fresher hiring pitch backed by {selectedPitch.matchedStudentCount} pre-assessed candidates.
+                Zero-upfront, performance-contingent fresher hiring pitch providing access to pre-assessed, eligibility-matched candidates for verified interview slots.
               </DialogDescription>
             </DialogHeader>
 
@@ -596,7 +596,7 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                   type="button"
                   onClick={() =>
                     copyPitchText(
-                      `Hi ${selectedPitch.recruiterName || 'Talent Acquisition Team'},\n\nWe noticed ${selectedPitch.companyName}'s active hiring drive for fresher talent in ${selectedPitch.region}.\n\nPlacementConnect currently has ${selectedPitch.matchedStudentCount} pre-assessed candidates meeting your specific criteria. We can deliver ${Math.min(selectedPitch.hiringVolume * 3, 45)} verified first-round interview slots directly to your recruiting team.\n\n• Zero Upfront Listing or Sourcing Fees\n• Pre-screened with 80+ benchmark diagnostic assessments\n• Performance fee (8.33% CTC) applies only on Day-1 joined hires\n\nWould you be open to a brief 10-minute briefing on Thursday at 3:00 PM IST to review candidate batch profiles?`
+                      `Hi ${selectedPitch.recruiterName || 'Talent Acquisition Team'},\n\nWe noticed ${selectedPitch.companyName}'s active hiring drive for fresher talent in ${selectedPitch.region}.\n\nPlacementConnect currently provides access to ${selectedPitch.matchedStudentCount} pre-assessed, eligibility-matched candidates meeting your specific criteria. We can deliver ${Math.min(selectedPitch.hiringVolume * 3, 45)} verified first-round interview slots directly to your recruiting team.\n\n• Zero Upfront Listing or Sourcing Fees\n• Pre-screened with 80+ benchmark diagnostic assessments\n• Performance fee (8.33% CTC) applies only on Day-1 joined hires\n\nWould you be open to a brief 10-minute briefing on Thursday at 3:00 PM IST to review candidate batch profiles?`
                     )
                   }
                   className="absolute top-2 right-2 p-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
@@ -608,7 +608,7 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                 <p className="text-slate-400 mb-2">Subject: Pre-Assessed Fresher Pipeline for {selectedPitch.companyName} ({selectedPitch.matchedStudentCount} Qualified Candidates)</p>
                 <p>Hi {selectedPitch.recruiterName || 'Talent Acquisition Team'},</p>
                 <p className="mt-2">We noticed {selectedPitch.companyName}'s active hiring drive for fresher talent in {selectedPitch.region}.</p>
-                <p className="mt-2">PlacementConnect currently has <strong>{selectedPitch.matchedStudentCount} pre-assessed candidates</strong> meeting your criteria. We can deliver <strong>{Math.min(selectedPitch.hiringVolume * 3, 45)} verified interview slots</strong> directly to your recruiting calendar.</p>
+                <p className="mt-2">PlacementConnect currently provides access to <strong>{selectedPitch.matchedStudentCount} pre-assessed, eligibility-matched candidates</strong> meeting your criteria. We can deliver <strong>{Math.min(selectedPitch.hiringVolume * 3, 45)} verified interview slots</strong> directly to your recruiting calendar.</p>
                 <p className="mt-2 text-emerald-300">• Zero Upfront Listing or Sourcing Fees</p>
                 <p className="text-emerald-300">• 80+ benchmark diagnostic verified</p>
                 <p className="text-emerald-300">• Success fee (8.33% CTC) applies only on Day-1 join</p>
@@ -616,7 +616,7 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
               </div>
 
               <div className="p-2.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px]">
-                💡 <strong>Why this converts:</strong> Resolves campus coordination overhead for the recruiter while guaranteeing interview capacity for our 3N Assurance students.
+                💡 <strong>Why this converts:</strong> Resolves campus coordination overhead for the recruiter while offering pre-assessed candidate access against verified interview capacity.
               </div>
             </div>
 

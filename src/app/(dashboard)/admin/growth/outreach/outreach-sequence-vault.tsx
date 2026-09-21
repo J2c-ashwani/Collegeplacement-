@@ -609,7 +609,7 @@ export function OutreachSequenceVault({
               <div>
                 <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <UserX className="h-5 w-5 text-rose-600" />
-                  DPDP & Marketplace Suppression Registry
+                  Suppression & DNC Registry (DPDP Privacy & Outreach Controls)
                 </h3>
                 <p className="text-xs text-slate-500">
                   Strict enforcement: Suppressed domains or emails are blocked from enrollment and sequence dispatches.
@@ -622,7 +622,7 @@ export function OutreachSequenceVault({
 
             <div className="p-3.5 rounded-lg bg-slate-50 border text-xs space-y-2 text-slate-600">
               <p>
-                <strong>Compliance Protocol:</strong> In accordance with India Digital Personal Data Protection (DPDP) Act 2023:
+                <strong>Compliance Protocol:</strong> Privacy and outreach suppression controls designed to support DPDP principles:
               </p>
               <ul className="list-disc list-inside space-y-1 text-slate-500">
                 <li>Immediate unenrollment from all multi-step cadences upon receiving unsubscribe signal.</li>

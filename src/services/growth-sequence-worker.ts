@@ -108,26 +108,35 @@ export async function executePendingSequences(): Promise<SequenceExecutionSummar
         channel: step.channel,
       })
 
-      // 6. Create Outreach Draft
-      await prisma.growthOutreach.create({
-        data: {
+      // 6. Idempotency Check: Prevent duplicate drafts for the same enrollment step
+      const existingDraft = await prisma.growthOutreach.findFirst({
+        where: {
           enrollmentId: enrollment.id,
           stepId: step.id,
-          prospectType: enrollment.prospectType,
-          collegeProspectId: enrollment.collegeProspectId,
-          employerProspectId: enrollment.employerProspectId,
-          subject,
-          body,
-          personalizedTokens: {
-            prospectName,
-            contactName,
-            stepNumber: step.stepNumber,
-          },
-          status: 'DRAFT_PENDING_APPROVAL',
-          isSafeAction: safety.isSafe,
         },
       })
-      summary.draftedCount++
+
+      if (!existingDraft) {
+        await prisma.growthOutreach.create({
+          data: {
+            enrollmentId: enrollment.id,
+            stepId: step.id,
+            prospectType: enrollment.prospectType,
+            collegeProspectId: enrollment.collegeProspectId,
+            employerProspectId: enrollment.employerProspectId,
+            subject,
+            body,
+            personalizedTokens: {
+              prospectName,
+              contactName,
+              stepNumber: step.stepNumber,
+            },
+            status: 'DRAFT_PENDING_APPROVAL',
+            isSafeAction: safety.isSafe,
+          },
+        })
+        summary.draftedCount++
+      }
 
       // 7. Advance or complete enrollment schedule
       const nextStep = enrollment.sequence.steps.find(
@@ -160,26 +169,56 @@ export async function executePendingSequences(): Promise<SequenceExecutionSummar
 }
 
 /**
- * Suppresses a prospect completely across all sequences and active drafts.
+ * Suppresses a prospect completely across domain, email, active sequences, and drafts.
+ * Enforces multi-level DNC (both target entity and canonical root domain lock).
  */
 export async function suppressProspectDnc(
   prospectType: 'COLLEGE' | 'EMPLOYER',
   prospectId: string,
-  _reason: string = 'Opt-out requested'
+  reason: string = 'Opt-out requested'
 ) {
+  let normalizedDomain = ''
+  let contactEmail = ''
+
   if (prospectType === 'COLLEGE') {
-    await prisma.collegeProspect.update({
-      where: { id: prospectId },
+    const prospect = await prisma.collegeProspect.findUnique({ where: { id: prospectId } })
+    if (prospect) {
+      normalizedDomain = prospect.normalizedDomain
+      contactEmail = prospect.tpoEmail || ''
+    }
+
+    // Suppress target and any prospect sharing the canonical domain
+    await prisma.collegeProspect.updateMany({
+      where: {
+        OR: [
+          { id: prospectId },
+          ...(normalizedDomain ? [{ normalizedDomain }] : []),
+          ...(contactEmail ? [{ tpoEmail: contactEmail }] : []),
+        ],
+      },
       data: { dnc: true, status: 'DNC', complianceStatus: 'SUPPRESSED_DNC' },
     })
   } else {
-    await prisma.employerProspect.update({
-      where: { id: prospectId },
+    const prospect = await prisma.employerProspect.findUnique({ where: { id: prospectId } })
+    if (prospect) {
+      normalizedDomain = prospect.normalizedDomain
+      contactEmail = prospect.recruiterEmail || ''
+    }
+
+    // Suppress target and any prospect sharing the canonical domain
+    await prisma.employerProspect.updateMany({
+      where: {
+        OR: [
+          { id: prospectId },
+          ...(normalizedDomain ? [{ normalizedDomain }] : []),
+          ...(contactEmail ? [{ recruiterEmail: contactEmail }] : []),
+        ],
+      },
       data: { dnc: true, status: 'DNC', complianceStatus: 'SUPPRESSED_DNC' },
     })
   }
 
-  // Cancel all pending drafts
+  // Cancel all pending drafts for this prospect
   await prisma.growthOutreach.updateMany({
     where: {
       prospectType,
@@ -202,4 +241,6 @@ export async function suppressProspectDnc(
     },
     data: { status: 'STOPPED_DNC' },
   })
+
+  console.log(`[GrowthOS DNC] Entity suppressed: ${prospectType} ${prospectId} | Domain: ${normalizedDomain} | Reason: ${reason}`)
 }

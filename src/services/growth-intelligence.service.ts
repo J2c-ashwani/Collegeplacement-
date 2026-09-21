@@ -195,6 +195,18 @@ export function calculateAssuranceCoveragePotential(params: {
 
 /**
  * 11-Component Deterministic College ICP Score (100% Total)
+ * 1. Graduating Student Volume: 15%
+ * 2. Course Diversity & Relevancy: 15%
+ * 3. Placement Gap Index: 10%
+ * 4. Regional Employer Accessibility: 10%
+ * 5. TPO Accessibility & Responsiveness: 10%
+ * 6. Student Affordability & Regional Fit: 10%
+ * 7. Industry Collaboration & MOU History: 10%
+ * 8. Campus Infrastructure & Lab Signals: 5%
+ * 9. Historical Student Conversion Potential: 5%
+ * 10. Accreditation & Profile Signals: 5%
+ * 11. Likelihood of Partnership: 5%
+ * TOTAL: 15+15+10+10+10+10+10+5+5+5+5 = 100%
  */
 export function evaluateCollegeICP(input: CollegeIcpInput): {
   score: number
@@ -210,10 +222,10 @@ export function evaluateCollegeICP(input: CollegeIcpInput): {
   ).length
   const courseScore = Math.min(100, (matchedCourses / Math.max(1, highDemandCourses.length)) * 100) * 0.15
 
-  // 3. Placement Gap Index (15%): Low historical placement = high commercial need
+  // 3. Placement Gap Index (10%): Low historical placement = high commercial need
   const historicalRate = input.historicalPlacementRate ?? 0.45
-  const gapIndex = Math.max(0, 1 - historicalRate) // 0.55 gap
-  const gapScore = (gapIndex * 100) * 0.15
+  const gapIndex = Math.max(0, 1 - historicalRate) // e.g. 0.55 gap
+  const gapScore = (gapIndex * 100) * 0.10
 
   // 4. Regional Employer Accessibility (10%)
   const geoMatch = (!input.targetRegion || input.region.toLowerCase() === input.targetRegion.toLowerCase()) ? 100 : 60

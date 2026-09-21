@@ -477,18 +477,45 @@ export function CollegeGrowthCrm({ initialProspects, sequences }: CollegeGrowthC
               </div>
 
               {/* Dimension Score List */}
+              {/* Dimension Score List */}
               <div className="space-y-2">
-                <h4 className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                  11 ICP Dimensions Breakdown
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                    Deterministic 11-Dimension ICP Model (100% Total)
+                  </h4>
+                  <Badge variant="outline" className="text-[10px] bg-indigo-50 text-indigo-700 font-mono font-semibold">
+                    11 Dimensions = 100%
+                  </Badge>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   {selectedBreakdown.icpBreakdown &&
-                    Object.entries(selectedBreakdown.icpBreakdown).map(([dim, val]: [string, any]) => (
-                      <div key={dim} className="flex items-center justify-between p-2 rounded-md bg-slate-50/70 border border-slate-100">
-                        <span className="text-slate-600 capitalize">{dim.replace(/([A-Z])/g, ' $1')}</span>
-                        <span className="font-semibold text-indigo-700">{typeof val === 'number' ? `${val}%` : String(val)}</span>
-                      </div>
-                    ))}
+                    Object.entries({
+                      studentVolume: { title: '1. Graduating Student Volume', weight: 15, desc: 'Cohort size potential for 3N batch assurance' },
+                      courseRelevancy: { title: '2. Course Diversity & Relevancy', weight: 15, desc: 'B.Tech, BCA, MCA, MBA alignment' },
+                      placementGap: { title: '3. Historical Placement Gap', weight: 10, desc: 'Commercial partnership need index' },
+                      employerAccessibility: { title: '4. Regional Employer Proximity', weight: 10, desc: 'Cluster alignment with corporate demand' },
+                      tpoAccessibility: { title: '5. TPO Accessibility & Verification', weight: 10, desc: 'Direct contact reachable & verified' },
+                      studentAffordability: { title: '6. Student Affordability & Economics', weight: 10, desc: 'Regional fee structure viability' },
+                      industryMous: { title: '7. Industry MOUs & Track Record', weight: 10, desc: 'Campus drive responsiveness history' },
+                      campusInfrastructure: { title: '8. Assessment Lab Infrastructure', weight: 5, desc: 'Diagnostic test facilities on-campus' },
+                      conversionPotential: { title: '9. Student Conversion Potential', weight: 5, desc: 'Assurance participation willingness' },
+                      accreditationSignal: { title: '10. Accreditation Signal (NAAC/NBA)', weight: 5, desc: 'Institutional quality baseline signal' },
+                      partnershipLikelihood: { title: '11. Partnership & MoU Likelihood', weight: 5, desc: 'Strategic fit for 3N assurance ecosystem' },
+                    }).map(([key, config]) => {
+                      const score = selectedBreakdown.icpBreakdown?.[key] ?? 0
+                      return (
+                        <div key={key} className="p-2 rounded-md bg-slate-50 border border-slate-200/70 space-y-0.5">
+                          <div className="flex items-center justify-between">
+                            <span className="font-semibold text-slate-800 text-[11px]">{config.title}</span>
+                            <span className="font-mono font-bold text-indigo-700 text-[11px]">{score} / {config.weight} pts</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[10px] text-slate-500">
+                            <span className="truncate">{config.desc}</span>
+                            <span className="font-medium text-slate-400 shrink-0 ml-1">Weight: {config.weight}%</span>
+                          </div>
+                        </div>
+                      )
+                    })}
                 </div>
               </div>
 
@@ -515,8 +542,8 @@ export function CollegeGrowthCrm({ initialProspects, sequences }: CollegeGrowthC
                   <strong className="text-slate-800">{selectedBreakdown.freshnessStatus}</strong>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>DPDP Compliance Status:</span>
-                  <strong className="text-emerald-700">VERIFIED OFFICIAL CONTACT</strong>
+                  <span>Privacy & Outreach Compliance Controls:</span>
+                  <strong className="text-emerald-700">VERIFIED OFFICIAL CONTACT (DPDP-Oriented Controls)</strong>
                 </div>
               </div>
             </div>

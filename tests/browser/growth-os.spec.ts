@@ -55,7 +55,7 @@ test.describe('GrowthOS AI Marketplace Intelligence & Liquidity Verification', (
 
     // 6. Test Safe Action Bulk Approval
     const bulkSafeBtn = page.locator('button:has-text("Approve All Safe Actions")')
-    if (await bulkSafeBtn.isVisible()) {
+    if (await bulkSafeBtn.isVisible() && await bulkSafeBtn.isEnabled()) {
       await bulkSafeBtn.click()
     }
   })
@@ -78,8 +78,8 @@ test.describe('GrowthOS AI Marketplace Intelligence & Liquidity Verification', (
     const breakdownBtn = page.locator('button:has-text("11-D Breakdown")').first()
     if (await breakdownBtn.isVisible()) {
       await breakdownBtn.click()
-      await expect(page.locator('text=11 ICP Dimensions Breakdown')).toBeVisible()
-      await page.click('button:has-text("Close")')
+      await expect(page.locator('text=Deterministic 11-Dimension ICP Model')).toBeVisible()
+      await page.keyboard.press('Escape')
     }
 
     // Inspect Sequence Enrollment Dialog
@@ -138,6 +138,6 @@ test.describe('GrowthOS AI Marketplace Intelligence & Liquidity Verification', (
 
     // Switch to Suppression Registry tab
     await page.click('button:has-text("Suppression & DNC Registry")')
-    await expect(page.locator('text=DPDP & Marketplace Suppression Registry')).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Suppression.*Registry/i })).toBeVisible()
   })
 })
