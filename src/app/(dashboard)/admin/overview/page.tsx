@@ -96,7 +96,7 @@ export default async function AdminOverview() {
           },
           {
             label: 'Status',
-            value: 'Live Telemetry',
+            value: 'Current Operational Status',
             variant: 'neutral',
           },
         ]}

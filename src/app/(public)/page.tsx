@@ -116,7 +116,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { title: "Verified Corporate Network", desc: "Access to hundreds of verified recruiters actively conducting campus interview drives." },
-              { title: "Live Telemetry Dashboard", desc: "Track every student's placement journey with live database-driven telemetry." },
+              { title: "Operational Status Dashboard", desc: "Track student placement progression with database-driven institutional telemetry." },
               { title: "Automated Workflows", desc: "Structured campus drive scheduling, interview allocation, and offer verification." },
               { title: "Diagnostic Benchmarking", desc: "Standardized 9-dimension evaluation to measure technical and situational readiness." },
               { title: "Accreditation Support", desc: "Placement Evidence & Accreditation Support for NAAC and NBA documentation workflows." },

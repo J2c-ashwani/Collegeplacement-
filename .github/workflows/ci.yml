@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
+      DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
 
     services:
       postgres:
@@ -42,11 +45,13 @@ jobs:
         run: npx prisma generate
         env:
           DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
+          DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
 
       - name: Push Database Schema
         run: npx prisma db push --skip-generate
         env:
           DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
+          DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
 
       - name: TypeScript Strict Check
         run: npm run typecheck

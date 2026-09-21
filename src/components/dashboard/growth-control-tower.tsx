@@ -30,7 +30,7 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
                   Growth Control Tower
                 </span>
                 <span className="text-xs text-slate-400">•</span>
-                <span className="text-xs text-slate-300">Live Database-Driven Telemetry</span>
+                <span className="text-xs text-slate-300">Database-Driven Telemetry</span>
               </div>
               <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
                 Employer Capacity & Assurance Liquidity Balance
