@@ -1,0 +1,231 @@
+enum ApplicationStatus {
+  APPLIED
+  SHORTLISTED
+  INTERVIEW_SCHEDULED
+  INTERVIEWED
+  SELECTED
+  REJECTED
+  WITHDRAWN
+  ON_HOLD
+}
+
+enum OpportunityStatus {
+  ASSIGNED
+  INTERVIEW_OFFERED
+  INTERVIEW_SCHEDULED
+  INTERVIEW_IN_PROGRESS
+  COMPLETED
+  SELECTED
+  REJECTED
+  ON_HOLD
+  CANCELLED
+  NO_SHOW
+  WITHDRAWN
+}
+
+enum InterviewStatus {
+  NOT_SCHEDULED
+  SCHEDULED
+  STUDENT_CONFIRMED
+  EMPLOYER_CONFIRMED
+  RESCHEDULED
+  COMPLETED
+  NO_SHOW
+  SELECTED
+  REJECTED
+  ON_HOLD
+  CANCELLED
+}
+
+enum InterviewMode {
+  IN_PERSON
+  PHONE
+  VIDEO
+  ONLINE_TEST
+}
+
+enum OfferStatus {
+  OFFER_PENDING
+  OFFER_RECEIVED
+  OFFER_ACCEPTED
+  JOINING_PENDING
+  JOINED
+  DECLINED
+  OFFER_REVOKED
+}
+
+enum PlacementStatus {
+  CONFIRMED
+  VERIFIED
+  DISPUTED
+  LEFT_WITHIN_PROBATION
+  REVERSED
+}
+
+model Application {
+  id                 String                @id @default(cuid())
+  studentId          String
+  jobId              String
+  status             ApplicationStatus     @default(APPLIED)
+  matchScore         Float?
+  matchReasons       Json?
+  coverLetter        String?
+  additionalAnswers  Json?
+  appliedAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  student            Student               @relation(fields: [studentId], references: [id])
+  job                Job                   @relation(fields: [jobId], references: [id])
+  opportunity        AssuranceOpportunity?
+  offer              Offer?
+
+  @@index([studentId])
+  @@index([jobId])
+  @@index([status])
+  @@map("applications")
+}
+
+model AssuranceOpportunity {
+  id                   String            @id @default(cuid())
+  studentProgrammeId   String
+  studentId            String
+  employerId           String
+  jobId                String
+  applicationId        String?           @unique
+  opportunityNumber    Int
+  assignedDate         DateTime          @default(now())
+  status               OpportunityStatus @default(ASSIGNED)
+  countsTowardAssurance Boolean          @default(true)
+  nonCountReason       String?
+  completedDate        DateTime?
+  outcome              String?
+  assignedBy           String?
+  notes                String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  studentProgramme     StudentProgramme  @relation(fields: [studentProgrammeId], references: [id])
+  student              Student           @relation(fields: [studentId], references: [id])
+  employer             Employer          @relation(fields: [employerId], references: [id])
+  job                  Job               @relation(fields: [jobId], references: [id])
+  application          Application?      @relation(fields: [applicationId], references: [id])
+  interviews           Interview[]
+  offer                Offer?
+
+  @@index([studentProgrammeId])
+  @@index([studentId])
+  @@index([employerId])
+  @@index([jobId])
+  @@index([status])
+  @@map("assurance_opportunities")
+}
+
+model Interview {
+  id              String            @id @default(cuid())
+  opportunityId   String
+  applicationId   String?
+  studentId       String
+  jobId           String
+  employerId      String
+  roundNumber     Int               @default(1)
+  roundName       String?
+  scheduledAt     DateTime?
+  duration        Int?
+  mode            InterviewMode     @default(VIDEO)
+  meetingLink     String?
+  location        String?
+  status          InterviewStatus   @default(NOT_SCHEDULED)
+  result          String?
+  rejectionReason String?
+  feedback        String?
+  interviewerName String?
+  completedAt     DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  opportunity     AssuranceOpportunity @relation(fields: [opportunityId], references: [id])
+  student         Student           @relation(fields: [studentId], references: [id])
+  job             Job               @relation(fields: [jobId], references: [id])
+  employer        Employer          @relation(fields: [employerId], references: [id])
+
+  @@index([opportunityId])
+  @@index([applicationId])
+  @@index([studentId])
+  @@index([jobId])
+  @@index([employerId])
+  @@index([status])
+  @@map("interviews")
+}
+
+model Offer {
+  id                     String            @id @default(cuid())
+  applicationId          String?           @unique
+  opportunityId          String?           @unique
+  studentId              String
+  employerId             String
+  jobId                  String
+  institutionId          String
+  offerDate              DateTime?
+  ctc                    Decimal?
+  fixedSalary            Decimal?
+  variableSalary         Decimal?
+  joiningDate            DateTime?
+  location               String?
+  employmentType         String?
+  status                 OfferStatus       @default(OFFER_PENDING)
+  offerLetterDocumentId  String?           @unique
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  application            Application?      @relation(fields: [applicationId], references: [id])
+  opportunity            AssuranceOpportunity? @relation(fields: [opportunityId], references: [id])
+  student                Student           @relation(fields: [studentId], references: [id])
+  employer               Employer          @relation(fields: [employerId], references: [id])
+  job                    Job               @relation(fields: [jobId], references: [id])
+  institution            Institution       @relation(fields: [institutionId], references: [id])
+  placement              Placement?
+  offerLetterDocument    Document?         @relation(fields: [offerLetterDocumentId], references: [id])
+
+  @@index([studentId])
+  @@index([employerId])
+  @@index([jobId])
+  @@index([institutionId])
+  @@index([status])
+  @@map("offers")
+}
+
+model Placement {
+  id                    String            @id @default(cuid())
+  offerId               String            @unique
+  studentId             String
+  institutionId         String
+  employerId            String
+  jobId                 String
+  placementCode         String            @unique
+  ctc                   Decimal?
+  joiningDate           DateTime?
+  joinedAt              DateTime?
+  status                PlacementStatus   @default(CONFIRMED)
+  verifiedBy            String?
+  verifiedAt            DateTime?
+  verificationNotes     String?
+  leftDate              DateTime?
+  leftReason            String?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  offer                 Offer             @relation(fields: [offerId], references: [id])
+  student               Student           @relation(fields: [studentId], references: [id])
+  institution           Institution       @relation(fields: [institutionId], references: [id])
+  employer              Employer          @relation(fields: [employerId], references: [id])
+  job                   Job               @relation(fields: [jobId], references: [id])
+  employerFees          EmployerFee[]
+
+  @@index([offerId])
+  @@index([studentId])
+  @@index([institutionId])
+  @@index([employerId])
+  @@index([jobId])
+  @@index([status])
+  @@map("placements")
+}

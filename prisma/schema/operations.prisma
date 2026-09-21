@@ -1,0 +1,119 @@
+enum WorkshopStatus {
+  DRAFT
+  PUBLISHED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum IndustryVisitStatus {
+  REQUESTED
+  COMPANY_OUTREACH
+  APPROVED
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum ActivityType {
+  WORKSHOP
+  SEMINAR
+  INDUSTRY_INTERACTION
+  INDUSTRY_VISIT
+  PLACEMENT_DRIVE
+  CAREER_SESSION
+  ASSESSMENT_DRIVE
+  EMPLOYER_SESSION
+}
+
+model Workshop {
+  id                 String              @id @default(cuid())
+  title              String
+  topic              String?
+  speaker            String?
+  company            String?
+  date               DateTime?
+  duration           Int?
+  mode               String?
+  meetingLink        String?
+  targetInstitutions String[]
+  targetDepartments  String[]
+  description        String?
+  status             WorkshopStatus      @default(DRAFT)
+  maxParticipants    Int?
+  createdBy          String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  attendance         WorkshopAttendance[]
+
+  @@index([status])
+  @@map("workshops")
+}
+
+model WorkshopAttendance {
+  id                String    @id @default(cuid())
+  workshopId        String
+  studentId         String
+  attended          Boolean   @default(false)
+  certificateIssued Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+
+  workshop          Workshop  @relation(fields: [workshopId], references: [id])
+  student           Student   @relation(fields: [studentId], references: [id])
+
+  @@index([workshopId])
+  @@index([studentId])
+  @@map("workshop_attendances")
+}
+
+model IndustryVisit {
+  id               String               @id @default(cuid())
+  institutionId    String
+  company          String?
+  preferredDate    DateTime?
+  studentCount     Int?
+  department       String?
+  purpose          String?
+  status           IndustryVisitStatus  @default(REQUESTED)
+  scheduledDate    DateTime?
+  attendanceCount  Int?
+  outcomeReport    String?
+  contactPerson    String?
+  approvedBy       String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  institution      Institution          @relation(fields: [institutionId], references: [id])
+
+  @@index([institutionId])
+  @@index([status])
+  @@map("industry_visits")
+}
+
+model InstitutionActivity {
+  id                      String       @id @default(cuid())
+  institutionId           String
+  mouId                   String?
+  type                    ActivityType
+  title                   String
+  date                    DateTime
+  department              String?
+  participantCount        Int?
+  speaker                 String?
+  company                 String?
+  mode                    String?
+  attendanceCount         Int?
+  photographsDocumentIds  String[]
+  report                  String?
+  outcomes                String?
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+
+  institution             Institution  @relation(fields: [institutionId], references: [id])
+  mou                     MOU?         @relation(fields: [mouId], references: [id])
+
+  @@index([institutionId])
+  @@index([mouId])
+  @@map("institution_activities")
+}

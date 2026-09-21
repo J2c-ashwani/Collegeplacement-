@@ -1,0 +1,159 @@
+enum OrderType {
+  INSTITUTION_MEMBERSHIP
+  STUDENT_PROGRAMME
+  EMPLOYER_FEE
+  EMPLOYER_CAMPAIGN
+}
+
+enum OrderStatus {
+  CREATED
+  ATTEMPTED
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentStatus {
+  CREATED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum RefundStatus {
+  INITIATED
+  PROCESSED
+  FAILED
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+}
+
+enum CouponApplicableTo {
+  INSTITUTION
+  STUDENT
+  EMPLOYER
+  ALL
+}
+
+model Order {
+  id           String         @id @default(cuid())
+  orderType    OrderType
+  entityId     String?
+  userId       String
+  amount       Decimal
+  gstAmount    Decimal        @default(0)
+  totalAmount  Decimal
+  currency     String         @default("INR")
+  status       OrderStatus    @default(CREATED)
+  gatewayOrderId String?      @unique
+  couponId     String?
+  notes        Json?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  user         User           @relation(fields: [userId], references: [id])
+  payment      Payment?
+  invoice      Invoice?
+  refunds      Refund[]
+  coupon       Coupon?        @relation(fields: [couponId], references: [id])
+  memberships  InstitutionMembership[]
+  programmes   StudentProgramme[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([gatewayOrderId])
+  @@map("orders")
+}
+
+model Payment {
+  id               String         @id @default(cuid())
+  orderId          String         @unique
+  gatewayPaymentId String?        @unique
+  gatewaySignature String?
+  amount           Decimal
+  currency         String         @default("INR")
+  status           PaymentStatus  @default(CREATED)
+  method           String?
+  gateway          String         @default("razorpay")
+  paidAt           DateTime?
+  gatewayResponse  Json?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  order            Order          @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@index([gatewayPaymentId])
+  @@map("payments")
+}
+
+model Invoice {
+  id             String       @id @default(cuid())
+  orderId        String?      @unique
+  paymentId      String?
+  invoiceNumber  String       @unique
+  amount         Decimal
+  gstAmount      Decimal      @default(0)
+  totalAmount    Decimal
+  gstNumber      String?
+  buyerName      String
+  buyerEmail     String?
+  buyerAddress   String?
+  items          Json
+  generatedAt    DateTime     @default(now())
+  dueDate        DateTime?
+  paidAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  order          Order?       @relation(fields: [orderId], references: [id])
+  employerFee    EmployerFee?
+
+  @@index([orderId])
+  @@index([invoiceNumber])
+  @@map("invoices")
+}
+
+model Refund {
+  id               String       @id @default(cuid())
+  paymentId        String
+  orderId          String
+  amount           Decimal
+  reason           String?
+  status           RefundStatus @default(INITIATED)
+  gatewayRefundId  String?
+  processedAt      DateTime?
+  processedBy      String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  order            Order        @relation(fields: [orderId], references: [id])
+
+  @@index([paymentId])
+  @@index([orderId])
+  @@map("refunds")
+}
+
+model Coupon {
+  id             String             @id @default(cuid())
+  code           String             @unique
+  type           CouponType
+  value          Decimal
+  maxUses        Int?
+  usedCount      Int                @default(0)
+  validFrom      DateTime
+  validTo        DateTime
+  applicableTo   CouponApplicableTo @default(ALL)
+  description    String?
+  isActive       Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  orders         Order[]
+
+  @@index([code])
+  @@map("coupons")
+}

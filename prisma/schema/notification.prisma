@@ -1,0 +1,107 @@
+enum NotificationChannel {
+  EMAIL
+  SMS
+  WHATSAPP
+  IN_APP
+}
+
+enum TicketStatus {
+  OPEN
+  ASSIGNED
+  IN_PROGRESS
+  WAITING
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketCategory {
+  PAYMENT
+  INTERVIEW
+  PROFILE
+  ASSESSMENT
+  EMPLOYER
+  INSTITUTION
+  MOU
+  BILLING
+  WORKSHOP
+  OTHER
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  readAt    DateTime?
+  link      String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([read])
+  @@map("notifications")
+}
+
+model NotificationTemplate {
+  id        String              @id @default(cuid())
+  type      String              @unique
+  channel   NotificationChannel
+  subject   String?
+  body      String
+  variables String[]
+  isActive  Boolean             @default(true)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@map("notification_templates")
+}
+
+model SupportTicket {
+  id             String          @id @default(cuid())
+  userId         String
+  category       TicketCategory
+  subject        String
+  description    String
+  status         TicketStatus    @default(OPEN)
+  priority       TicketPriority  @default(MEDIUM)
+  assignedTo     String?
+  resolvedAt     DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  user           User            @relation("UserSupportTickets", fields: [userId], references: [id])
+  assignedToUser User?           @relation("AssignedSupportTickets", fields: [assignedTo], references: [id])
+  comments       TicketComment[]
+
+  @@index([userId])
+  @@index([assignedTo])
+  @@index([status])
+  @@map("support_tickets")
+}
+
+model TicketComment {
+  id         String        @id @default(cuid())
+  ticketId   String
+  userId     String
+  message    String
+  isInternal Boolean       @default(false)
+  createdAt  DateTime      @default(now())
+
+  ticket     SupportTicket @relation(fields: [ticketId], references: [id])
+  user       User          @relation(fields: [userId], references: [id])
+
+  @@index([ticketId])
+  @@index([userId])
+  @@map("ticket_comments")
+}

@@ -1,0 +1,50 @@
+model AuditLog {
+  id            String   @id @default(cuid())
+  userId        String?
+  userRole      String?
+  action        String
+  entity        String
+  entityId      String?
+  previousValue Json?
+  newValue      Json?
+  ip            String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+
+  user          User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([entity])
+  @@index([entityId])
+  @@map("audit_logs")
+}
+
+model CRMNote {
+  id           String    @id @default(cuid())
+  entityType   String
+  entityId     String
+  note         String
+  userId       String
+  nextFollowUp DateTime?
+  createdAt    DateTime  @default(now())
+
+  user         User      @relation(fields: [userId], references: [id])
+  employer     Employer? @relation("EmployerCRMNotes", fields: [entityId], references: [id], map: "employer_crm_note_fkey")
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@map("crm_notes")
+}
+
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  category    String
+  description String?
+  updatedBy   String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@map("settings")
+}

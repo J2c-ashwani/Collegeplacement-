@@ -1,0 +1,246 @@
+enum InstitutionStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  SUSPENDED
+  EXPIRED
+}
+
+enum InstitutionType {
+  ENGINEERING
+  ARTS_SCIENCE
+  MANAGEMENT
+  POLYTECHNIC
+  UNIVERSITY
+  OTHER
+}
+
+enum MembershipStatus {
+  ACTIVE
+  PENDING
+  EXPIRED
+  SUSPENDED
+  CANCELLED
+}
+
+enum MOUStatus {
+  DRAFT
+  SENT
+  UNDER_REVIEW
+  SIGNED
+  ACTIVE
+  EXPIRED
+  TERMINATED
+}
+
+enum RosterInvitationStatus {
+  NOT_SENT
+  SENT
+  REGISTERED
+  BOUNCED
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+}
+
+model Institution {
+  id                    String            @id @default(cuid())
+  name                  String
+  code                  String            @unique
+  registrationCode      String            @unique
+  type                  InstitutionType
+  universityAffiliation String?
+  accreditation         String?
+  address               String?
+  city                  String?
+  state                 String?
+  pincode               String?
+  website               String?
+  principalName         String?
+  tpoName               String?
+  tpoEmail              String?
+  officialPhone         String?
+  estimatedStudentCount Int?
+  departments           String[]
+  graduationBatches     String[]
+  placementPercentage   Float?
+  logo                  String?
+  status                InstitutionStatus
+  approvedAt            DateTime?
+  approvedBy            String?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  students              Student[]
+  memberships           InstitutionMembership[]
+  mous                  MOU[]
+  activities            InstitutionActivity[]
+  users                 InstitutionUser[]
+  rosters               InstitutionRoster[]
+  campaigns             RegistrationCampaign[]
+  rosterStudents        RosterStudent[]
+  studentProgrammes     StudentProgramme[]
+  offers                Offer[]
+  placements            Placement[]
+  documents             Document[]
+  industryVisits        IndustryVisit[]
+
+  @@index([status])
+  @@index([code])
+  @@index([registrationCode])
+  @@map("institutions")
+}
+
+model InstitutionUser {
+  id            String      @id @default(cuid())
+  userId        String
+  institutionId String
+  designation   String?
+  isPrimary     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([institutionId])
+  @@map("institution_users")
+}
+
+model InstitutionPlan {
+  id             String                  @id @default(cuid())
+  name           String
+  slug           String                  @unique
+  description    String?
+  price          Decimal
+  currency       String                  @default("INR")
+  gstPercent     Decimal                 @default(18)
+  durationMonths Int                     @default(12)
+  features       String[]
+  isActive       Boolean                 @default(true)
+  sortOrder      Int                     @default(0)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  memberships    InstitutionMembership[]
+
+  @@map("institution_plans")
+}
+
+model InstitutionMembership {
+  id                String             @id @default(cuid())
+  institutionId     String
+  planId            String
+  orderId           String?
+  startDate         DateTime?
+  endDate           DateTime?
+  status            MembershipStatus
+  autoRenew         Boolean            @default(false)
+  activatedAt       DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  institution       Institution        @relation(fields: [institutionId], references: [id])
+  plan              InstitutionPlan    @relation(fields: [planId], references: [id])
+  order             Order?             @relation(fields: [orderId], references: [id])
+  studentProgrammes StudentProgramme[]
+
+  @@index([institutionId])
+  @@index([planId])
+  @@index([orderId])
+  @@index([status])
+  @@map("institution_memberships")
+}
+
+model InstitutionRoster {
+  id                    String          @id @default(cuid())
+  institutionId         String
+  graduationYear        Int
+  totalExpectedStudents Int?
+  importedAt            DateTime?
+  importedBy            String?
+  status                String          @default("ACTIVE")
+  createdAt             DateTime        @default(now())
+
+  institution           Institution     @relation(fields: [institutionId], references: [id])
+  rosterStudents        RosterStudent[]
+  importedByUser        User?           @relation("RosterImportedBy", fields: [importedBy], references: [id])
+
+  @@index([institutionId])
+  @@index([importedBy])
+  @@map("institution_rosters")
+}
+
+model RosterStudent {
+  id                  String                 @id @default(cuid())
+  rosterId            String
+  institutionId       String
+  name                String
+  enrollmentNumber    String?
+  email               String?
+  mobile              String?
+  course              String?
+  branch              String?
+  department          String?
+  graduationYear      Int
+  cgpa                Float?
+  registeredStudentId String?
+  invitationSentAt    DateTime?
+  invitationStatus    RosterInvitationStatus @default(NOT_SENT)
+  createdAt           DateTime               @default(now())
+
+  roster              InstitutionRoster      @relation(fields: [rosterId], references: [id])
+  institution         Institution            @relation(fields: [institutionId], references: [id])
+  registeredStudent   Student?               @relation(fields: [registeredStudentId], references: [id])
+
+  @@index([rosterId])
+  @@index([institutionId])
+  @@index([registeredStudentId])
+  @@index([email])
+  @@map("roster_students")
+}
+
+model RegistrationCampaign {
+  id                   String         @id @default(cuid())
+  institutionId        String
+  name                 String
+  graduationYear       Int
+  targetStudents       Int?
+  registrationDeadline DateTime?
+  status               CampaignStatus @default(DRAFT)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  institution          Institution    @relation(fields: [institutionId], references: [id])
+
+  @@index([institutionId])
+  @@map("registration_campaigns")
+}
+
+model MOU {
+  id            String                @id @default(cuid())
+  institutionId String
+  status        MOUStatus
+  startDate     DateTime?
+  expiryDate    DateTime?
+  documentId    String?               @unique
+  signedDate    DateTime?
+  signatories   String[]
+  renewalDate   DateTime?
+  notes         String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  institution   Institution           @relation(fields: [institutionId], references: [id])
+  document      Document?             @relation(fields: [documentId], references: [id])
+  activities    InstitutionActivity[]
+
+  @@index([institutionId])
+  @@index([status])
+  @@map("mous")
+}

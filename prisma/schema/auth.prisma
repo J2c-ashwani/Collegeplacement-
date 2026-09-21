@@ -1,0 +1,78 @@
+enum Role {
+  SUPER_ADMIN
+  OPERATIONS
+  INSTITUTION_ADMIN
+  STUDENT
+  EMPLOYER
+  COUNSELLOR
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  PENDING_VERIFICATION
+}
+
+model User {
+  id                 String       @id @default(cuid())
+  email              String       @unique
+  phone              String?
+  passwordHash       String?
+  name               String
+  role               Role
+  status             UserStatus
+  emailVerified      DateTime?
+  phoneVerified      DateTime?
+  twoFactorEnabled   Boolean      @default(false)
+  twoFactorSecret    String?
+  avatar             String?
+  lastLoginAt        DateTime?
+  loginAttempts      Int          @default(0)
+  lockedUntil        DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  student            Student?
+  institutionUsers   InstitutionUser[]
+  employerUsers      EmployerUser[]
+  notifications      Notification[]
+  auditLogs          AuditLog[]
+  supportTickets     SupportTicket[] @relation("UserSupportTickets")
+  assignedTickets    SupportTicket[] @relation("AssignedSupportTickets")
+  documents          Document[]
+  rostersImported    InstitutionRoster[] @relation("RosterImportedBy")
+  ticketComments     TicketComment[]
+  crmNotes           CRMNote[]
+  orders             Order[]
+
+  @@index([email])
+  @@index([status])
+  @@index([role])
+  @@map("users")
+}
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  type      String   // Using String since enums are global, or we can define it
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([token])
+  @@map("verification_tokens")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  sessionToken String   @unique
+  expires      DateTime
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([sessionToken])
+  @@map("sessions")
+}

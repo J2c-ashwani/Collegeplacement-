@@ -1,0 +1,1090 @@
+import { PrismaClient, Role, UserStatus, StudentStatus, InstitutionStatus, InstitutionType, MembershipStatus, ProgrammeStatus, AssuranceStatus, AssessmentStatus, AssessmentCategory, QuestionType, EmployerStatus, EmployerSize, JobStatus, JobType, WorkMode, FeeType, FeeTrigger, ApplicationStatus, OpportunityStatus, InterviewStatus, InterviewMode, OfferStatus, PlacementStatus, RosterInvitationStatus, WorkshopStatus, ActivityType } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  console.log('🌱 Starting PlacementConnect database seed...')
+
+  const defaultPasswordHash = await bcrypt.hash('Password123!', 10)
+  const adminPasswordHash = await bcrypt.hash('AdminPassword123!', 10)
+
+  // 1. Settings
+  console.log('1. Seeding system settings...')
+  const defaultSettings = [
+    { key: 'ASSURANCE_INTERVIEW_TARGET', value: 3, category: 'ASSURANCE', description: 'Default qualified interview opportunities target' },
+    { key: 'DEFAULT_GST_PERCENT', value: 18, category: 'TAX', description: 'Goods & Services Tax percentage' },
+    { key: 'PLATFORM_NAME', value: 'PlacementConnect', category: 'BRANDING', description: 'Platform display name' },
+    { key: 'SUPPORT_EMAIL', value: 'support@placementconnect.com', category: 'COMMUNICATION', description: 'Platform support email' },
+    { key: 'ALLOW_STUDENT_SELF_REGISTRATION', value: false, category: 'REGISTRATION', description: 'Require institution link for registration' },
+  ]
+  for (const s of defaultSettings) {
+    await prisma.setting.upsert({
+      where: { key: s.key },
+      update: { value: s.value },
+      create: s,
+    })
+  }
+
+  // 2. Super Admin & Operations Users
+  console.log('2. Seeding platform admins...')
+  const superAdmin = await prisma.user.upsert({
+    where: { email: 'admin@placementconnect.com' },
+    update: {},
+    create: {
+      email: 'admin@placementconnect.com',
+      name: 'Super Admin',
+      passwordHash: adminPasswordHash,
+      role: Role.SUPER_ADMIN,
+      status: UserStatus.ACTIVE,
+      emailVerified: new Date(),
+    },
+  })
+
+  const opsAdmin = await prisma.user.upsert({
+    where: { email: 'ops@placementconnect.com' },
+    update: {},
+    create: {
+      email: 'ops@placementconnect.com',
+      name: 'Placement Operations Manager',
+      passwordHash: defaultPasswordHash,
+      role: Role.OPERATIONS,
+      status: UserStatus.ACTIVE,
+      emailVerified: new Date(),
+    },
+  })
+
+  // 3. Institution Plans (Configurable pricing, NOT hardcoded)
+  console.log('3. Seeding institution membership plans...')
+  const partnerPlan = await prisma.institutionPlan.upsert({
+    where: { slug: 'partner' },
+    update: { price: 9999 },
+    create: {
+      name: 'Partner',
+      slug: 'partner',
+      description: 'Essential institutional placement partnership with student registration access and basic reporting.',
+      price: 9999,
+      gstPercent: 18,
+      durationMonths: 12,
+      features: [
+        'Dedicated student registration portal',
+        'Custom institutional QR & URL',
+        'Up to 500 student registrations',
+        'Standard placement dashboard',
+        'Placement verification & documentation',
+        'Email support'
+      ],
+      sortOrder: 1,
+    },
+  })
+
+  const placementPlan = await prisma.institutionPlan.upsert({
+    where: { slug: 'placement' },
+    update: { price: 19999 },
+    create: {
+      name: 'Placement',
+      slug: 'placement',
+      description: 'Comprehensive placement partnership with priority employer matching, assessment drives and workshop sessions.',
+      price: 19999,
+      gstPercent: 18,
+      durationMonths: 12,
+      features: [
+        'All Partner plan features',
+        'Up to 1,500 student registrations',
+        'Priority employer drive matching',
+        '2 Career readiness workshops / year',
+        '1 Industry interaction session / year',
+        'Advanced funnel analytics & NAAC-style reports',
+        'Dedicated TPO relationship manager'
+      ],
+      sortOrder: 2,
+    },
+  })
+
+  const placementPlusPlan = await prisma.institutionPlan.upsert({
+    where: { slug: 'placement-plus' },
+    update: { price: 34999 },
+    create: {
+      name: 'Placement Plus',
+      slug: 'placement-plus',
+      description: 'Flagship enterprise institutional network with unlimited students, direct campus interview drives, and industry visits.',
+      price: 34999,
+      gstPercent: 18,
+      durationMonths: 12,
+      features: [
+        'All Placement plan features',
+        'Unlimited student registrations',
+        'Exclusive virtual & campus hiring drives',
+        '4 Workshops + 2 Industry visits coordination',
+        'Formal institutional MOU management',
+        'Department-wise placement benchmarking',
+        'Executive TPO review meetings quarterly'
+      ],
+      sortOrder: 3,
+    },
+  })
+
+  // 4. Student Programme Plans (Configurable, NOT hardcoded)
+  console.log('4. Seeding student programme plans...')
+  const assurancePlan = await prisma.programmePlan.upsert({
+    where: { slug: 'placement-assurance' },
+    update: { price: 999 },
+    create: {
+      name: 'Placement Assurance',
+      slug: 'placement-assurance',
+      description: 'Full assessment, employability score, badges, and minimum 3 qualified interview opportunities.',
+      price: 999,
+      gstPercent: 18,
+      durationMonths: 12,
+      features: [
+        'Comprehensive 9-dimension employability assessment',
+        'Verified career-readiness scorecard & profile',
+        'Earn industry badges',
+        'Minimum 3 qualified interview opportunities',
+        'Resume review & guidance',
+        'Interview preparation materials'
+      ],
+      sortOrder: 1,
+    },
+  })
+
+  const assurancePlusPlan = await prisma.programmePlan.upsert({
+    where: { slug: 'placement-plus-student' },
+    update: { price: 1499 },
+    create: {
+      name: 'Placement Plus',
+      slug: 'placement-plus-student',
+      description: 'Everything in Assurance plus 1-on-1 mock interviews and priority employer shortlisting.',
+      price: 1499,
+      gstPercent: 18,
+      durationMonths: 12,
+      features: [
+        'Everything in Placement Assurance',
+        '1-on-1 Mock interview with industry mentor',
+        'Priority shortlisting on partner employer vacancies',
+        'Detailed diagnostic subscore improvement report',
+        'Direct counsellor placement support'
+      ],
+      sortOrder: 2,
+    },
+  })
+
+  // 5. Badges
+  console.log('5. Seeding employability badges...')
+  const badgesList = [
+    { name: 'Interview Ready', slug: 'interview-ready', description: 'Demonstrated overall interview readiness score above 75.' },
+    { name: 'Employer Ready', slug: 'employer-ready', description: 'Overall employability score above 80 across all dimensions.' },
+    { name: 'Strong Communicator', slug: 'strong-communicator', description: 'Scored 80+ in situational and professional communication.' },
+    { name: 'High Learning Agility', slug: 'high-learning-agility', description: 'Exemplary problem solving and adaptability in unfamiliar contexts.' },
+    { name: 'Team Player', slug: 'team-player', description: 'High collaborative and constructive conflict-resolution aptitude.' },
+    { name: 'Technical Ready', slug: 'technical-ready', description: 'Solid foundational technical competencies evaluated.' },
+    { name: 'Sales Ready', slug: 'sales-ready', description: 'High career motivation, resilience and persuasive communication.' },
+    { name: 'Customer Success Ready', slug: 'customer-success-ready', description: 'Strong empathy, active listening and solution-orientation.' },
+    { name: 'High Professionalism', slug: 'high-professionalism', description: 'Strong work ethics, accountability and workplace integrity.' },
+  ]
+  const createdBadges: Record<string, any> = {}
+  for (const b of badgesList) {
+    createdBadges[b.slug] = await prisma.badge.upsert({
+      where: { slug: b.slug },
+      update: {},
+      create: { ...b, criteria: { minScore: 75 } },
+    })
+  }
+
+  // 6. Assessment Questions (9 Categories)
+  console.log('6. Seeding assessment questions...')
+  const questionsData = [
+    // COMMUNICATION
+    {
+      category: AssessmentCategory.COMMUNICATION,
+      questionType: QuestionType.SITUATIONAL,
+      question: 'A client sends an urgent email expressing dissatisfaction with an unexpected delay caused by technical issues. What is your immediate response?',
+      options: [
+        { text: 'Acknowledge the issue immediately, express empathy, explain the cause briefly and commit to an updated realistic delivery window.', score: 10 },
+        { text: 'Wait until the technical issue is completely fixed before replying so you have a complete answer.', score: 4 },
+        { text: 'Forward the email to the technical lead and tell the client it is out of your hands.', score: 1 },
+        { text: 'Reply reassuring them everything is fine and there is no real issue.', score: 0 }
+      ],
+      correctAnswer: 'Acknowledge the issue immediately, express empathy, explain the cause briefly and commit to an updated realistic delivery window.',
+      weight: 1.2,
+      difficulty: 2
+    },
+    {
+      category: AssessmentCategory.COMMUNICATION,
+      questionType: QuestionType.MCQ,
+      question: 'In a remote team environment, what is the best practice for communicating critical blockers?',
+      options: [
+        { text: 'Post a clear, concise message in the project channel with context, steps taken, and exact assistance required.', score: 10 },
+        { text: 'Wait until the weekly standup meeting to raise it.', score: 2 },
+        { text: 'Send private messages to everyone in the team at the same time.', score: 4 },
+        { text: 'Switch to a different task without telling anyone.', score: 0 }
+      ],
+      correctAnswer: 'Post a clear, concise message in the project channel with context, steps taken, and exact assistance required.',
+      weight: 1.0,
+      difficulty: 1
+    },
+    // WORK ETHICS
+    {
+      category: AssessmentCategory.WORK_ETHICS,
+      questionType: QuestionType.SITUATIONAL,
+      question: 'You notice a colleague accidentally pushed an unverified configuration change that might cause downtime later. The colleague has already left for the day. What do you do?',
+      options: [
+        { text: 'Flag the issue to the on-call engineer or team lead with details and offer to assist with reverting or fixing.', score: 10 },
+        { text: 'Ignore it because it was not your mistake and wait until morning.', score: 1 },
+        { text: 'Post publicly criticising the colleague on social media.', score: 0 },
+        { text: 'Silently delete their code without testing or notifying anyone.', score: 3 }
+      ],
+      correctAnswer: 'Flag the issue to the on-call engineer or team lead with details and offer to assist with reverting or fixing.',
+      weight: 1.2,
+      difficulty: 2
+    },
+    // LEARNING AGILITY
+    {
+      category: AssessmentCategory.LEARNING_AGILITY,
+      questionType: QuestionType.SITUATIONAL,
+      question: 'Your manager assigns you a project that uses a modern tool and framework you have never used before. How do you approach this?',
+      options: [
+        { text: 'Break down the requirements, spend focused time on official docs and starter tutorials, build a quick prototype, and ask targeted questions.', score: 10 },
+        { text: 'Tell the manager you cannot do it because you were not taught this in college.', score: 0 },
+        { text: 'Copy-paste code randomly from online forums without understanding how it works.', score: 2 },
+        { text: 'Delay starting until someone gives you comprehensive personal training.', score: 2 }
+      ],
+      correctAnswer: 'Break down the requirements, spend focused time on official docs and starter tutorials, build a quick prototype, and ask targeted questions.',
+      weight: 1.0,
+      difficulty: 2
+    },
+    // PROBLEM SOLVING
+    {
+      category: AssessmentCategory.PROBLEM_SOLVING,
+      questionType: QuestionType.SCENARIO,
+      question: 'You are troubleshooting a performance slowdown that affects 10% of users. What is the most structured diagnostic approach?',
+      options: [
+        { text: 'Analyze logs and metrics to identify patterns (browser, location, data size), reproduce under the same conditions, isolate the root cause, test a fix.', score: 10 },
+        { text: 'Restart all servers immediately without checking logs.', score: 3 },
+        { text: 'Assume it is an issue with the user internet and close the tickets.', score: 1 },
+        { text: 'Rewrite the entire codebase from scratch.', score: 0 }
+      ],
+      correctAnswer: 'Analyze logs and metrics to identify patterns (browser, location, data size), reproduce under the same conditions, isolate the root cause, test a fix.',
+      weight: 1.2,
+      difficulty: 3
+    },
+    // TEAM BEHAVIOUR
+    {
+      category: AssessmentCategory.TEAM_BEHAVIOUR,
+      questionType: QuestionType.SITUATIONAL,
+      question: 'During a team brainstorming session, another team member strongly disagrees with your technical design. How do you respond?',
+      options: [
+        { text: 'Listen constructively to their reasoning, evaluate pros and cons objectively, and collaboratively converge on the best approach for the project.', score: 10 },
+        { text: 'Get defensive and insist your solution is the only correct one.', score: 1 },
+        { text: 'Refuse to contribute to the project from that point on.', score: 0 },
+        { text: 'Complain to executive leadership immediately without discussing with the colleague.', score: 2 }
+      ],
+      correctAnswer: 'Listen constructively to their reasoning, evaluate pros and cons objectively, and collaboratively converge on the best approach for the project.',
+      weight: 1.0,
+      difficulty: 1
+    },
+    // PROFESSIONAL BEHAVIOUR
+    {
+      category: AssessmentCategory.PROFESSIONAL_BEHAVIOUR,
+      questionType: QuestionType.LIKERT,
+      question: 'I consistently arrive 5 minutes before scheduled meetings prepared with relevant agenda notes.',
+      options: [
+        { text: 'Strongly Agree', score: 10 },
+        { text: 'Agree', score: 8 },
+        { text: 'Neutral', score: 5 },
+        { text: 'Disagree', score: 2 },
+        { text: 'Strongly Disagree', score: 0 }
+      ],
+      weight: 1.0,
+      difficulty: 1
+    },
+    // CAREER MOTIVATION
+    {
+      category: AssessmentCategory.CAREER_MOTIVATION,
+      questionType: QuestionType.SITUATIONAL,
+      question: 'When choosing your first professional job, which factor matters most to your long-term growth?',
+      options: [
+        { text: 'A supportive learning environment with experienced mentors and challenging hands-on projects.', score: 10 },
+        { text: 'The highest possible starting title regardless of actual responsibilities.', score: 3 },
+        { text: 'A position where minimum effort is expected.', score: 0 },
+        { text: 'Solely brand name, even if doing repetitive non-technical data entry.', score: 4 }
+      ],
+      correctAnswer: 'A supportive learning environment with experienced mentors and challenging hands-on projects.',
+      weight: 1.0,
+      difficulty: 1
+    },
+    // SKILLS
+    {
+      category: AssessmentCategory.SKILLS,
+      questionType: QuestionType.MCQ,
+      question: 'What is the primary benefit of using database indexing on frequently queried columns?',
+      options: [
+        { text: 'Significantly improves SELECT query search speed at the cost of slight overhead on write operations.', score: 10 },
+        { text: 'Guarantees the database cannot be hacked.', score: 0 },
+        { text: 'Eliminates the need for writing foreign key constraints.', score: 2 },
+        { text: 'Compresses image files stored in the database.', score: 0 }
+      ],
+      correctAnswer: 'Significantly improves SELECT query search speed at the cost of slight overhead on write operations.',
+      weight: 1.2,
+      difficulty: 2
+    },
+    {
+      category: AssessmentCategory.WORKPLACE_PREFERENCES,
+      questionType: QuestionType.MCQ,
+      question: 'How do you prefer receiving feedback on your work?',
+      options: [
+        { text: 'Regular, direct, and actionable feedback focused on specific outcomes and improvement areas.', score: 10 },
+        { text: 'Only in formal annual reviews once a year.', score: 3 },
+        { text: 'I prefer not receiving any feedback.', score: 0 },
+        { text: 'Informal feedback only when I request it.', score: 6 }
+      ],
+      correctAnswer: 'Regular, direct, and actionable feedback focused on specific outcomes and improvement areas.',
+      weight: 1.0,
+      difficulty: 1
+    }
+  ]
+
+  for (const q of questionsData) {
+    const existing = await prisma.assessmentQuestion.findFirst({
+      where: { question: q.question }
+    })
+    if (!existing) {
+      await prisma.assessmentQuestion.create({
+        data: q as any
+      })
+    }
+  }
+
+  // 7. Institutions
+  console.log('7. Seeding 3 partner institutions...')
+  const institutionsData = [
+    {
+      name: 'Apex Institute of Technology',
+      code: 'apex-tech',
+      registrationCode: 'APX123',
+      type: InstitutionType.ENGINEERING,
+      universityAffiliation: 'Mumbai University',
+      accreditation: 'NAAC A+',
+      address: 'Sector 15, Vashi',
+      city: 'Navi Mumbai',
+      state: 'Maharashtra',
+      pincode: '400703',
+      website: 'https://apextech.edu.in',
+      principalName: 'Dr. Ramesh Sharma',
+      tpoName: 'Prof. Anjali Mehta',
+      tpoEmail: 'tpo@apextech.edu.in',
+      officialPhone: '+91 9820011223',
+      estimatedStudentCount: 1200,
+      departments: ['Computer Science', 'Information Technology', 'Electronics & Telecommunication', 'Mechanical'],
+      graduationBatches: ['2025', '2026'],
+      placementPercentage: 74.5,
+      status: InstitutionStatus.APPROVED,
+    },
+    {
+      name: 'National Institute of Science & Management',
+      code: 'nism-pune',
+      registrationCode: 'NSM456',
+      type: InstitutionType.MANAGEMENT,
+      universityAffiliation: 'Savitribai Phule Pune University',
+      accreditation: 'NAAC A',
+      address: 'Kothrud Campus',
+      city: 'Pune',
+      state: 'Maharashtra',
+      pincode: '411038',
+      website: 'https://nismpune.ac.in',
+      principalName: 'Dr. Sunita Deshmukh',
+      tpoName: 'Vikram Joshi',
+      tpoEmail: 'tpo@nismpune.ac.in',
+      officialPhone: '+91 9821144556',
+      estimatedStudentCount: 800,
+      departments: ['MBA Marketing', 'MBA Finance', 'MCA', 'BBA'],
+      graduationBatches: ['2025', '2026'],
+      placementPercentage: 68.0,
+      status: InstitutionStatus.APPROVED,
+    },
+    {
+      name: 'St. Xavier Engineering College',
+      code: 'st-xavier',
+      registrationCode: 'STX789',
+      type: InstitutionType.ENGINEERING,
+      universityAffiliation: 'Bengaluru City University',
+      accreditation: 'NBA Accredited',
+      address: 'Whitefield Road',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      pincode: '560066',
+      website: 'https://stxaviertech.edu',
+      principalName: 'Fr. Thomas Varghese',
+      tpoName: 'Rajesh Nair',
+      tpoEmail: 'tpo@stxaviertech.edu',
+      officialPhone: '+91 9845012345',
+      estimatedStudentCount: 1000,
+      departments: ['Computer Science', 'AI & Data Science', 'Electrical Engineering'],
+      graduationBatches: ['2026'],
+      placementPercentage: 81.2,
+      status: InstitutionStatus.APPROVED,
+    }
+  ]
+
+  const institutions: any[] = []
+  for (const inst of institutionsData) {
+    const institution = await prisma.institution.upsert({
+      where: { code: inst.code },
+      update: {},
+      create: inst,
+    })
+    institutions.push(institution)
+
+    // Create TPO User
+    const tpoUser = await prisma.user.upsert({
+      where: { email: inst.tpoEmail },
+      update: {},
+      create: {
+        email: inst.tpoEmail,
+        name: inst.tpoName,
+        passwordHash: defaultPasswordHash,
+        role: Role.INSTITUTION_ADMIN,
+        status: UserStatus.ACTIVE,
+        emailVerified: new Date(),
+      }
+    })
+
+    await prisma.institutionUser.upsert({
+      where: { id: `iu-${inst.code}` },
+      update: {},
+      create: {
+        id: `iu-${inst.code}`,
+        userId: tpoUser.id,
+        institutionId: institution.id,
+        designation: 'Head — Training & Placement Officer',
+        isPrimary: true,
+      }
+    })
+
+    // Active Membership for Apex & St. Xavier; Pending for NISM
+    const plan = inst.code === 'st-xavier' ? placementPlusPlan : placementPlan
+    const membership = await prisma.institutionMembership.upsert({
+      where: { id: `mem-${inst.code}` },
+      update: {},
+      create: {
+        id: `mem-${inst.code}`,
+        institutionId: institution.id,
+        planId: plan.id,
+        startDate: new Date(),
+        endDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
+        status: MembershipStatus.ACTIVE,
+        activatedAt: new Date(),
+      }
+    })
+
+    // Roster of expected students
+    const roster = await prisma.institutionRoster.upsert({
+      where: { id: `roster-${inst.code}-2026` },
+      update: {},
+      create: {
+        id: `roster-${inst.code}-2026`,
+        institutionId: institution.id,
+        graduationYear: 2026,
+        totalExpectedStudents: 600,
+        importedBy: tpoUser.id,
+        status: 'ACTIVE'
+      }
+    })
+  }
+
+  const primaryInstitution = institutions[0] // Apex Tech
+
+  // 8. Seed 50 Roster Students for Apex (Demonstrating Denominator 600)
+  console.log('8. Seeding student roster entries...')
+  for (let i = 1; i <= 50; i++) {
+    const pad = String(i).padStart(3, '0')
+    await prisma.rosterStudent.upsert({
+      where: { id: `roster-stu-apex-${pad}` },
+      update: {},
+      create: {
+        id: `roster-stu-apex-${pad}`,
+        rosterId: `roster-apex-tech-2026`,
+        institutionId: primaryInstitution.id,
+        name: `Student Candidate ${pad}`,
+        enrollmentNumber: `APX2026CS${pad}`,
+        email: `student${pad}@apextech.edu.in`,
+        mobile: `+91 9800000${pad}`,
+        course: 'B.Tech',
+        branch: i % 2 === 0 ? 'Computer Science' : 'Information Technology',
+        department: 'Engineering',
+        graduationYear: 2026,
+        cgpa: 7.2 + (i % 25) * 0.1,
+        invitationStatus: i <= 20 ? RosterInvitationStatus.REGISTERED : RosterInvitationStatus.SENT,
+        invitationSentAt: new Date(),
+      }
+    })
+  }
+
+  // 9. Employers & Fee Rules
+  console.log('9. Seeding partner employers...')
+  const employersData = [
+    {
+      name: 'TechCorp Solutions',
+      industry: 'IT & Software Development',
+      size: EmployerSize.MEDIUM,
+      website: 'https://techcorp-solutions.example.com',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      status: EmployerStatus.APPROVED,
+      recruiterName: 'Kavita Rao',
+      recruiterEmail: 'recruiter@techcorp.example.com',
+    },
+    {
+      name: 'CloudNova Systems',
+      industry: 'Cloud Infrastructure & DevOps',
+      size: EmployerSize.STARTUP,
+      website: 'https://cloudnova.example.com',
+      city: 'Pune',
+      state: 'Maharashtra',
+      status: EmployerStatus.APPROVED,
+      recruiterName: 'Amit Saxena',
+      recruiterEmail: 'amit@cloudnova.example.com',
+    },
+    {
+      name: 'FinEdge Analytics',
+      industry: 'Fintech & Data Engineering',
+      size: EmployerSize.LARGE,
+      website: 'https://finedge.example.com',
+      city: 'Mumbai',
+      state: 'Maharashtra',
+      status: EmployerStatus.APPROVED,
+      recruiterName: 'Pooja Iyer',
+      recruiterEmail: 'pooja@finedge.example.com',
+    },
+    {
+      name: 'NexaRetail Digital',
+      industry: 'E-commerce & Retail Tech',
+      size: EmployerSize.MEDIUM,
+      website: 'https://nexaretail.example.com',
+      city: 'Navi Mumbai',
+      state: 'Maharashtra',
+      status: EmployerStatus.APPROVED,
+      recruiterName: 'Rohan Gupta',
+      recruiterEmail: 'rohan@nexaretail.example.com',
+    },
+    {
+      name: 'GrowthPulse Media',
+      industry: 'Digital Marketing & Inside Sales',
+      size: EmployerSize.STARTUP,
+      website: 'https://growthpulse.example.com',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      status: EmployerStatus.APPROVED,
+      recruiterName: 'Sanjay Mehra',
+      recruiterEmail: 'sanjay@growthpulse.example.com',
+    }
+  ]
+
+  const employers: any[] = []
+  for (const emp of employersData) {
+    const employer = await prisma.employer.upsert({
+      where: { id: `emp-${emp.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}` },
+      update: {},
+      create: {
+        id: `emp-${emp.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        name: emp.name,
+        industry: emp.industry,
+        size: emp.size,
+        website: emp.website,
+        city: emp.city,
+        state: emp.state,
+        status: emp.status,
+        verifiedAt: new Date(),
+        verifiedBy: superAdmin.id,
+      }
+    })
+    employers.push(employer)
+
+    // Recruiter user
+    const recruiterUser = await prisma.user.upsert({
+      where: { email: emp.recruiterEmail },
+      update: {},
+      create: {
+        email: emp.recruiterEmail,
+        name: emp.recruiterName,
+        passwordHash: defaultPasswordHash,
+        role: Role.EMPLOYER,
+        status: UserStatus.ACTIVE,
+        emailVerified: new Date(),
+      }
+    })
+
+    await prisma.employerUser.upsert({
+      where: { id: `eu-${employer.id}` },
+      update: {},
+      create: {
+        id: `eu-${employer.id}`,
+        userId: recruiterUser.id,
+        employerId: employer.id,
+        designation: 'Talent Acquisition Specialist',
+        isPrimary: true,
+      }
+    })
+
+    // Employer Fee Rule (Success Fee on joining: ₹10,000)
+    await prisma.employerFeeRule.upsert({
+      where: { id: `fee-rule-${employer.id}` },
+      update: {},
+      create: {
+        id: `fee-rule-${employer.id}`,
+        employerId: employer.id,
+        feeType: FeeType.SUCCESS_FEE,
+        feeAmount: 10000,
+        feeCurrency: 'INR',
+        trigger: FeeTrigger.CANDIDATE_JOINED,
+        isActive: true,
+      }
+    })
+  }
+
+  // 10. Jobs with Assessment Thresholds
+  console.log('10. Seeding fresher job postings with assessment criteria...')
+  const jobsData = [
+    {
+      id: 'job-techcorp-sde',
+      employerId: employers[0].id,
+      title: 'Junior Full-Stack Software Engineer',
+      department: 'Engineering',
+      type: JobType.FULL_TIME,
+      location: 'Bengaluru',
+      workMode: WorkMode.HYBRID,
+      salaryMin: 450000,
+      salaryMax: 600000,
+      ctc: 550000,
+      degree: ['B.Tech', 'BE', 'MCA'],
+      branch: ['Computer Science', 'Information Technology'],
+      graduationYear: 2026,
+      minCgpa: 7.0,
+      backlogsAllowed: false,
+      skills: ['JavaScript', 'React', 'Node.js', 'PostgreSQL'],
+      minEmployabilityScore: 75,
+      minTechnicalScore: 70,
+      minCommunicationScore: 65,
+      requiredBadges: ['Technical Ready'],
+      openings: 5,
+      description: 'Exciting opportunity for 2026 freshers to build scalable cloud SaaS applications with modern web stacks.',
+      status: JobStatus.ACTIVE,
+      approvedBy: superAdmin.id,
+      approvedAt: new Date(),
+    },
+    {
+      id: 'job-cloudnova-devops',
+      employerId: employers[1].id,
+      title: 'Associate Cloud & DevOps Engineer',
+      department: 'Infrastructure',
+      type: JobType.FULL_TIME,
+      location: 'Pune',
+      workMode: WorkMode.ONSITE,
+      salaryMin: 400000,
+      salaryMax: 500000,
+      ctc: 480000,
+      degree: ['B.Tech', 'BE'],
+      branch: ['Computer Science', 'Electronics & Telecommunication', 'Information Technology'],
+      graduationYear: 2026,
+      minCgpa: 6.8,
+      backlogsAllowed: false,
+      skills: ['Linux', 'Docker', 'AWS', 'Python', 'Networking'],
+      minEmployabilityScore: 70,
+      minTechnicalScore: 70,
+      minLearningAgilityScore: 75,
+      requiredBadges: ['High Learning Agility'],
+      openings: 3,
+      description: 'Hands-on role supporting automated CI/CD pipelines, container orchestration and multi-cloud environments.',
+      status: JobStatus.ACTIVE,
+      approvedBy: superAdmin.id,
+      approvedAt: new Date(),
+    },
+    {
+      id: 'job-growthpulse-sales',
+      employerId: employers[4].id,
+      title: 'Inside Sales Executive — Enterprise SaaS',
+      department: 'Revenue & Sales',
+      type: JobType.FULL_TIME,
+      location: 'Bengaluru',
+      workMode: WorkMode.HYBRID,
+      salaryMin: 400000,
+      salaryMax: 550000,
+      ctc: 500000,
+      degree: ['B.Tech', 'BBA', 'B.Sc', 'Any Graduate'],
+      branch: ['Any'],
+      graduationYear: 2026,
+      minCgpa: 6.0,
+      backlogsAllowed: true,
+      skills: ['B2B Sales', 'Prospecting', 'Excellent English', 'CRM'],
+      minEmployabilityScore: 70,
+      minCommunicationScore: 80,
+      minWorkEthicsScore: 70,
+      requiredBadges: ['Strong Communicator', 'Sales Ready'],
+      openings: 8,
+      description: 'Drive high-velocity SaaS demos and qualified enterprise pipeline across Indian and global mid-markets.',
+      status: JobStatus.ACTIVE,
+      approvedBy: superAdmin.id,
+      approvedAt: new Date(),
+    }
+  ]
+
+  const createdJobs: any[] = []
+  for (const j of jobsData) {
+    const job = await prisma.job.upsert({
+      where: { id: j.id },
+      update: {},
+      create: j,
+    })
+    createdJobs.push(job)
+  }
+
+  // 11. Students (20 accounts: enrolled, paid, assessed)
+  console.log('11. Seeding enrolled student profiles and programmes...')
+  const sampleStudents = [
+    { name: 'Aarav Sharma', email: 'aarav.sharma@apextech.edu.in', score: 84, placed: true },
+    { name: 'Diya Patel', email: 'diya.patel@apextech.edu.in', score: 81, placed: true },
+    { name: 'Rohan Deshmukh', email: 'rohan.deshmukh@apextech.edu.in', score: 79, placed: false },
+    { name: 'Ananya Verma', email: 'ananya.verma@apextech.edu.in', score: 76, placed: false },
+    { name: 'Ishaan Kulkarni', email: 'ishaan.k@apextech.edu.in', score: 88, placed: false },
+  ]
+
+  for (let i = 0; i < sampleStudents.length; i++) {
+    const stu = sampleStudents[i]
+    const user = await prisma.user.upsert({
+      where: { email: stu.email },
+      update: {},
+      create: {
+        email: stu.email,
+        name: stu.name,
+        passwordHash: defaultPasswordHash,
+        role: Role.STUDENT,
+        status: UserStatus.ACTIVE,
+        emailVerified: new Date(),
+      }
+    })
+
+    const studentRecord = await prisma.student.upsert({
+      where: { id: `stu-${i + 1}` },
+      update: {},
+      create: {
+        id: `stu-${i + 1}`,
+        userId: user.id,
+        institutionId: primaryInstitution.id,
+        enrollmentNumber: `APX2026CS${String(i + 1).padStart(3, '0')}`,
+        status: stu.placed ? StudentStatus.PLACED : StudentStatus.ACTIVE,
+        verificationId: `STU-2026-${String(i + 1).padStart(6, '0')}`,
+        registrationSource: 'INSTITUTION_URL',
+      }
+    })
+
+    // Profile
+    await prisma.studentProfile.upsert({
+      where: { studentId: studentRecord.id },
+      update: {},
+      create: {
+        studentId: studentRecord.id,
+        course: 'B.Tech',
+        branch: 'Computer Science',
+        department: 'Engineering',
+        graduationYear: 2026,
+        cgpa: 8.2 + (i * 0.2),
+        tenthPercentage: 88.5,
+        twelfthPercentage: 85.0,
+        backlogs: 0,
+        location: 'Navi Mumbai',
+        preferredLocations: ['Mumbai', 'Bengaluru', 'Pune'],
+        skills: ['React', 'Node.js', 'PostgreSQL', 'TypeScript', 'Tailwind'],
+        languages: ['English', 'Hindi'],
+        preferredRoles: ['Software Engineer', 'Full-Stack Developer'],
+        salaryExpectation: 500000,
+        employerVisibilityConsent: true,
+        employerVisibilityConsentAt: new Date(),
+      }
+    })
+
+    // Student Programme
+    const studentProg = await prisma.studentProgramme.upsert({
+      where: { id: `prog-${studentRecord.id}` },
+      update: {},
+      create: {
+        id: `prog-${studentRecord.id}`,
+        studentId: studentRecord.id,
+        programmePlanId: assurancePlan.id,
+        institutionId: primaryInstitution.id,
+        institutionMembershipId: `mem-${primaryInstitution.code}`,
+        status: stu.placed ? ProgrammeStatus.PLACED : ProgrammeStatus.ACTIVE,
+        assuranceTarget: 3,
+        assuranceStartDate: new Date(),
+        assuranceEndDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+        studentObligationsAccepted: new Date(),
+        opportunitiesConsumed: stu.placed ? 1 : (i === 2 ? 1 : 0),
+        opportunitiesRemaining: stu.placed ? 2 : (i === 2 ? 2 : 3),
+        assuranceStatus: stu.placed ? AssuranceStatus.PLACED : AssuranceStatus.ACTIVE,
+      }
+    })
+
+    // Assessment Result
+    const assessment = await prisma.studentAssessment.upsert({
+      where: { id: `assess-${studentRecord.id}` },
+      update: {},
+      create: {
+        id: `assess-${studentRecord.id}`,
+        studentId: studentRecord.id,
+        status: AssessmentStatus.COMPLETED,
+        startedAt: new Date(Date.now() - 3600000),
+        completedAt: new Date(),
+      }
+    })
+
+    await prisma.assessmentResult.upsert({
+      where: { assessmentId: assessment.id },
+      update: {},
+      create: {
+        assessmentId: assessment.id,
+        studentId: studentRecord.id,
+        overallScore: stu.score,
+        technicalReadiness: stu.score - 2,
+        communication: stu.score + 1,
+        workEthics: 82,
+        learningAgility: 85,
+        teamOrientation: 80,
+        problemSolving: stu.score - 1,
+        professionalBehaviour: 85,
+        interviewReadiness: stu.score,
+      }
+    })
+
+    // Award Badges
+    await prisma.studentBadge.upsert({
+      where: { id: `sbadge-${studentRecord.id}-ir` },
+      update: {},
+      create: {
+        id: `sbadge-${studentRecord.id}-ir`,
+        studentId: studentRecord.id,
+        badgeId: createdBadges['interview-ready'].id,
+        score: stu.score,
+        verificationId: `BDG-IR-${studentRecord.id}`,
+      }
+    })
+    await prisma.studentBadge.upsert({
+      where: { id: `sbadge-${studentRecord.id}-er` },
+      update: {},
+      create: {
+        id: `sbadge-${studentRecord.id}-er`,
+        studentId: studentRecord.id,
+        badgeId: createdBadges['employer-ready'].id,
+        score: stu.score,
+        verificationId: `BDG-ER-${studentRecord.id}`,
+      }
+    })
+
+    // Applications & Opportunities
+    const targetJob = createdJobs[0] // TechCorp SDE
+    const application = await prisma.application.upsert({
+      where: { id: `app-${studentRecord.id}-${targetJob.id}` },
+      update: {},
+      create: {
+        id: `app-${studentRecord.id}-${targetJob.id}`,
+        studentId: studentRecord.id,
+        jobId: targetJob.id,
+        status: stu.placed ? ApplicationStatus.SELECTED : (i === 2 ? ApplicationStatus.REJECTED : ApplicationStatus.INTERVIEW_SCHEDULED),
+        matchScore: stu.score + 5,
+        matchReasons: {
+          skillsMatch: true,
+          cgpaMet: true,
+          scoresMet: true,
+          badgeAwarded: true
+        }
+      }
+    })
+
+    // Assurance Opportunity #1
+    const opportunity = await prisma.assuranceOpportunity.upsert({
+      where: { id: `opp-${studentRecord.id}-1` },
+      update: {},
+      create: {
+        id: `opp-${studentRecord.id}-1`,
+        studentProgrammeId: studentProg.id,
+        studentId: studentRecord.id,
+        employerId: targetJob.employerId,
+        jobId: targetJob.id,
+        applicationId: application.id,
+        opportunityNumber: 1,
+        status: stu.placed ? OpportunityStatus.SELECTED : (i === 2 ? OpportunityStatus.REJECTED : OpportunityStatus.INTERVIEW_SCHEDULED),
+        countsTowardAssurance: true,
+        completedDate: stu.placed || i === 2 ? new Date() : null,
+        outcome: stu.placed ? 'Selected by employer' : (i === 2 ? 'Rejected after Technical Round 2' : null),
+      }
+    })
+
+    // Interview rounds
+    await prisma.interview.upsert({
+      where: { id: `int-${opportunity.id}-r1` },
+      update: {},
+      create: {
+        id: `int-${opportunity.id}-r1`,
+        opportunityId: opportunity.id,
+        applicationId: application.id,
+        studentId: studentRecord.id,
+        jobId: targetJob.id,
+        employerId: targetJob.employerId,
+        roundNumber: 1,
+        roundName: 'Technical Screen & Coding Architecture',
+        scheduledAt: new Date(Date.now() - 86400000),
+        mode: InterviewMode.VIDEO,
+        meetingLink: 'https://meet.google.com/xyz-demo-interview',
+        status: InterviewStatus.COMPLETED,
+        result: 'PASSED',
+        completedAt: new Date(Date.now() - 82800000),
+      }
+    })
+
+    // If placed, generate Offer, Placement, and Auto-trigger Employer Fee!
+    if (stu.placed) {
+      const offer = await prisma.offer.upsert({
+        where: { id: `offer-${studentRecord.id}` },
+        update: {},
+        create: {
+          id: `offer-${studentRecord.id}`,
+          applicationId: application.id,
+          opportunityId: opportunity.id,
+          studentId: studentRecord.id,
+          employerId: targetJob.employerId,
+          jobId: targetJob.id,
+          institutionId: primaryInstitution.id,
+          offerDate: new Date(Date.now() - 7 * 86400000),
+          ctc: 550000,
+          fixedSalary: 500000,
+          variableSalary: 50000,
+          joiningDate: new Date('2026-07-01'),
+          location: 'Bengaluru',
+          employmentType: 'Full-Time',
+          status: OfferStatus.JOINED,
+        }
+      })
+
+      const placement = await prisma.placement.upsert({
+        where: { offerId: offer.id },
+        update: {},
+        create: {
+          offerId: offer.id,
+          studentId: studentRecord.id,
+          institutionId: primaryInstitution.id,
+          employerId: targetJob.employerId,
+          jobId: targetJob.id,
+          placementCode: `PLC-2026-${String(i + 1).padStart(6, '0')}`,
+          ctc: 550000,
+          joiningDate: new Date('2026-07-01'),
+          joinedAt: new Date(),
+          status: PlacementStatus.VERIFIED,
+          verifiedBy: superAdmin.id,
+          verifiedAt: new Date(),
+          verificationNotes: 'Offer letter and joining verification call verified by platform team.',
+        }
+      })
+
+      // Employer Success Fee automatically generated
+      await prisma.employerFee.upsert({
+        where: { id: `efee-${placement.id}` },
+        update: {},
+        create: {
+          id: `efee-${placement.id}`,
+          employerFeeRuleId: `fee-rule-${targetJob.employerId}`,
+          employerId: targetJob.employerId,
+          placementId: placement.id,
+          studentId: studentRecord.id,
+          jobId: targetJob.id,
+          amount: 10000,
+          gstAmount: 1800,
+          totalAmount: 11800,
+          status: 'GENERATED',
+          paymentDueDate: new Date(Date.now() + 30 * 86400000),
+        }
+      })
+    }
+  }
+
+  // 12. Workshops
+  console.log('12. Seeding upcoming career sessions & workshops...')
+  await prisma.workshop.upsert({
+    where: { id: 'ws-1' },
+    update: {},
+    create: {
+      id: 'ws-1',
+      title: 'Mastering the First 90 Days in a Tech Startup',
+      topic: 'Workplace Readiness & Team Integration',
+      speaker: 'Siddharth Nair, VP Engineering',
+      company: 'TechCorp Solutions',
+      date: new Date(Date.now() + 5 * 86400000),
+      duration: 90,
+      mode: 'Live Interactive Webinar',
+      meetingLink: 'https://meet.google.com/ws-startup-prep',
+      targetInstitutions: [primaryInstitution.id],
+      targetDepartments: ['Computer Science', 'Information Technology'],
+      description: 'Practical guide on how fresh engineers can deliver impact, navigate codebases and communicate effectively.',
+      status: WorkshopStatus.PUBLISHED,
+      maxParticipants: 300,
+      createdBy: opsAdmin.id,
+    }
+  })
+
+  // 13. Institutional Activity & MOU
+  console.log('13. Seeding institutional MOU & activity records...')
+  const mou = await prisma.mOU.upsert({
+    where: { id: `mou-${primaryInstitution.code}` },
+    update: {},
+    create: {
+      id: `mou-${primaryInstitution.code}`,
+      institutionId: primaryInstitution.id,
+      status: 'ACTIVE',
+      startDate: new Date(),
+      expiryDate: new Date(Date.now() + 365 * 86400000),
+      signedDate: new Date(),
+      signatories: [
+        'Dr. Ramesh Sharma (Principal, Apex Tech)',
+        'Founder & CEO (PlacementConnect Platform)'
+      ],
+      notes: 'Annual institutional placement agreement covering Placement Assurance for final-year graduating batch.'
+    }
+  })
+
+  await prisma.institutionActivity.upsert({
+    where: { id: `act-${primaryInstitution.code}-1` },
+    update: {},
+    create: {
+      id: `act-${primaryInstitution.code}-1`,
+      institutionId: primaryInstitution.id,
+      mouId: mou.id,
+      type: ActivityType.PLACEMENT_DRIVE,
+      title: '2026 Cloud & Software Engineering Placement Drive',
+      date: new Date(Date.now() - 14 * 86400000),
+      department: 'Computer Science & IT',
+      participantCount: 140,
+      speaker: 'Kavita Rao',
+      company: 'TechCorp Solutions',
+      mode: 'Hybrid Drive',
+      attendanceCount: 135,
+      report: 'Completed initial screening and round 1 technical coding challenges.',
+      outcomes: '12 candidates shortlisted for round 2 technical evaluations.'
+    }
+  })
+
+  console.log('✅ PlacementConnect seed completed successfully!')
+  console.log('--------------------------------------------------')
+  console.log('Credentials Summary:')
+  console.log('  Super Admin:      admin@placementconnect.com / AdminPassword123!')
+  console.log('  Operations:       ops@placementconnect.com   / Password123!')
+  console.log('  Institution TPO:  tpo@apextech.edu.in        / Password123!')
+  console.log('  Employer:         recruiter@techcorp.example.com / Password123!')
+  console.log('  Student:          aarav.sharma@apextech.edu.in   / Password123!')
+  console.log('--------------------------------------------------')
+}
+
+main()
+  .catch((e) => {
+    console.error('❌ Seed error:', e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+  })

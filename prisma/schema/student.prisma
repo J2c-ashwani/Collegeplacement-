@@ -1,0 +1,318 @@
+enum StudentStatus {
+  REGISTERED
+  PAYMENT_PENDING
+  PAYMENT_SUCCESS
+  ASSESSMENT_PENDING
+  ASSESSMENT_COMPLETED
+  VERIFICATION_PENDING
+  ACTIVE
+  SUSPENDED
+  PLACED
+  PROGRAMME_COMPLETED
+}
+
+enum ProgrammeStatus {
+  NOT_STARTED
+  ELIGIBILITY_PENDING
+  ELIGIBLE
+  ACTIVE
+  TARGET_COMPLETED
+  PLACED
+  EXPIRED
+  SUSPENDED
+  INELIGIBLE
+  CANCELLED
+  REFUNDED
+}
+
+enum AssuranceStatus {
+  NOT_STARTED
+  ELIGIBLE
+  ACTIVE
+  TARGET_COMPLETED
+  PLACED
+  EXPIRED
+  SUSPENDED
+  INELIGIBLE
+}
+
+enum AssessmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum AssessmentCategory {
+  SKILLS
+  WORK_ETHICS
+  WORKPLACE_PREFERENCES
+  COMMUNICATION
+  LEARNING_AGILITY
+  TEAM_BEHAVIOUR
+  CAREER_MOTIVATION
+  PROBLEM_SOLVING
+  PROFESSIONAL_BEHAVIOUR
+}
+
+enum QuestionType {
+  MCQ
+  RANKING
+  SCENARIO
+  LIKERT
+  YES_NO
+  SITUATIONAL
+}
+
+enum PrivacyLevel {
+  PUBLIC
+  EMPLOYER_VISIBLE
+  INSTITUTION_VISIBLE
+  PRIVATE
+}
+
+model Student {
+  id                   String               @id @default(cuid())
+  userId               String               @unique
+  institutionId        String
+  enrollmentNumber     String?
+  status               StudentStatus        @default(REGISTERED)
+  registrationSource   String?
+  referralCode         String?
+  verificationId       String?              @unique
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  user                 User                 @relation(fields: [userId], references: [id])
+  institution          Institution          @relation(fields: [institutionId], references: [id])
+  profile              StudentProfile?
+  programmes           StudentProgramme[]
+  assessments          StudentAssessment[]
+  badges               StudentBadge[]
+  applications         Application[]
+  documents            Document[]
+  opportunities        AssuranceOpportunity[]
+  rosterRecords        RosterStudent[]
+  workshopAttendances  WorkshopAttendance[]
+  interviews           Interview[]
+  offers               Offer[]
+  placements           Placement[]
+  employerFees         EmployerFee[]
+  assessmentResults    AssessmentResult[]
+
+  @@index([institutionId])
+  @@index([status])
+  @@index([verificationId])
+  @@map("students")
+}
+
+model StudentProfile {
+  id                          String       @id @default(cuid())
+  studentId                   String       @unique
+  course                      String?
+  branch                      String?
+  department                  String?
+  graduationYear              Int?
+  cgpa                        Float?
+  tenthPercentage             Float?
+  twelfthPercentage           Float?
+  diplomaPercentage           Float?
+  backlogs                    Int          @default(0)
+  location                    String?
+  preferredLocations          String[]
+  skills                      String[]
+  languages                   String[]
+  experience                  String?
+  internships                 Json?
+  projects                    Json?
+  certifications              Json?
+  resumeDocumentId            String?      @unique
+  photoUrl                    String?
+  preferredRoles              String[]
+  salaryExpectation           Decimal?
+  availability                String?
+  privacyLevel                PrivacyLevel @default(EMPLOYER_VISIBLE)
+  employerVisibilityConsent   Boolean      @default(false)
+  employerVisibilityConsentAt DateTime?
+  createdAt                   DateTime     @default(now())
+  updatedAt                   DateTime     @updatedAt
+
+  student                     Student      @relation(fields: [studentId], references: [id])
+  resumeDocument              Document?    @relation(fields: [resumeDocumentId], references: [id])
+
+  @@index([studentId])
+  @@map("student_profiles")
+}
+
+model ProgrammePlan {
+  id             String             @id @default(cuid())
+  name           String
+  slug           String             @unique
+  description    String?
+  price          Decimal
+  currency       String             @default("INR")
+  gstPercent     Decimal            @default(18)
+  features       String[]
+  durationMonths Int                @default(12)
+  isActive       Boolean            @default(true)
+  sortOrder      Int                @default(0)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  studentProgrammes StudentProgramme[]
+
+  @@map("programme_plans")
+}
+
+model StudentProgramme {
+  id                          String                @id @default(cuid())
+  studentId                   String
+  programmePlanId             String
+  institutionId               String
+  institutionMembershipId     String?
+  orderId                     String?
+  status                      ProgrammeStatus       @default(NOT_STARTED)
+  startDate                   DateTime?
+  endDate                     DateTime?
+  programmeTermsVersion       String?
+  assuranceTarget             Int                   @default(3)
+  assuranceStartDate          DateTime?
+  assuranceEndDate            DateTime?
+  eligibilityStatus           String?
+  eligibilityReason           String?
+  studentObligationsAccepted  DateTime?
+  noShowCount                 Int                   @default(0)
+  offerRejectionCount         Int                   @default(0)
+  opportunitiesConsumed       Int                   @default(0)
+  opportunitiesRemaining      Int                   @default(3)
+  assuranceStatus             AssuranceStatus       @default(NOT_STARTED)
+  createdAt                   DateTime              @default(now())
+  updatedAt                   DateTime              @updatedAt
+
+  student                     Student               @relation(fields: [studentId], references: [id])
+  programmePlan               ProgrammePlan         @relation(fields: [programmePlanId], references: [id])
+  institution                 Institution           @relation(fields: [institutionId], references: [id])
+  membership                  InstitutionMembership? @relation(fields: [institutionMembershipId], references: [id])
+  order                       Order?                @relation(fields: [orderId], references: [id])
+  opportunities               AssuranceOpportunity[]
+
+  @@index([studentId])
+  @@index([programmePlanId])
+  @@index([institutionId])
+  @@index([institutionMembershipId])
+  @@index([orderId])
+  @@index([status])
+  @@map("student_programmes")
+}
+
+model AssessmentQuestion {
+  id            String             @id @default(cuid())
+  category      AssessmentCategory
+  questionType  QuestionType
+  question      String
+  options       Json
+  correctAnswer String?
+  weight        Float              @default(1.0)
+  difficulty    Int                @default(1)
+  scoringRules  Json?
+  explanation   String?
+  isActive      Boolean            @default(true)
+  version       Int                @default(1)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  answers       AssessmentAnswer[]
+
+  @@index([category])
+  @@index([isActive])
+  @@map("assessment_questions")
+}
+
+model StudentAssessment {
+  id          String             @id @default(cuid())
+  studentId   String
+  startedAt   DateTime           @default(now())
+  completedAt DateTime?
+  status      AssessmentStatus   @default(IN_PROGRESS)
+  createdAt   DateTime           @default(now())
+
+  student     Student            @relation(fields: [studentId], references: [id])
+  answers     AssessmentAnswer[]
+  result      AssessmentResult?
+
+  @@index([studentId])
+  @@index([status])
+  @@map("student_assessments")
+}
+
+model AssessmentAnswer {
+  id           String             @id @default(cuid())
+  assessmentId String
+  questionId   String
+  answer       String
+  score        Float?
+  createdAt    DateTime           @default(now())
+
+  assessment   StudentAssessment  @relation(fields: [assessmentId], references: [id])
+  question     AssessmentQuestion @relation(fields: [questionId], references: [id])
+
+  @@index([assessmentId])
+  @@index([questionId])
+  @@map("assessment_answers")
+}
+
+model AssessmentResult {
+  id                     String            @id @default(cuid())
+  assessmentId           String            @unique
+  studentId              String
+  overallScore           Float
+  technicalReadiness     Float
+  communication          Float
+  workEthics             Float
+  learningAgility        Float
+  teamOrientation        Float
+  problemSolving         Float
+  professionalBehaviour  Float
+  interviewReadiness     Float
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  assessment             StudentAssessment @relation(fields: [assessmentId], references: [id])
+  student                Student           @relation(fields: [studentId], references: [id])
+
+  @@index([studentId])
+  @@map("assessment_results")
+}
+
+model Badge {
+  id            String         @id @default(cuid())
+  name          String
+  slug          String         @unique
+  description   String?
+  criteria      Json
+  iconUrl       String?
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  studentBadges StudentBadge[]
+
+  @@map("badges")
+}
+
+model StudentBadge {
+  id             String    @id @default(cuid())
+  studentId      String
+  badgeId        String
+  score          Float?
+  issuedAt       DateTime  @default(now())
+  expiresAt      DateTime?
+  verificationId String?   @unique
+  createdAt      DateTime  @default(now())
+
+  student        Student   @relation(fields: [studentId], references: [id])
+  badge          Badge     @relation(fields: [badgeId], references: [id])
+
+  @@index([studentId])
+  @@index([badgeId])
+  @@map("student_badges")
+}

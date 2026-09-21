@@ -1,0 +1,214 @@
+enum EmployerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum EmployerSize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+enum JobStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  ACTIVE
+  CLOSED
+  FILLED
+  REJECTED
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  CONTRACT
+}
+
+enum WorkMode {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+
+enum FeeType {
+  SUCCESS_FEE
+  CAMPAIGN_FEE
+  SUBSCRIPTION
+}
+
+enum FeeTrigger {
+  CANDIDATE_JOINED
+  OFFER_ACCEPTED
+  CAMPAIGN_START
+}
+
+enum EmployerFeeStatus {
+  GENERATED
+  INVOICED
+  PAID
+  OVERDUE
+  WAIVED
+  DISPUTED
+}
+
+model Employer {
+  id            String             @id @default(cuid())
+  name          String
+  industry      String?
+  size          EmployerSize?
+  website       String?
+  logo          String?
+  description   String?
+  address       String?
+  city          String?
+  state         String?
+  gstNumber     String?
+  status        EmployerStatus     @default(PENDING)
+  verifiedAt    DateTime?
+  verifiedBy    String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  users         EmployerUser[]
+  jobs          Job[]
+  feeRules      EmployerFeeRule[]
+  fees          EmployerFee[]
+  crmNotes      CRMNote[]          @relation("EmployerCRMNotes")
+  opportunities AssuranceOpportunity[]
+  interviews    Interview[]
+  offers        Offer[]
+  placements    Placement[]
+  documents     Document[]
+
+  @@index([status])
+  @@map("employers")
+}
+
+model EmployerUser {
+  id          String    @id @default(cuid())
+  userId      String
+  employerId  String
+  designation String?
+  isPrimary   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  employer    Employer  @relation(fields: [employerId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([employerId])
+  @@map("employer_users")
+}
+
+model Job {
+  id                        String                 @id @default(cuid())
+  employerId                String
+  title                     String
+  department                String?
+  type                      JobType
+  location                  String?
+  workMode                  WorkMode
+  salaryMin                 Decimal?
+  salaryMax                 Decimal?
+  ctc                       Decimal?
+  experience                String?
+  education                 String?
+  degree                    String[]
+  branch                    String[]
+  graduationYear            Int?
+  minCgpa                   Float?
+  backlogsAllowed           Boolean                @default(false)
+  skills                    String[]
+  languages                 String[]
+  minEmployabilityScore     Float?
+  minCommunicationScore     Float?
+  minTechnicalScore         Float?
+  minWorkEthicsScore        Float?
+  minLearningAgilityScore   Float?
+  requiredBadges            String[]
+  openings                  Int                    @default(1)
+  applicationDeadline       DateTime?
+  joiningDate               DateTime?
+  description               String
+  additionalQuestions       Json?
+  interviewProcess          String?
+  status                    JobStatus              @default(DRAFT)
+  approvedBy                String?
+  approvedAt                DateTime?
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+
+  employer                  Employer               @relation(fields: [employerId], references: [id])
+  applications              Application[]
+  opportunities             AssuranceOpportunity[]
+  interviews                Interview[]
+  offers                    Offer[]
+  placements                Placement[]
+  employerFees              EmployerFee[]
+
+  @@index([employerId])
+  @@index([status])
+  @@map("jobs")
+}
+
+model EmployerFeeRule {
+  id            String        @id @default(cuid())
+  employerId    String?
+  feeType       FeeType
+  feeAmount     Decimal?
+  feeCurrency   String        @default("INR")
+  feePercentage Float?
+  trigger       FeeTrigger
+  isActive      Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  employer      Employer?     @relation(fields: [employerId], references: [id])
+  fees          EmployerFee[]
+
+  @@index([employerId])
+  @@map("employer_fee_rules")
+}
+
+model EmployerFee {
+  id                 String             @id @default(cuid())
+  employerFeeRuleId  String
+  employerId         String
+  placementId        String?
+  studentId          String?
+  jobId              String?
+  amount             Decimal
+  gstAmount          Decimal            @default(0)
+  totalAmount        Decimal
+  status             EmployerFeeStatus  @default(GENERATED)
+  invoiceId          String?            @unique
+  paymentDueDate     DateTime?
+  generatedAt        DateTime           @default(now())
+  paidAt             DateTime?
+  disputeReason      String?
+  disputeResolvedAt  DateTime?
+  disputeResolvedBy  String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  feeRule            EmployerFeeRule    @relation(fields: [employerFeeRuleId], references: [id])
+  employer           Employer           @relation(fields: [employerId], references: [id])
+  placement          Placement?         @relation(fields: [placementId], references: [id])
+  student            Student?           @relation(fields: [studentId], references: [id])
+  job                Job?               @relation(fields: [jobId], references: [id])
+  invoice            Invoice?           @relation(fields: [invoiceId], references: [id])
+
+  @@index([employerFeeRuleId])
+  @@index([employerId])
+  @@index([placementId])
+  @@index([studentId])
+  @@index([jobId])
+  @@index([status])
+  @@map("employer_fees")
+}

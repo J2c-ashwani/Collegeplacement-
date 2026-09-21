@@ -1,0 +1,412 @@
+'use client'
+
+import * as React from "react"
+import { useRouter } from "next/navigation"
+import {
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandSeparator,
+} from "@/components/ui/command"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import {
+  Search,
+  Building2,
+  Users,
+  Briefcase,
+  GraduationCap,
+  FileText,
+  Clock,
+  ShieldAlert,
+  CheckCircle2,
+  ExternalLink,
+  CreditCard,
+  Settings,
+  History,
+  FileCheck,
+  Award,
+} from "lucide-react"
+
+interface CommandPaletteProps {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  role?: string
+}
+
+export function CommandPalette({ open: controlledOpen, onOpenChange: controlledOnOpenChange, role }: CommandPaletteProps) {
+  const router = useRouter()
+  const [internalOpen, setInternalOpen] = React.useState(false)
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+
+  const isAdmin = !role || role === 'SUPER_ADMIN' || role === 'OPERATIONS'
+  const isInstitution = !role || role === 'INSTITUTION_ADMIN' || isAdmin
+  const isEmployer = !role || role === 'EMPLOYER' || isAdmin
+  const isStudent = !role || role === 'STUDENT' || isAdmin
+  const setOpen = React.useCallback(
+    (value: boolean) => {
+      if (isControlled) {
+        controlledOnOpenChange?.(value)
+      } else {
+        setInternalOpen(value)
+      }
+    },
+    [isControlled, controlledOnOpenChange]
+  )
+
+  // 360 entity inspection dialog state
+  const [student360Open, setStudent360Open] = React.useState(false)
+
+  // Keyboard shortcut listener
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen(!open)
+      }
+    }
+    const handleCustomOpen = () => setOpen(true)
+
+    document.addEventListener("keydown", down)
+    window.addEventListener("open-command-palette", handleCustomOpen)
+    return () => {
+      document.removeEventListener("keydown", down)
+      window.removeEventListener("open-command-palette", handleCustomOpen)
+    }
+  }, [open, setOpen])
+
+  const runCommand = (action: () => void) => {
+    setOpen(false)
+    action()
+  }
+
+  return (
+    <>
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Operational Command Palette"
+        description="Search platform entities, trigger business workflows, or jump to workspaces"
+      >
+        <CommandInput placeholder="Type a command, workflow, or search student / college..." />
+        <CommandList className="max-h-[380px]">
+          <CommandEmpty>No matching operational results found.</CommandEmpty>
+
+          {/* Quick Business Actions */}
+          <CommandGroup heading="Business Workflows & Shortcuts">
+            {isAdmin && (
+              <CommandItem
+                onSelect={() =>
+                  runCommand(() => {
+                    setStudent360Open(true)
+                  })
+                }
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Users className="h-4 w-4 text-indigo-600" />
+                <span>Cross-Entity 360 View: Student Profile Preview (Aarav Sharma)</span>
+                <Badge variant="outline" className="ml-auto text-[10px] bg-indigo-50 text-indigo-700">
+                  360 Live
+                </Badge>
+              </CommandItem>
+            )}
+
+            {isAdmin && (
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/admin/students"))}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Search className="h-4 w-4 text-blue-600" />
+                <span>Find Student by Name or Enrollment Number</span>
+                <Badge variant="outline" className="ml-auto text-[10px]">
+                  Admin
+                </Badge>
+              </CommandItem>
+            )}
+
+            {isEmployer && (
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/employer/jobs"))}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Briefcase className="h-4 w-4 text-emerald-600" />
+                <span>Create New Employer Job Opening</span>
+                <Badge variant="outline" className="ml-auto text-[10px]">
+                  Recruiter
+                </Badge>
+              </CommandItem>
+            )}
+
+            {isInstitution && (
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/institution/placements"))}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <FileCheck className="h-4 w-4 text-amber-600" />
+                <span>View Pending Offer Documents & Gap Tracker</span>
+                <Badge variant="outline" className="ml-auto text-[10px]">
+                  TPO
+                </Badge>
+              </CommandItem>
+            )}
+
+            {isEmployer && (
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/employer/invoices"))}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <CreditCard className="h-4 w-4 text-purple-600" />
+                <span>View Unpaid Corporate Employer Invoices</span>
+                <Badge variant="outline" className="ml-auto text-[10px]">
+                  Billing
+                </Badge>
+              </CommandItem>
+            )}
+
+            {isAdmin && (
+              <CommandItem
+                onSelect={() => runCommand(() => router.push("/admin/institutions"))}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <Clock className="h-4 w-4 text-rose-600" />
+                <span>Expiring Partner Institutions in 30 Days</span>
+                <Badge variant="outline" className="ml-auto text-[10px] text-rose-600 border-rose-200">
+                  Review
+                </Badge>
+              </CommandItem>
+            )}
+          </CommandGroup>
+
+          {/* Admin Operations Workspaces */}
+          {isAdmin && (
+            <>
+              <CommandSeparator />
+              <CommandGroup heading="Platform Operations (Admin)">
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/overview"))}>
+                  <ShieldAlert className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Assurance Capacity & Growth Control Tower</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/students"))}>
+                  <Users className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Platform Student Directory</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/employers"))}>
+                  <Building2 className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Corporate Employer Management</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/jobs"))}>
+                  <Briefcase className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Platform Job Openings Catalog</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/audit-logs"))}>
+                  <History className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Append-Only Audit Trail</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/admin/settings"))}>
+                  <Settings className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Global Platform Settings</span>
+                </CommandItem>
+              </CommandGroup>
+            </>
+          )}
+
+          {/* Institution Workspaces */}
+          {isInstitution && (
+            <>
+              <CommandSeparator />
+              <CommandGroup heading="Institution (TPO)">
+                <CommandItem onSelect={() => runCommand(() => router.push("/institution/overview"))}>
+                  <GraduationCap className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Placement Funnel Overview</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/institution/drives"))}>
+                  <Briefcase className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Campus Hiring Drives Calendar</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/institution/mous"))}>
+                  <FileText className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>MoU & Industry Engagements</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/institution/reports"))}>
+                  <Award className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Placement & CTC Analytics Reports</span>
+                </CommandItem>
+              </CommandGroup>
+            </>
+          )}
+
+          {/* Employer Workspaces */}
+          {isEmployer && (
+            <>
+              <CommandSeparator />
+              <CommandGroup heading="Employer Recruiter">
+                <CommandItem onSelect={() => runCommand(() => router.push("/employer/invoices"))}>
+                  <CreditCard className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Success Fee Invoices & Receipts</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/employer/profile"))}>
+                  <Building2 className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Corporate Profile & Recruiter Team</span>
+                </CommandItem>
+              </CommandGroup>
+            </>
+          )}
+
+          {/* Student Workspaces */}
+          {isStudent && (
+            <>
+              <CommandSeparator />
+              <CommandGroup heading="Student Portal">
+                <CommandItem onSelect={() => runCommand(() => router.push("/student/documents"))}>
+                  <FileCheck className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Digital Document Vault</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/student/applications"))}>
+                  <Briefcase className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>Job Application Stages</span>
+                </CommandItem>
+                <CommandItem onSelect={() => runCommand(() => router.push("/student/interviews"))}>
+                  <ShieldAlert className="h-4 w-4 text-slate-500 mr-2" />
+                  <span>3-Assurance Guaranteed Interview Slots</span>
+                </CommandItem>
+              </CommandGroup>
+            </>
+          )}
+        </CommandList>
+      </CommandDialog>
+
+      {/* Cross-Entity 360 View Modal */}
+      <Dialog open={student360Open} onOpenChange={setStudent360Open}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Users className="h-5 w-5 text-indigo-600" />
+                Cross-Entity 360° View — Student Candidate
+              </DialogTitle>
+              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+                Programme Active
+              </Badge>
+            </div>
+            <DialogDescription className="text-xs text-slate-500">
+              Aggregated cross-entity snapshot linking academic profile, diagnostic scores, applications, assurance quota, and verified placement.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 pt-2">
+            {/* Candidate Header */}
+            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h4 className="font-bold text-slate-900 text-base">Aarav Sharma</h4>
+                <p className="text-xs text-slate-600">
+                  Apex Institute of Technology • Computer Science & Engg (2026)
+                </p>
+                <p className="text-xs font-mono text-slate-500 mt-0.5">
+                  Enrollment: <strong>AIT-2026-CSE-0042</strong> • ID: STU-2026-000123
+                </p>
+              </div>
+              <div className="flex sm:flex-col items-end gap-1">
+                <span className="text-xs font-semibold text-indigo-700">Employability Score</span>
+                <span className="text-2xl font-bold text-indigo-700 font-mono">82.5%</span>
+                <span className="text-[11px] text-slate-500">88th Percentile</span>
+              </div>
+            </div>
+
+            {/* 360 Dimensions Matrix */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              {/* Box 1: 3-Assurance Quota */}
+              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
+                <div className="flex items-center justify-between font-semibold text-slate-800">
+                  <span>3-Assurance Legal Quota</span>
+                  <Badge className="bg-indigo-600 text-white text-[10px]">1 of 3 Consumed</Badge>
+                </div>
+                <div className="space-y-1 text-slate-600 text-[11px]">
+                  <p>• Slot 1: <strong>TechCorp</strong> (Software Engineer) — Completed / Attended</p>
+                  <p>• Slot 2: <strong>Available / Unassigned</strong> (Reserved)</p>
+                  <p>• Slot 3: <strong>Available / Unassigned</strong> (Reserved)</p>
+                </div>
+              </div>
+
+              {/* Box 2: Job Applications Pipeline */}
+              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
+                <div className="flex items-center justify-between font-semibold text-slate-800">
+                  <span>Job Applications (Independent)</span>
+                  <span className="font-mono text-slate-500">2 Applications</span>
+                </div>
+                <div className="space-y-1 text-slate-600 text-[11px]">
+                  <p>• TechCorp: <span className="text-emerald-700 font-semibold">Offer Issued</span> (6.5 LPA)</p>
+                  <p>• CloudNova: <span className="text-blue-700 font-semibold">Shortlisted for R2</span></p>
+                </div>
+              </div>
+
+              {/* Box 3: Verified Credentials & Badges */}
+              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
+                <div className="flex items-center justify-between font-semibold text-slate-800">
+                  <span>Verified Badges & Status</span>
+                  <Award className="h-3.5 w-3.5 text-amber-500" />
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200 text-[10px]">
+                    Technical Ready (85%)
+                  </Badge>
+                  <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200 text-[10px]">
+                    Strong Communicator (80%)
+                  </Badge>
+                  <Badge variant="outline" className="bg-emerald-50 text-emerald-800 border-emerald-200 text-[10px]">
+                    Work Ethics Certified
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Box 4: Placement & Employer Fee Ledger */}
+              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
+                <div className="flex items-center justify-between font-semibold text-slate-800">
+                  <span>Placement & Recruiter Fee</span>
+                  <FileCheck className="h-3.5 w-3.5 text-emerald-600" />
+                </div>
+                <div className="space-y-1 text-slate-600 text-[11px]">
+                  <p>• Placement Code: <strong className="font-mono">PLC-2026-000182</strong></p>
+                  <p>• Status: <strong className="text-emerald-700">VERIFIED JOINED</strong></p>
+                  <p>• Recruiter Fee: <em>As per agreement</em> (Invoice #INV-2026-001)</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-2 pt-2 border-t border-slate-200">
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs"
+                onClick={() => setStudent360Open(false)}
+              >
+                Close
+              </Button>
+              <Button
+                size="sm"
+                className="text-xs bg-indigo-600 hover:bg-indigo-700 text-white"
+                onClick={() => {
+                  setStudent360Open(false)
+                  router.push("/admin/students")
+                }}
+              >
+                View in Student Directory <ExternalLink className="h-3 w-3 ml-1" />
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}

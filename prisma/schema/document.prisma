@@ -1,0 +1,86 @@
+enum DocumentType {
+  RESUME
+  ACADEMIC
+  ID_DOCUMENT
+  OFFER_LETTER
+  MOU_DOCUMENT
+  INSTITUTION_DOC
+  EMPLOYER_DOC
+  INVOICE_DOC
+  CERTIFICATE
+  ACTIVITY_REPORT
+  PROFILE_PHOTO
+  OTHER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  FLAGGED
+}
+
+enum DocumentAction {
+  UPLOADED
+  VIEWED
+  DOWNLOADED
+  VERIFIED
+  REJECTED
+  DELETED
+}
+
+model Document {
+  id                   String               @id @default(cuid())
+  type                 DocumentType
+  entityType           String?
+  entityId             String?
+  studentId            String?
+  institutionId        String?
+  employerId           String?
+  placementId          String?
+  filename             String
+  originalFilename     String
+  storageKey           String               @unique
+  mimeType             String
+  size                 Int
+  uploadedBy           String
+  verificationStatus   VerificationStatus   @default(PENDING)
+  verifiedBy           String?
+  verifiedAt           DateTime?
+  verificationComment  String?
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  uploadedByUser       User                 @relation(fields: [uploadedBy], references: [id])
+  student              Student?             @relation(fields: [studentId], references: [id])
+  institution          Institution?         @relation(fields: [institutionId], references: [id])
+  employer             Employer?            @relation(fields: [employerId], references: [id])
+  accessLogs           DocumentAccessLog[]
+  studentProfile       StudentProfile?
+  mou                  MOU?
+  offer                Offer?
+
+  @@index([studentId])
+  @@index([institutionId])
+  @@index([employerId])
+  @@index([uploadedBy])
+  @@index([verificationStatus])
+  @@map("documents")
+}
+
+model DocumentAccessLog {
+  id          String         @id @default(cuid())
+  documentId  String
+  userId      String?
+  action      DocumentAction
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime       @default(now())
+
+  document    Document       @relation(fields: [documentId], references: [id])
+  // user        User?          @relation(fields: [userId], references: [id]) // Assuming anonymous access allowed or handle relation
+
+  @@index([documentId])
+  @@index([userId])
+  @@map("document_access_logs")
+}
