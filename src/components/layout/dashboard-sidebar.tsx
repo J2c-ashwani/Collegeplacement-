@@ -8,7 +8,8 @@ import {
   LayoutDashboard, Building2, Users, Briefcase, FileText, 
   Video, GraduationCap, CheckCircle, 
   Star, Shield, UserCircle, QrCode, LogOut,
-  History, Settings, CreditCard, Award, FileCheck
+  History, Settings, CreditCard, Award, FileCheck,
+  TrendingUp, Mail, Sparkles
 } from "lucide-react"
 
 import {
@@ -37,6 +38,10 @@ export function DashboardSidebar({ role, user }: DashboardSidebarProps) {
   const navItems = {
     admin: [
       { title: "Platform Overview", icon: LayoutDashboard, url: "/admin/overview" },
+      { title: "GrowthOS Control Tower", icon: TrendingUp, url: "/admin/growth" },
+      { title: "College Acquisition", icon: Sparkles, url: "/admin/growth/colleges" },
+      { title: "Employer Demand", icon: Briefcase, url: "/admin/growth/employers" },
+      { title: "Outreach Vault", icon: Mail, url: "/admin/growth/outreach" },
       { title: "Partner Institutions", icon: Building2, url: "/admin/institutions" },
       { title: "Student Directory", icon: Users, url: "/admin/students" },
       { title: "Corporate Employers", icon: Building2, url: "/admin/employers" },

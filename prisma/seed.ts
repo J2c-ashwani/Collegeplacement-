@@ -1069,6 +1069,429 @@ async function main() {
     }
   })
 
+  // -------------------------------------------------------------
+  // GrowthOS Baseline Seed Data (Track 5)
+  // -------------------------------------------------------------
+  console.log('Seeding GrowthOS Marketplace Intelligence data...')
+
+  // 1. College Prospects
+  const college1 = await prisma.collegeProspect.upsert({
+    where: { normalizedDomain: 'abctech.edu.in' },
+    update: {},
+    create: {
+      name: 'ABC Institute of Technology',
+      normalizedDomain: 'abctech.edu.in',
+      website: 'https://www.abctech.edu.in',
+      city: 'Noida',
+      state: 'Uttar Pradesh',
+      region: 'Delhi NCR',
+      courses: ['B.Tech Computer Science', 'BCA', 'MCA', 'MBA'],
+      estimatedCohort: 820,
+      icpScore: 86.4,
+      icpBreakdown: {
+        studentVolume: 24.6,
+        courseRelevancy: 15.0,
+        placementGap: 9.8,
+        employerAccessibility: 10.0,
+        tpoAccessibility: 10.0,
+        studentAffordability: 7.5,
+        industryMous: 4.5,
+      },
+      fitSummary: 'Premier Tier-2 technical institute in Delhi NCR with 820 graduating students in high-demand IT/Sales disciplines.',
+      recommendedPitch: 'Extend ABC Institute of Technology placement outcomes with pre-assessed talent pipelines and guaranteed employer interview slots.',
+      tpoName: 'Dr. Rakesh Verma',
+      tpoEmail: 'tpo@abctech.edu.in',
+      tpoPhone: '+91 98112 34567',
+      principalName: 'Prof. S. K. Gupta',
+      provenanceData: {
+        sourceUrl: 'https://www.abctech.edu.in/placements',
+        sourceType: 'OFFICIAL_INSTITUTION_DIRECTORY',
+        retrievedAt: new Date().toISOString(),
+        confidence: 0.95,
+      },
+      freshnessStatus: 'FRESH',
+      complianceStatus: 'VERIFIED',
+      status: 'ICP_SCORED',
+    },
+  })
+
+  const college2 = await prisma.collegeProspect.upsert({
+    where: { normalizedDomain: 'dmc.ac.in' },
+    update: {},
+    create: {
+      name: 'Delhi Metropolitan College',
+      normalizedDomain: 'dmc.ac.in',
+      website: 'https://www.dmc.ac.in',
+      city: 'New Delhi',
+      state: 'Delhi',
+      region: 'Delhi NCR',
+      courses: ['BCA', 'BBA', 'B.Com', 'MCA'],
+      estimatedCohort: 640,
+      icpScore: 83.5,
+      icpBreakdown: {
+        studentVolume: 19.2,
+        courseRelevancy: 15.0,
+        placementGap: 10.5,
+        employerAccessibility: 10.0,
+        tpoAccessibility: 9.0,
+        studentAffordability: 8.0,
+        industryMous: 4.0,
+      },
+      fitSummary: 'High-density commercial college with 640 graduating students ideal for Inside Sales and Customer Operations roles.',
+      recommendedPitch: 'Access PlacementConnect corporate partner network to absorb 640 graduating BCA/BBA students in verified corporate roles.',
+      tpoName: 'Pooja Sharma',
+      tpoEmail: 'placements@dmc.ac.in',
+      tpoPhone: '+91 98710 54321',
+      principalName: 'Dr. Anita Malhotra',
+      provenanceData: {
+        sourceUrl: 'https://www.dmc.ac.in/about',
+        sourceType: 'OFFICIAL_INSTITUTION_DIRECTORY',
+        retrievedAt: new Date().toISOString(),
+        confidence: 0.92,
+      },
+      freshnessStatus: 'FRESH',
+      complianceStatus: 'VERIFIED',
+      status: 'DISCOVERED',
+    },
+  })
+
+  const college3 = await prisma.collegeProspect.upsert({
+    where: { normalizedDomain: 'maepune.ac.in' },
+    update: {},
+    create: {
+      name: 'Maharashtra Academy of Engineering',
+      normalizedDomain: 'maepune.ac.in',
+      website: 'https://www.maepune.ac.in',
+      city: 'Pune',
+      state: 'Maharashtra',
+      region: 'Pune',
+      courses: ['B.Tech CSE', 'B.Tech Mechanical', 'B.Tech Civil'],
+      estimatedCohort: 540,
+      icpScore: 78.8,
+      fitSummary: 'Established engineering academy in Pune IT corridor with 540 students seeking core and software placements.',
+      tpoName: 'Sunil Deshmukh',
+      tpoEmail: 'tpo@maepune.ac.in',
+      provenanceData: {
+        sourceUrl: 'https://www.maepune.ac.in',
+        sourceType: 'OFFICIAL_INSTITUTION_DIRECTORY',
+        retrievedAt: new Date().toISOString(),
+        confidence: 0.90,
+      },
+      freshnessStatus: 'FRESH',
+      complianceStatus: 'VERIFIED',
+      status: 'DISCOVERED',
+    },
+  })
+
+  // 2. Employer Prospects
+  const emp1 = await prisma.employerProspect.upsert({
+    where: { normalizedDomain: 'fintechhorizon.com' },
+    update: {},
+    create: {
+      companyName: 'Fintech Horizon India Pvt Ltd',
+      normalizedDomain: 'fintechhorizon.com',
+      website: 'https://www.fintechhorizon.com',
+      careersUrl: 'https://www.fintechhorizon.com/careers',
+      industry: 'Financial Technology & Digital Banking',
+      city: 'Gurgaon',
+      state: 'Haryana',
+      region: 'Delhi NCR',
+      hiringVolume: 70,
+      openRoles: ['Inside Sales Associate (50)', 'Customer Success Specialist (20)'],
+      experienceRange: '0-2 Years',
+      employerFitScore: 91.2,
+      fitBreakdown: {
+        hiringDemand: 15.0,
+        fresherEligibility: 15.0,
+        roleRelevance: 10.0,
+        candidateMatch: 15.0,
+        geographyMatch: 10.0,
+        salaryFit: 10.0,
+        hiringVolume: 10.0,
+        interviewCapacity: 5.0,
+        historicalConversion: 3.5,
+        employerReliability: 4.5,
+      },
+      assuranceCoveragePotential: {
+        openFresherRoles: 2,
+        eligibleCandidatePool: 183,
+        skillMatchCount: 76,
+        regionalProximityCount: 32,
+        deliverableSlotsThisMonth: 20,
+        coverageYieldPercentage: 10.9,
+      },
+      matchedStudentCount: 183,
+      matchedSkills: ['Inside Sales', 'Customer Success', 'Communication', 'Lead Qualification'],
+      matchingRoles: ['Inside Sales Associate', 'Customer Success Specialist'],
+      recruiterName: 'Vikram Sethi',
+      recruiterEmail: 'vikram.sethi@fintechhorizon.com',
+      recruiterTitle: 'Head of Campus Talent Acquisition',
+      provenanceData: {
+        sourceUrl: 'https://www.fintechhorizon.com/careers/freshers',
+        sourceType: 'CORPORATE_CAREER_SITE',
+        retrievedAt: new Date().toISOString(),
+        confidence: 0.94,
+      },
+      freshnessStatus: 'FRESH',
+      complianceStatus: 'VERIFIED',
+      status: 'QUALIFIED',
+    },
+  })
+
+  const emp2 = await prisma.employerProspect.upsert({
+    where: { normalizedDomain: 'cloudscalesystems.com' },
+    update: {},
+    create: {
+      companyName: 'CloudScale Systems India',
+      normalizedDomain: 'cloudscalesystems.com',
+      website: 'https://www.cloudscalesystems.com',
+      careersUrl: 'https://www.cloudscalesystems.com/careers',
+      industry: 'Cloud Infrastructure & Managed DevOps',
+      city: 'Noida',
+      state: 'Uttar Pradesh',
+      region: 'Delhi NCR',
+      hiringVolume: 35,
+      openRoles: ['Associate Cloud Support Engineer (25)', 'Junior DevOps Trainee (10)'],
+      experienceRange: '0-1 Years',
+      employerFitScore: 88.5,
+      fitBreakdown: {
+        hiringDemand: 12.5,
+        fresherEligibility: 15.0,
+        roleRelevance: 10.0,
+        candidateMatch: 14.0,
+        geographyMatch: 10.0,
+        salaryFit: 10.0,
+        hiringVolume: 10.0,
+        interviewCapacity: 5.0,
+        historicalConversion: 4.0,
+        employerReliability: 4.0,
+      },
+      matchedStudentCount: 124,
+      matchedSkills: ['AWS/Cloud Basics', 'Linux Admin', 'Networking', 'Python Scripting'],
+      matchingRoles: ['Associate Cloud Support Engineer'],
+      recruiterName: 'Ananya Roy',
+      recruiterEmail: 'ananya.roy@cloudscalesystems.com',
+      recruiterTitle: 'Senior Technical Recruiter',
+      provenanceData: {
+        sourceUrl: 'https://www.cloudscalesystems.com/careers',
+        sourceType: 'CORPORATE_CAREER_SITE',
+        retrievedAt: new Date().toISOString(),
+        confidence: 0.96,
+      },
+      freshnessStatus: 'FRESH',
+      complianceStatus: 'VERIFIED',
+      status: 'RECRUITER_IDENTIFIED',
+    },
+  })
+
+  // 3. Sequences & Steps
+  const collegeSeq = await prisma.outreachSequence.upsert({
+    where: { id: 'seq-college-assurance-v1' },
+    update: {},
+    create: {
+      id: 'seq-college-assurance-v1',
+      name: 'College Placement Assurance Partnership Sequence',
+      targetType: 'COLLEGE',
+      description: '3-step sequence pitching placement assurance capacity, NAAC evidence readiness, and pre-assessed employer network.',
+      isActive: true,
+      steps: {
+        create: [
+          {
+            stepNumber: 1,
+            delayDays: 0,
+            templateSubject: 'Extending placement outcomes for {{prospectName}} ({{cohort}} graduating cohort)',
+            templateBody: 'Dear {{contactName}},\n\nWe noticed {{prospectName}} has a prominent graduating class of approximately {{cohort}} students across tech and business streams.\n\nPlacementConnect partners with colleges to complement internal TPO operations with pre-assessed employer networks, guaranteed interview quotas, and an automated NAAC/NIRF Placement Evidence Center.\n\nWould you be open for a brief 15-minute introductory call this Thursday to review our partner college model?',
+            channel: 'EMAIL',
+          },
+          {
+            stepNumber: 2,
+            delayDays: 3,
+            templateSubject: 'Re: 15-min placement collaboration for {{prospectName}}',
+            templateBody: 'Hi {{contactName}},\n\nFollowing up on my previous message. Across Delhi NCR institutions, our verified placement assurance model delivered 3x interview opportunities per enrolled student with zero unverified offer letters.\n\nI would be delighted to share our Institutional Placement Evidence demo with your team.',
+            channel: 'EMAIL',
+          },
+        ],
+      },
+    },
+  })
+
+  const employerSeq = await prisma.outreachSequence.upsert({
+    where: { id: 'seq-employer-liquidity-v1' },
+    update: {},
+    create: {
+      id: 'seq-employer-liquidity-v1',
+      name: 'Fresher Liquidity & Pre-Assessed Candidate Sourcing',
+      targetType: 'EMPLOYER',
+      description: 'Pitches pre-screened fresher candidate pools for active corporate vacancies.',
+      isActive: true,
+      steps: {
+        create: [
+          {
+            stepNumber: 1,
+            delayDays: 0,
+            templateSubject: 'Pre-assessed fresher candidates for {{prospectName}}\'s hiring drive',
+            templateBody: 'Dear {{contactName}},\n\nWe noted {{prospectName}}\'s active fresher recruitment drive across Delhi NCR. PlacementConnect currently has {{candidateCount}} pre-screened, 9-dimension assessed candidates matching your technical and sales specifications.\n\nAll candidates have verified transcripts and demonstrated employability benchmarks.\n\nWould you like our team to schedule a curated mega-drive slot with 20 pre-evaluated applicants this month?',
+            channel: 'EMAIL',
+          },
+        ],
+      },
+    },
+  })
+
+  // 4. Outreach Drafts
+  await prisma.growthOutreach.upsert({
+    where: { id: 'outreach-draft-1' },
+    update: {},
+    create: {
+      id: 'outreach-draft-1',
+      prospectType: 'EMPLOYER',
+      employerProspectId: emp1.id,
+      subject: `Pre-assessed fresher candidates for ${emp1.companyName}'s hiring drive`,
+      body: `Dear ${emp1.recruiterName},\n\nWe noted ${emp1.companyName}'s active fresher recruitment drive for Inside Sales and Customer Success. PlacementConnect currently has 183 pre-screened, 9-dimension assessed candidates in Delhi NCR matching your exact hiring criteria.\n\nWould you like our team to share a curated shortlist of 20 pre-evaluated applicants this month?`,
+      status: 'DRAFT_PENDING_APPROVAL',
+      isSafeAction: true,
+    },
+  })
+
+  await prisma.growthOutreach.upsert({
+    where: { id: 'outreach-draft-2' },
+    update: {},
+    create: {
+      id: 'outreach-draft-2',
+      prospectType: 'COLLEGE',
+      collegeProspectId: college1.id,
+      subject: `Extending placement outcomes for ${college1.name} (820 graduating cohort)`,
+      body: `Dear ${college1.tpoName},\n\nWe noticed ${college1.name} has a prominent graduating class of approximately 820 students across technical and business disciplines.\n\nPlacementConnect extends TPO operations by bringing an additional pre-vetted corporate employer network and an automated NAAC/NIRF audit gap tracker.\n\nWould you be open for a brief 15-minute call this Thursday?`,
+      status: 'DRAFT_PENDING_APPROVAL',
+      isSafeAction: true,
+    },
+  })
+
+  // 5. Growth Actions (AI Action Queue)
+  await prisma.growthAction.upsert({
+    where: { id: 'action-capacity-ncr-1' },
+    update: {},
+    create: {
+      id: 'action-capacity-ncr-1',
+      priority: 'URGENT_RED',
+      category: 'ACQUIRE_EMPLOYERS',
+      title: 'Acquire 3 Corporate Employers in Delhi NCR (320 Slot Capacity Deficit)',
+      description: 'Delhi NCR active assurance obligation has a remaining gap of 320 interview slots across Inside Sales and Tech Support. Activating outreach to Fintech Horizon India and CloudScale Systems closes 76% of the deficit.',
+      targetRegion: 'Delhi NCR',
+      targetDomain: 'Inside Sales & Cloud Support',
+      metricDeficit: 320,
+      impactScore: 95.0,
+      urgencyScore: 95.0,
+      confidenceScore: 90.0,
+      effortScore: 35.0,
+      actionScore: 231.4,
+      isSafeAction: true,
+      reasoning: {
+        coverageRatio: '66.7%',
+        regionalGapSlots: 320,
+        targetRegion: 'Delhi NCR',
+        topUnmetRoles: ['Inside Sales Associate (180)', 'Customer Success (80)', 'Cloud Support (60)'],
+        estimatedAddressableCapacity: 240,
+        confidenceScore: '90%',
+        impactExplanation: 'Acquiring these 2 pre-qualified employers delivers up to 240 interview slots, resolving 75% of the Delhi NCR assurance gap.',
+      },
+      status: 'PENDING',
+    },
+  })
+
+  await prisma.growthAction.upsert({
+    where: { id: 'action-college-ncr-2' },
+    update: {},
+    create: {
+      id: 'action-college-ncr-2',
+      priority: 'HIGH_ORANGE',
+      category: 'ACQUIRE_COLLEGES',
+      title: 'Enroll 4 Tier-2 BCA/B.Com Colleges in Delhi NCR for Active Recruiter Demand',
+      description: 'Corporate partners in Delhi NCR have 140 open Inside Sales and Ops positions with insufficient student applicants. Target ABC Institute and Delhi Metropolitan College.',
+      targetRegion: 'Delhi NCR',
+      targetDomain: 'BCA & B.Com Cohorts',
+      metricDeficit: 140,
+      impactScore: 85.0,
+      urgencyScore: 85.0,
+      confidenceScore: 90.0,
+      effortScore: 40.0,
+      actionScore: 162.6,
+      isSafeAction: true,
+      reasoning: {
+        coverageRatio: '82.0%',
+        regionalGapSlots: 140,
+        targetRegion: 'Delhi NCR',
+        topUnmetRoles: ['Inside Sales', 'Operations'],
+        estimatedAddressableCapacity: 200,
+        confidenceScore: '90%',
+        impactExplanation: 'Enrolling these 2 high-ICP colleges adds 1,460 eligible students to absorb open corporate requisitions.',
+      },
+      status: 'PENDING',
+    },
+  })
+
+  await prisma.growthAction.upsert({
+    where: { id: 'action-followup-skyline-3' },
+    update: {},
+    create: {
+      id: 'action-followup-skyline-3',
+      priority: 'HIGH_ORANGE',
+      category: 'FOLLOW_UP_PROPOSALS',
+      title: 'Follow up with ABC Institute on Pending MoU Review',
+      description: 'Proposal viewed 4 days ago by Dr. Rakesh Verma (TPO). No response received yet.',
+      targetRegion: 'Delhi NCR',
+      targetDomain: 'Partnership Finalization',
+      metricDeficit: 1,
+      impactScore: 75.0,
+      urgencyScore: 70.0,
+      confidenceScore: 95.0,
+      effortScore: 20.0,
+      actionScore: 249.4,
+      isSafeAction: true,
+      reasoning: {
+        coverageRatio: '100%',
+        regionalGapSlots: 0,
+        targetRegion: 'Delhi NCR',
+        topUnmetRoles: ['MoU Onboarding'],
+        estimatedAddressableCapacity: 820,
+        confidenceScore: '95%',
+        impactExplanation: 'Securing this partnership brings 820 graduating students into the verified placement network.',
+      },
+      status: 'PENDING',
+    },
+  })
+
+  await prisma.growthAction.upsert({
+    where: { id: 'action-stale-pune-4' },
+    update: {},
+    create: {
+      id: 'action-stale-pune-4',
+      priority: 'LOW_GREEN',
+      category: 'RESOLVE_STALE_PROSPECTS',
+      title: 'Refresh Contact Verification for 2 Pune Prospects Nearing Stale Status',
+      description: 'Maharashtra Academy of Engineering profile has not been re-verified in 28 days. Pre-flight check will block outreach in 2 days.',
+      targetRegion: 'Pune',
+      targetDomain: 'Data Hygiene',
+      metricDeficit: 2,
+      impactScore: 50.0,
+      urgencyScore: 40.0,
+      confidenceScore: 85.0,
+      effortScore: 20.0,
+      actionScore: 85.0,
+      isSafeAction: true,
+      reasoning: {
+        coverageRatio: '100%',
+        regionalGapSlots: 0,
+        targetRegion: 'Pune',
+        topUnmetRoles: ['Data Freshness'],
+        estimatedAddressableCapacity: 0,
+        confidenceScore: '85%',
+        impactExplanation: 'Maintains enterprise data provenance and prevents outreach suspension under DPDP safety policy.',
+      },
+      status: 'PENDING',
+    },
+  })
+
   console.log('✅ PlacementConnect seed completed successfully!')
   console.log('--------------------------------------------------')
   console.log('Credentials Summary:')

@@ -1,0 +1,407 @@
+enum ProspectType {
+  COLLEGE
+  EMPLOYER
+}
+
+enum FreshnessStatus {
+  FRESH
+  RECENT
+  STALE
+  EXPIRED
+}
+
+enum CollegeProspectStatus {
+  DISCOVERED
+  RESEARCHED
+  ICP_SCORED
+  CONTACT_IDENTIFIED
+  SEQUENCE_ENROLLED
+  OUTREACH_PENDING
+  OUTREACH_ACTIVE
+  REPLIED
+  MEETING_SCHEDULED
+  PROPOSAL_PENDING
+  NEGOTIATING
+  WON_ONBOARDED
+  LOST
+  DNC
+}
+
+enum EmployerProspectStatus {
+  DISCOVERED
+  RESEARCHING
+  QUALIFIED
+  RECRUITER_IDENTIFIED
+  SEQUENCE_ENROLLED
+  OUTREACH_PENDING
+  OUTREACH_ACTIVE
+  REPLIED
+  MEETING_SCHEDULED
+  CAMPAIGN_ACTIVE
+  WON_PARTNER
+  LOST
+  DNC
+}
+
+enum OutreachEventType {
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  REPLIED
+  BOUNCED
+  UNSUBSCRIBED
+  DNC
+  MEETING_BOOKED
+}
+
+enum ReplyIntent {
+  POSITIVE_MEETING
+  POSITIVE_PROPOSAL
+  OBJECTION_EXISTING_PARTNER
+  OBJECTION_BUDGET
+  OBJECTION_TIMING
+  NOT_INTERESTED
+  UNSUBSCRIBE_DNC
+  OUT_OF_OFFICE
+  NEEDS_CLARIFICATION
+}
+
+enum MeetingOutcome {
+  SCHEDULED
+  HELD_QUALIFIED
+  HELD_PROPOSAL_REQUESTED
+  HELD_MOU_IN_PROGRESS
+  HELD_UNQUALIFIED
+  RESCHEDULED
+  NO_SHOW
+  CANCELLED
+}
+
+enum GrowthPriority {
+  URGENT_RED
+  HIGH_ORANGE
+  MEDIUM_YELLOW
+  LOW_GREEN
+}
+
+enum GrowthActionCategory {
+  ACQUIRE_EMPLOYERS
+  ACQUIRE_COLLEGES
+  FOLLOW_UP_PROPOSALS
+  RENEW_INSTITUTION
+  RESOLVE_STALE_PROSPECTS
+}
+
+enum ComplianceReviewStatus {
+  PENDING_REVIEW
+  VERIFIED
+  FLAGGED
+  SUPPRESSED_DNC
+}
+
+enum OutreachChannel {
+  EMAIL
+  LINKEDIN_ASSISTED
+  PHONE
+}
+
+model CollegeProspect {
+  id                 String                @id @default(cuid())
+  name               String
+  normalizedDomain   String                @unique
+  website            String
+  aisheCode          String?
+  city               String
+  state              String
+  region             String
+  courses            String[]
+  estimatedCohort    Int                   @default(0)
+  icpScore           Float                 @default(0.0)
+  icpBreakdown       Json?
+  fitSummary         String?
+  recommendedPitch   String?
+  tpoName            String?
+  tpoEmail           String?
+  tpoPhone           String?
+  principalName      String?
+  provenanceData     Json?
+  freshnessStatus    FreshnessStatus       @default(FRESH)
+  lastVerifiedAt     DateTime              @default(now())
+  dnc                Boolean               @default(false)
+  complianceStatus   ComplianceReviewStatus @default(VERIFIED)
+  dataRetentionUntil DateTime?
+  status             CollegeProspectStatus @default(DISCOVERED)
+  notes              String?
+  enrolledSequenceId String?
+  duplicateOfId      String?
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  enrollments        SequenceEnrollment[]
+  outreachDrafts     GrowthOutreach[]
+  meetings           GrowthMeeting[]
+
+  @@index([region])
+  @@index([icpScore])
+  @@index([status])
+  @@index([dnc])
+  @@map("college_prospects")
+}
+
+model EmployerProspect {
+  id                         String                 @id @default(cuid())
+  companyName                String
+  normalizedDomain           String                 @unique
+  website                    String
+  careersUrl                 String?
+  industry                   String
+  city                       String
+  state                      String
+  region                     String
+  hiringVolume               Int                    @default(0)
+  openRoles                  Json?
+  experienceRange            String?                @default("0-2 Years")
+  employerFitScore           Float                  @default(0.0)
+  fitBreakdown               Json?
+  assuranceCoveragePotential Json?
+  matchedStudentCount        Int                    @default(0)
+  matchedSkills              String[]
+  matchingRoles              String[]
+  recruiterName              String?
+  recruiterEmail             String?
+  recruiterTitle             String?
+  recruiterPhone             String?
+  provenanceData             Json?
+  freshnessStatus            FreshnessStatus        @default(FRESH)
+  lastVerifiedAt             DateTime               @default(now())
+  dnc                        Boolean                @default(false)
+  complianceStatus           ComplianceReviewStatus  @default(VERIFIED)
+  dataRetentionUntil         DateTime?
+  status                     EmployerProspectStatus @default(DISCOVERED)
+  notes                      String?
+  enrolledSequenceId         String?
+  duplicateOfId              String?
+  createdAt                  DateTime               @default(now())
+  updatedAt                  DateTime               @updatedAt
+
+  enrollments                SequenceEnrollment[]
+  outreachDrafts             GrowthOutreach[]
+  meetings                   GrowthMeeting[]
+
+  @@index([region])
+  @@index([employerFitScore])
+  @@index([status])
+  @@index([dnc])
+  @@map("employer_prospects")
+}
+
+model OutreachSequence {
+  id             String               @id @default(cuid())
+  name           String
+  targetType     ProspectType
+  description    String?
+  isActive       Boolean              @default(true)
+  experimentId   String?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  steps          SequenceStep[]
+  enrollments    SequenceEnrollment[]
+  experiment     GrowthExperiment?    @relation(fields: [experimentId], references: [id])
+
+  @@map("outreach_sequences")
+}
+
+model SequenceStep {
+  id              String           @id @default(cuid())
+  sequenceId      String
+  stepNumber      Int
+  delayDays       Int              @default(3)
+  templateSubject String
+  templateBody    String
+  channel         OutreachChannel  @default(EMAIL)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  sequence        OutreachSequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  outreachDrafts  GrowthOutreach[]
+
+  @@unique([sequenceId, stepNumber])
+  @@map("sequence_steps")
+}
+
+model SequenceEnrollment {
+  id                 String           @id @default(cuid())
+  sequenceId         String
+  prospectType       ProspectType
+  collegeProspectId  String?
+  employerProspectId String?
+  currentStepNumber  Int              @default(1)
+  status             String           @default("ACTIVE")
+  nextExecutionAt    DateTime         @default(now())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  sequence           OutreachSequence @relation(fields: [sequenceId], references: [id])
+  collegeProspect    CollegeProspect? @relation(fields: [collegeProspectId], references: [id], onDelete: Cascade)
+  employerProspect   EmployerProspect? @relation(fields: [employerProspectId], references: [id], onDelete: Cascade)
+  outreachDrafts     GrowthOutreach[]
+
+  @@index([status])
+  @@index([nextExecutionAt])
+  @@map("sequence_enrollments")
+}
+
+model GrowthOutreach {
+  id                 String           @id @default(cuid())
+  enrollmentId       String?
+  stepId             String?
+  prospectType       ProspectType
+  collegeProspectId  String?
+  employerProspectId String?
+  subject            String
+  body               String
+  personalizedTokens Json?
+  status             String           @default("DRAFT_PENDING_APPROVAL")
+  isSafeAction       Boolean          @default(true)
+  approvedBy         String?
+  approvedAt         DateTime?
+  sentAt             DateTime?
+  providerMessageId  String?
+  threadId           String?
+  optOutToken        String           @default(cuid())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  enrollment         SequenceEnrollment? @relation(fields: [enrollmentId], references: [id])
+  step               SequenceStep?       @relation(fields: [stepId], references: [id])
+  collegeProspect    CollegeProspect?    @relation(fields: [collegeProspectId], references: [id], onDelete: Cascade)
+  employerProspect   EmployerProspect?   @relation(fields: [employerProspectId], references: [id], onDelete: Cascade)
+  events             OutreachEvent[]
+  replies            ReplyEvent[]
+
+  @@index([status])
+  @@index([isSafeAction])
+  @@map("growth_outreaches")
+}
+
+model OutreachEvent {
+  id          String            @id @default(cuid())
+  outreachId  String
+  eventType   OutreachEventType
+  payload     Json?
+  createdAt   DateTime          @default(now())
+
+  outreach    GrowthOutreach    @relation(fields: [outreachId], references: [id], onDelete: Cascade)
+
+  @@index([outreachId])
+  @@index([eventType])
+  @@map("outreach_events")
+}
+
+model ReplyEvent {
+  id                  String         @id @default(cuid())
+  outreachId          String
+  senderEmail         String
+  snippet             String
+  body                String
+  intent              ReplyIntent    @default(NEEDS_CLARIFICATION)
+  confidence          Float          @default(0.85)
+  suggestedAction     String?
+  requiresHumanReview Boolean        @default(true)
+  handledAt           DateTime?
+  createdAt           DateTime       @default(now())
+
+  outreach            GrowthOutreach @relation(fields: [outreachId], references: [id], onDelete: Cascade)
+
+  @@index([outreachId])
+  @@index([intent])
+  @@map("reply_events")
+}
+
+model GrowthMeeting {
+  id                 String          @id @default(cuid())
+  prospectType       ProspectType
+  collegeProspectId  String?
+  employerProspectId String?
+  ownerId            String?
+  title              String
+  scheduledAt        DateTime
+  timezone           String          @default("Asia/Kolkata")
+  meetingUrl         String?
+  calendarEventId    String?
+  agenda             String?
+  outcome            MeetingOutcome  @default(SCHEDULED)
+  outcomeNotes       String?
+  nextStepAction     String?
+  followUpDate       DateTime?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  collegeProspect    CollegeProspect?  @relation(fields: [collegeProspectId], references: [id], onDelete: Cascade)
+  employerProspect   EmployerProspect? @relation(fields: [employerProspectId], references: [id], onDelete: Cascade)
+
+  @@index([scheduledAt])
+  @@index([outcome])
+  @@map("growth_meetings")
+}
+
+model GrowthAction {
+  id              String               @id @default(cuid())
+  priority        GrowthPriority       @default(HIGH_ORANGE)
+  category        GrowthActionCategory
+  title           String
+  description     String
+  targetRegion    String?
+  targetDomain    String?
+  metricDeficit   Int                  @default(0)
+  impactScore     Float                @default(80.0)
+  urgencyScore    Float                @default(80.0)
+  confidenceScore Float                @default(90.0)
+  effortScore     Float                @default(40.0)
+  actionScore     Float                @default(144.0)
+  isSafeAction    Boolean              @default(true)
+  reasoning       Json?
+  status          String               @default("PENDING")
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@index([status])
+  @@index([actionScore])
+  @@index([priority])
+  @@map("growth_actions")
+}
+
+model GrowthExperiment {
+  id              String                    @id @default(cuid())
+  name            String
+  targetType      ProspectType
+  status          String                    @default("RUNNING")
+  winnerVariantId String?
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+
+  sequences       OutreachSequence[]
+  variants        GrowthExperimentVariant[]
+
+  @@map("growth_experiments")
+}
+
+model GrowthExperimentVariant {
+  id             String           @id @default(cuid())
+  experimentId   String
+  variantKey     String
+  pitchTitle     String
+  sentCount      Int              @default(0)
+  replyCount     Int              @default(0)
+  meetingCount   Int              @default(0)
+  conversionRate Float            @default(0.0)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  experiment     GrowthExperiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+
+  @@unique([experimentId, variantKey])
+  @@map("growth_experiment_variants")
+}

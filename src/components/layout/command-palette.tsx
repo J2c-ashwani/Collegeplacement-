@@ -36,6 +36,9 @@ import {
   History,
   FileCheck,
   Award,
+  TrendingUp,
+  Sparkles,
+  Mail,
 } from "lucide-react"
 
 interface CommandPaletteProps {
@@ -105,6 +108,53 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
 
           {/* Quick Business Actions */}
           <CommandGroup heading="Business Workflows & Shortcuts">
+            {isAdmin && (
+              <>
+                <CommandItem
+                  onSelect={() => runCommand(() => router.push("/admin/growth"))}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <TrendingUp className="h-4 w-4 text-indigo-600" />
+                  <span>GrowthOS Control Tower: Assurance Capacity & Deficit</span>
+                  <Badge variant="outline" className="ml-auto text-[10px] bg-indigo-50 text-indigo-700">
+                    3N Liquidity
+                  </Badge>
+                </CommandItem>
+
+                <CommandItem
+                  onSelect={() => runCommand(() => router.push("/admin/growth/outreach"))}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Mail className="h-4 w-4 text-emerald-600" />
+                  <span>Outreach Approval Vault (Human-in-the-Loop Gate)</span>
+                  <Badge variant="outline" className="ml-auto text-[10px] bg-emerald-50 text-emerald-700">
+                    Approval Safe
+                  </Badge>
+                </CommandItem>
+
+                <CommandItem
+                  onSelect={() => runCommand(() => router.push("/admin/growth/colleges"))}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Sparkles className="h-4 w-4 text-teal-600" />
+                  <span>College Acquisition CRM: 11-Dimension ICP Sourcing</span>
+                  <Badge variant="outline" className="ml-auto text-[10px]">
+                    Supply
+                  </Badge>
+                </CommandItem>
+
+                <CommandItem
+                  onSelect={() => runCommand(() => router.push("/admin/growth/employers"))}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Briefcase className="h-4 w-4 text-blue-600" />
+                  <span>Employer Demand CRM: Sourcing Fresher Capacity</span>
+                  <Badge variant="outline" className="ml-auto text-[10px]">
+                    Demand
+                  </Badge>
+                </CommandItem>
+              </>
+            )}
             {isAdmin && (
               <CommandItem
                 onSelect={() =>
