@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "prisma generate --schema prisma/schema && next build --webpack",
+    "postinstall": "prisma generate --schema prisma/schema",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
+    "db:generate": "prisma generate --schema prisma/schema",
+    "db:push": "prisma db push --schema prisma/schema",
     "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
