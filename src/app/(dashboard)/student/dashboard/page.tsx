@@ -12,6 +12,8 @@ import {
 
 import { resolveStudent } from '@/lib/auth-utils'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function StudentDashboard() {
   const session = await auth()
   if (!session?.user?.id) {
@@ -54,45 +56,56 @@ export default async function StudentDashboard() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Top Banner / Welcome Strip */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-xl bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white shadow-sm">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
-              {student?.institution?.name || 'Apex Institute of Technology'}
-            </span>
-            <span className="text-xs text-indigo-300">| Class of 2026</span>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Student Portal', href: '/student/dashboard' },
+          { label: 'Career Launchpad' },
+        ]}
+        title={`Welcome back, ${studentName}`}
+        description="Track your Placement Assurance journey, qualified interview opportunities, and industry readiness credentials."
+        statusChips={[
+          {
+            label: 'Institution',
+            value: student?.institution?.name || 'Apex Institute of Technology',
+            variant: 'neutral',
+          },
+          {
+            label: 'Programme Standard',
+            value: 'Placement Assurance',
+            variant: 'neutral',
+          },
+          {
+            label: 'Assurance Status',
+            value: `${opportunities.length} of 3 Fulfilled`,
+            variant: opportunities.length > 0 ? 'success' : 'neutral',
+          },
+        ]}
+        actions={
+          <div className="flex items-center gap-2.5">
+            <Link href="/student/assessment">
+              <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white text-xs h-8 font-medium">
+                <Sparkles className="mr-1.5 h-3.5 w-3.5 text-blue-200" />
+                {assessmentResult ? 'Diagnostic Scorecard' : 'Start Assessment'}
+              </Button>
+            </Link>
+            <Link href="/student/jobs">
+              <Button size="sm" variant="outline" className="text-xs h-8">
+                Browse Campus Jobs
+              </Button>
+            </Link>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Welcome back, {studentName}
-          </h1>
-          <p className="text-sm text-indigo-200/90 max-w-xl">
-            Track your Placement Assurance journey, 3 qualified interview opportunities, and industry readiness credentials.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link href="/student/assessment">
-            <Button className="bg-white text-indigo-900 hover:bg-indigo-50 font-medium shadow-xs">
-              <Sparkles className="mr-2 h-4 w-4 text-indigo-600" />
-              {assessmentResult ? 'Diagnostic Scorecard' : 'Start Assessment'}
-            </Button>
-          </Link>
-          <Link href="/student/jobs">
-            <Button variant="outline" className="border-indigo-400/40 text-white hover:bg-white/10">
-              Browse Jobs
-            </Button>
-          </Link>
-        </div>
-      </div>
+        }
+      />
 
       {/* KPI Cards Row */}
       <div className="grid gap-4 md:grid-cols-4">
         {/* Programme Card */}
-        <Card className="border-slate-200/80 shadow-xs">
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Programme Plan</span>
-              <FileCheck2 className="h-4 w-4 text-indigo-600" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">Programme Plan</span>
+              <FileCheck2 className="h-4 w-4 text-[#1E40AF]" />
             </div>
             <CardTitle className="text-lg font-bold text-slate-900 mt-1">
               Placement Assurance
@@ -100,22 +113,22 @@ export default async function StudentDashboard() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50">
+              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-xs">
                 Active Enrolment
               </Badge>
-              <span className="text-xs text-slate-500 font-mono">3 Interviews</span>
+              <span className="text-xs text-slate-500 font-mono">Up to 3 Interviews</span>
             </div>
           </CardContent>
         </Card>
 
         {/* Assessment Card */}
-        <Card className="border-slate-200/80 shadow-xs">
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Employability Score</span>
-              <ShieldCheck className="h-4 w-4 text-indigo-600" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">Employability Score</span>
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
             </div>
-            <CardTitle className="text-2xl font-bold text-slate-900 mt-1 tabular-nums">
+            <CardTitle className="text-2xl font-bold font-mono text-slate-900 mt-1 tabular-nums">
               {assessmentResult ? `${Math.round(assessmentResult.overallScore)}/100` : 'Pending'}
             </CardTitle>
           </CardHeader>
@@ -123,13 +136,13 @@ export default async function StudentDashboard() {
             <div className="flex items-center gap-2">
               {assessmentResult ? (
                 <>
-                  <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50">
+                  <Badge className="bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-50 text-xs">
                     Interview Ready
                   </Badge>
-                  <span className="text-xs text-slate-500">Top 15%</span>
+                  <span className="text-xs text-slate-500 font-mono">Benchmarked</span>
                 </>
               ) : (
-                <Link href="/student/assessment" className="text-xs text-indigo-600 hover:underline flex items-center font-medium">
+                <Link href="/student/assessment" className="text-xs text-[#1E40AF] hover:underline flex items-center font-medium">
                   Take test now <ArrowRight className="h-3 w-3 ml-1" />
                 </Link>
               )}
@@ -138,46 +151,46 @@ export default async function StudentDashboard() {
         </Card>
 
         {/* Assurance Slots Card */}
-        <Card className="border-slate-200/80 shadow-xs">
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Assurance Status</span>
-              <Briefcase className="h-4 w-4 text-indigo-600" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">Assurance Status</span>
+              <Briefcase className="h-4 w-4 text-blue-600" />
             </div>
-            <CardTitle className="text-lg font-bold text-slate-900 mt-1">
-              {opportunities.length} of 3 Allocated
+            <CardTitle className="text-lg font-bold font-mono text-slate-900 mt-1 tabular-nums">
+              {opportunities.length} of 3 Fulfilled
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="w-full bg-slate-100 rounded-full h-2 mb-1.5 overflow-hidden">
               <div 
-                className="bg-indigo-600 h-2 rounded-full transition-all" 
+                className="bg-[#1E40AF] h-2 rounded-full transition-all" 
                 style={{ width: `${Math.min(100, (opportunities.length / 3) * 100)}%` }} 
               />
             </div>
             <p className="text-[11px] text-slate-500">
-              {3 - opportunities.length} guaranteed opportunities in reserve
+              {3 - opportunities.length} qualified opportunities available
             </p>
           </CardContent>
         </Card>
 
         {/* Placement Status Card */}
-        <Card className="border-slate-200/80 shadow-xs">
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Placement Offer</span>
-              <Trophy className="h-4 w-4 text-indigo-600" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">Placement Offer</span>
+              <Trophy className="h-4 w-4 text-amber-600" />
             </div>
             <CardTitle className="text-lg font-bold text-slate-900 mt-1">
-              {student?.status === 'PLACED' ? 'Offer Received 🎉' : 'In Selection Pipeline'}
+              {student?.status === 'PLACED' ? 'Offer Received' : 'In Selection Pipeline'}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Badge className={student?.status === 'PLACED' ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-amber-50 text-amber-700 border-amber-200"}>
+              <Badge className={student?.status === 'PLACED' ? "bg-emerald-50 text-emerald-700 border-emerald-200 text-xs" : "bg-amber-50 text-amber-700 border-amber-200 text-xs"}>
                 {student?.status === 'PLACED' ? 'Offer Confirmed' : 'Active Pipeline'}
               </Badge>
-              <span className="text-xs text-slate-500">Apex Tech</span>
+              <span className="text-xs text-slate-500">{student?.institution?.name || 'Partner College'}</span>
             </div>
           </CardContent>
         </Card>
@@ -186,18 +199,18 @@ export default async function StudentDashboard() {
       {/* Main Grid: 3-Assurance Tracker & Sidebar */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* 3 Guaranteed Opportunities Tracker (Left 2 Cols) */}
-        <Card className="lg:col-span-2 border-slate-200/80 shadow-xs">
+        <Card className="lg:col-span-2 border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="border-b border-slate-100 pb-4">
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-lg font-bold text-slate-900">
+                <CardTitle className="text-base font-bold text-slate-900">
                   Placement Assurance Tracker
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 mt-0.5">
-                  Your contractually guaranteed 3 qualified employer interview opportunities
+                  Your programme includes up to 3 qualified interview opportunities, subject to programme terms.
                 </CardDescription>
               </div>
-              <Badge variant="outline" className="border-indigo-200 bg-indigo-50/50 text-indigo-700 text-xs font-medium">
+              <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-800 text-xs font-medium font-mono">
                 Assurance Target: 3
               </Badge>
             </div>

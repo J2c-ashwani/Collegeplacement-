@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { AdminJobsDirectory, AdminJobRow } from './admin-jobs-directory'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function AdminJobsPage() {
   const session = await auth()
   if (!session?.user?.id || (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'OPERATIONS')) {
@@ -46,27 +48,27 @@ export default async function AdminJobsPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-              Job Network
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Cross-Platform Openings Catalog</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Platform Job Postings</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Central repository of employer job postings, score eligibility thresholds, and applicant pipelines.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs">
-            {jobRows.length} Active Listings
-          </Badge>
-        </div>
-      </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Platform Operations', href: '/admin/overview' },
+          { label: 'Campus Job Openings' },
+        ]}
+        title="Platform Job Postings"
+        description="Central repository of employer job postings, score eligibility thresholds, and applicant pipelines."
+        statusChips={[
+          {
+            label: 'Active Listings',
+            value: jobRows.length.toString(),
+            variant: 'success',
+          },
+          {
+            label: 'Access Model',
+            value: 'Pre-Assessed Candidates',
+            variant: 'neutral',
+          },
+        ]}
+      />
 
       <AdminJobsDirectory jobs={jobRows} />
     </div>

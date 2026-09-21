@@ -13,6 +13,8 @@ import {
 
 import { resolveEmployerId } from '@/lib/auth-utils'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function EmployerOverview() {
   const session = await auth()
   if (!session?.user?.id) {
@@ -75,44 +77,100 @@ export default async function EmployerOverview() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white shadow-xs">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 border border-indigo-400/30">
-              Corporate Hiring Portal
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-300 font-medium">{employer.name}</span>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Employer Portal', href: '/employer/overview' },
+          { label: 'Recruiter Command Center' },
+        ]}
+        title={employer.name}
+        description="Access pre-assessed 2026 graduating batch talent with verified technical & situational diagnostic scores."
+        statusChips={[
+          {
+            label: 'Active Openings',
+            value: activeJobs.length.toString(),
+            variant: 'neutral',
+          },
+          {
+            label: 'Fee Model',
+            value: 'As per agreement',
+            variant: 'neutral',
+          },
+          {
+            label: 'Confirmed Hires',
+            value: displayHires.toString(),
+            variant: 'success',
+          },
+        ]}
+        actions={
+          <div className="flex items-center gap-2.5">
+            <Link href="/employer/jobs">
+              <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white font-medium text-xs h-8">
+                <Plus className="mr-1.5 h-3.5 w-3.5" /> Post Job Opening
+              </Button>
+            </Link>
+            <Link href="/employer/candidates">
+              <Button size="sm" variant="outline" className="text-xs h-8">
+                Candidate Pipeline
+              </Button>
+            </Link>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Recruitment Command Center
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-            Access pre-assessed 2026 graduating batch talent with verified technical & situational diagnostic scores.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link href="/employer/jobs">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-xs">
-              <Plus className="mr-1.5 h-3.5 w-3.5" /> Post New Job Opening
-            </Button>
-          </Link>
-          <Link href="/employer/candidates">
-            <Button variant="outline" className="border-slate-600 text-white hover:bg-white/10 text-xs">
-              Candidate Pipeline
-            </Button>
-          </Link>
-        </div>
-      </div>
+        }
+      />
 
       {/* KPI Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Active Job Openings" value={activeJobs.length.toString()} icon={Briefcase} />
-        <StatCard title="Assessed Applicants" value={displayApplicants.toString()} icon={Users} />
-        <StatCard title="Interviews Conducted" value={displayInterviews.toString()} icon={Video} />
-        <StatCard title="Confirmed Hires" value={displayHires.toString()} icon={GraduationCap} />
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-mono">
+              <span>Active Job Openings</span>
+              <Briefcase className="h-4 w-4 text-[#1E40AF]" />
+            </div>
+            <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
+              {activeJobs.length}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">Live campus drives</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-mono">
+              <span>Assessed Applicants</span>
+              <Users className="h-4 w-4 text-blue-600" />
+            </div>
+            <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
+              {displayApplicants}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">Benchmarked talent pool</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-mono">
+              <span>Interviews Conducted</span>
+              <Video className="h-4 w-4 text-amber-600" />
+            </div>
+            <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
+              {displayInterviews}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">Qualified interview rounds</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200 shadow-2xs rounded-md bg-white">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between text-slate-500 text-xs font-mono">
+              <span>Confirmed Hires</span>
+              <GraduationCap className="h-4 w-4 text-emerald-600" />
+            </div>
+            <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
+              {displayHires}
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1">Joined candidates</p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Main Grid: Funnel & Active Positions */}

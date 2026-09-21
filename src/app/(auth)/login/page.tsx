@@ -57,44 +57,44 @@ export default function LoginPage() {
   }
 
   return (
-    <Card className="w-full shadow-lg border-0 bg-white">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Sign in</CardTitle>
-        <CardDescription className="text-center">
-          Enter your email and password to access your account
+    <Card className="w-full border border-slate-200 shadow-2xs rounded-md bg-white">
+      <CardHeader className="space-y-1 pb-4">
+        <CardTitle className="text-xl font-bold text-center text-slate-900 tracking-tight">Sign In to Platform</CardTitle>
+        <CardDescription className="text-center text-xs text-slate-500">
+          Enter your authorized credentials to access your workspace
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <Alert variant="destructive" className="py-2">
+            <Alert variant="destructive" className="py-2 text-xs">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" placeholder="m@example.com" required disabled={isLoading} />
+          <div className="space-y-1.5">
+            <Label htmlFor="email" className="text-xs font-semibold text-slate-700">Email Address</Label>
+            <Input id="email" name="email" type="email" placeholder="name@institution.edu.in" required disabled={isLoading} className="text-xs h-9 rounded-sm" />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Password</Label>
-              <Link href="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500 font-medium">
+              <Label htmlFor="password" className="text-xs font-semibold text-slate-700">Password</Label>
+              <Link href="/forgot-password" className="text-xs text-[#1E40AF] hover:underline font-medium">
                 Forgot Password?
               </Link>
             </div>
-            <Input id="password" name="password" type="password" required disabled={isLoading} />
+            <Input id="password" name="password" type="password" required disabled={isLoading} className="text-xs h-9 rounded-sm" />
           </div>
-          <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700" disabled={isLoading}>
-            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          <Button type="submit" className="w-full bg-[#1E40AF] hover:bg-blue-800 text-white font-medium text-xs h-9 rounded-sm shadow-2xs" disabled={isLoading}>
+            {isLoading ? <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" /> : null}
             Sign In
           </Button>
         </form>
       </CardContent>
-      <CardFooter className="flex flex-col items-center">
-        <p className="mt-2 text-sm text-muted-foreground">
+      <CardFooter className="flex flex-col items-center pt-2 pb-6">
+        <p className="text-xs text-slate-500">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-indigo-600 hover:text-indigo-500 font-medium">
-            Register
+          <Link href="/register" className="text-[#1E40AF] hover:underline font-semibold">
+            Institutional Registration
           </Link>
         </p>
       </CardFooter>

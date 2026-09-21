@@ -11,6 +11,8 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function InstitutionOverviewPage() {
   const session = await auth()
 
@@ -130,49 +132,79 @@ export default async function InstitutionOverviewPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Header Card with Registration Link & QR */}
-      <Card className="border-indigo-100 bg-linear-to-r from-indigo-900 to-indigo-800 text-white shadow-md">
-        <CardContent className="pt-6 pb-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <Badge className="bg-indigo-500/30 text-indigo-200 border-indigo-400/30 hover:bg-indigo-500/40">
-                  {institution.memberships[0]?.plan.name || 'Placement Partner'}
-                </Badge>
-                <span className="text-xs text-indigo-200">
-                  Code: <strong>{institution.registrationCode}</strong>
-                </span>
-              </div>
-              <h1 className="text-2xl font-bold tracking-tight">{institution.name}</h1>
-              <p className="text-xs text-indigo-200">
-                Institutional Placement Dashboard &bull; Graduating Batch 2026 &bull; {institution.city}, {institution.state}
-              </p>
-            </div>
-
-            {/* Unique Student Registration Link Widget */}
-            <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15 flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <div className="space-y-0.5">
-                <p className="text-xs font-medium text-indigo-200">Your Student Registration URL</p>
-                <code className="text-xs font-mono bg-black/20 px-2 py-1 rounded text-white block">
-                  {registrationUrl}
-                </code>
-              </div>
-              <div className="flex gap-2 shrink-0">
-                <Link href={registrationUrl} target="_blank">
-                  <Button size="sm" className="bg-white text-indigo-900 hover:bg-indigo-50 font-semibold text-xs">
-                    Open Link <ExternalLink className="ml-1 h-3 w-3" />
-                  </Button>
-                </Link>
-                <Link href={qrDownloadUrl} target="_blank">
-                  <Button size="sm" variant="outline" className="border-white/40 text-white hover:bg-white/20 text-xs">
-                    <QrCode className="mr-1 h-3.5 w-3.5" /> Download QR
-                  </Button>
-                </Link>
-              </div>
-            </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Institution Portal', href: '/institution/overview' },
+          { label: 'Placement Command Center' },
+        ]}
+        title={institution.name}
+        description={`Institutional Placement Dashboard • Graduating Batch 2026 • ${institution.city}, ${institution.state}`}
+        statusChips={[
+          {
+            label: 'Partnership Plan',
+            value: institution.memberships[0]?.plan.name || 'Placement Partner',
+            variant: 'neutral',
+          },
+          {
+            label: 'Batch Code',
+            value: institution.registrationCode,
+            variant: 'neutral',
+          },
+          {
+            label: 'Cohort Placement Rate',
+            value: `${cohortRate}%`,
+            variant: Number(cohortRate) >= 50 ? 'success' : 'neutral',
+          },
+        ]}
+        actions={
+          <div className="flex items-center gap-2">
+            <Link href="/institution/registration">
+              <Button size="sm" variant="outline" className="text-xs h-8">
+                <QrCode className="mr-1.5 h-3.5 w-3.5 text-slate-500" /> Registration Campaign
+              </Button>
+            </Link>
+            <Link href="/institution/reports">
+              <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white text-xs h-8 font-medium">
+                Accreditation Reports
+              </Button>
+            </Link>
           </div>
-        </CardContent>
-      </Card>
+        }
+      />
+
+      {/* Student Registration Campaign Bar */}
+      <div className="p-4 rounded-md border border-slate-200 bg-white shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
+              Student Registration Gateway
+            </span>
+            <span className="text-xs text-slate-400">•</span>
+            <span className="text-xs text-emerald-700 font-medium">Active Campaign</span>
+          </div>
+          <p className="text-xs text-slate-600">
+            Share this dedicated institutional registration link with Batch 2026 students to enroll them into Placement Assurance cohorts.
+          </p>
+          <div className="pt-1">
+            <code className="text-xs font-mono bg-slate-100 border border-slate-200 text-slate-800 px-2.5 py-1 rounded inline-block">
+              {registrationUrl}
+            </code>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link href={registrationUrl} target="_blank">
+            <Button size="sm" variant="outline" className="text-xs h-8">
+              Open Link <ExternalLink className="ml-1.5 h-3 w-3" />
+            </Button>
+          </Link>
+          <Link href={qrDownloadUrl} target="_blank">
+            <Button size="sm" variant="outline" className="text-xs h-8">
+              <QrCode className="mr-1.5 h-3.5 w-3.5" /> Download QR
+            </Button>
+          </Link>
+        </div>
+      </div>
 
       {/* Primary KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

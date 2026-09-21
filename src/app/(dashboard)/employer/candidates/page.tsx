@@ -9,6 +9,8 @@ import { CandidatePipelineTable } from './candidate-pipeline-table'
 
 import { resolveEmployerId } from '@/lib/auth-utils'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function EmployerCandidatesPage() {
   const session = await auth()
   if (!session?.user?.id) {
@@ -52,28 +54,27 @@ export default async function EmployerCandidatesPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-              Assessed Talent Network
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">2026 Graduating Fresher Pipeline</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Pre-Assessed Candidate Sourcing</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Browse verified students with 9-dimension diagnostic benchmarks and institutional accreditation.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-xs">
-            {students.length} Interview-Ready Candidates
-          </Badge>
-        </div>
-      </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Employer Portal', href: '/employer/overview' },
+          { label: 'Candidate Pool' },
+        ]}
+        title="Pre-Assessed Candidate Sourcing"
+        description="Browse verified students with 9-dimension diagnostic benchmarks, skill credentials, and student privacy consent."
+        statusChips={[
+          {
+            label: 'Interview-Ready Candidates',
+            value: students.length.toString(),
+            variant: 'success',
+          },
+          {
+            label: 'Privacy Governance',
+            value: 'Student Consent Verified',
+            variant: 'neutral',
+          },
+        ]}
+      />
 
       <CandidatePipelineTable initialCandidates={students as any} activeJobs={activeJobs} />
     </div>

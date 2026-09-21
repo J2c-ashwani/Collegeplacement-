@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { GraduationCap, Award, DollarSign, Download, CheckCircle2, AlertCircle } from 'lucide-react'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function AdminPlacementsPage() {
   const session = await auth()
   if (!session?.user?.id || (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'OPERATIONS')) {
@@ -51,28 +53,27 @@ export default async function AdminPlacementsPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-              Placement Audit & Billing
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Platform Success Fee Engine</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Placement Confirmations & Recruiter Invoicing</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Verified candidate joining records with automated recruiter success fee billing.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-xs">
-            {placements.length} Confirmed Placements
-          </Badge>
-        </div>
-      </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Platform Operations', href: '/admin/overview' },
+          { label: 'Placements & Fee Ledger' },
+        ]}
+        title="Placement Confirmations & Recruiter Invoicing"
+        description="Verified candidate joining records with automated recruiter success fee billing and audit trail."
+        statusChips={[
+          {
+            label: 'Confirmed Placements',
+            value: placements.length.toString(),
+            variant: 'success',
+          },
+          {
+            label: 'Collected Fees',
+            value: `₹${(totalPaidFees / 100000).toFixed(2)}L`,
+            variant: 'neutral',
+          },
+        ]}
+      />
 
       {/* KPI Cards */}
       <div className="grid gap-4 sm:grid-cols-3">

@@ -12,57 +12,51 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
   const isDeficit = metrics.status === 'DEFICIT'
 
   const statusColor = isSurplus
-    ? 'bg-emerald-500/15 text-emerald-700 border-emerald-300'
+    ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
     : isDeficit
-    ? 'bg-rose-500/15 text-rose-700 border-rose-300 animate-pulse'
-    : 'bg-amber-500/15 text-amber-700 border-amber-300'
-
-  const bannerBg = isSurplus
-    ? 'bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900'
-    : isDeficit
-    ? 'bg-gradient-to-r from-rose-950 via-slate-900 to-rose-950'
-    : 'bg-gradient-to-r from-slate-900 via-amber-950 to-slate-900'
+    ? 'bg-rose-50 text-rose-800 border-rose-300'
+    : 'bg-amber-50 text-amber-800 border-amber-300'
 
   return (
     <div className="space-y-4">
       {/* Control Tower Header Card */}
-      <Card className="border-slate-200/80 shadow-xs overflow-hidden">
-        <div className={`p-6 text-white ${bannerBg}`}>
+      <Card className="border-slate-200 shadow-2xs overflow-hidden rounded-md bg-white">
+        <div className="p-5 text-white bg-[#0F2744] border-b border-slate-800">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-1.5">
+            <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 flex items-center gap-1.5">
-                  <Gauge className="h-3 w-3" />
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-900/60 text-blue-200 border border-blue-700/50 flex items-center gap-1.5">
+                  <Gauge className="h-3 w-3 text-blue-400" />
                   Growth Control Tower
                 </span>
                 <span className="text-xs text-slate-400">•</span>
-                <span className="text-xs text-slate-300">Real-Time Marketplace Liquidity Telemetry</span>
+                <span className="text-xs text-slate-300">Live Database-Driven Telemetry</span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
                 Employer Capacity & Assurance Liquidity Balance
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
-                Monitors the <strong>3-Interview Legal Assurance Obligation</strong> ($3N$ opportunities) against active employer hiring slots to prevent capacity default before onboarding new cohorts.
+                Monitors the <strong>3-Interview Legal Assurance Obligation</strong> (3N opportunities) against active employer hiring slots to prevent capacity default before onboarding new cohorts.
               </p>
             </div>
 
             <div className="flex flex-col items-end gap-2 shrink-0">
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className={`px-3 py-1 font-bold text-xs uppercase tracking-wider bg-white ${statusColor}`}>
+                <Badge variant="outline" className={`px-2.5 py-0.5 font-mono font-bold text-xs uppercase tracking-wider ${statusColor}`}>
                   {isSurplus && <CheckCircle2 className="h-3.5 w-3.5 mr-1 text-emerald-600 inline" />}
                   {isDeficit && <ShieldAlert className="h-3.5 w-3.5 mr-1 text-rose-600 inline" />}
                   {!isSurplus && !isDeficit && <AlertTriangle className="h-3.5 w-3.5 mr-1 text-amber-600 inline" />}
                   {metrics.status}: {metrics.coverageRatio}x Coverage
                 </Badge>
               </div>
-              <span className="text-[11px] text-slate-300 font-medium">
-                GTM Status: <strong>{metrics.gtmAction}</strong>
+              <span className="text-[11px] text-slate-300 font-medium font-mono">
+                GTM Status: <strong className="text-white">{metrics.gtmAction}</strong>
               </span>
             </div>
           </div>
 
           {/* GTM Guidance Alert Bar */}
-          <div className="mt-4 pt-3 border-t border-white/10 flex items-start gap-2.5 text-xs text-slate-200">
+          <div className="mt-3 pt-3 border-t border-slate-700/80 flex items-start gap-2.5 text-xs text-slate-200">
             {isDeficit ? (
               <ShieldAlert className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
             ) : isSurplus ? (

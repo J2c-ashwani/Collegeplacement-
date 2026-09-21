@@ -11,7 +11,7 @@ import {
 import {
   Briefcase, Search, Filter, ShieldCheck, Mail, Phone, ExternalLink,
   Sparkles, CheckCircle2, AlertTriangle, UserCheck, Plus, Copy,
-  Check, Users, TrendingUp, Layers
+  Check, Users, TrendingUp, Layers, Building2, MapPin, Target, Clock
 } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
@@ -397,8 +397,8 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                     {employer.dnc && (
                       <Badge variant="destructive" className="text-[10px]">DNC SUPPRESSED</Badge>
                     )}
-                    <Badge variant="outline" className="text-[10px] bg-indigo-50 text-indigo-700 border-indigo-200">
-                      👥 {employer.matchedStudentCount} Student Pool Match
+                    <Badge variant="outline" className="text-[10px] bg-slate-50 text-slate-700 border-slate-200">
+                      <Users className="h-3 w-3 inline mr-1 text-slate-400" /> {employer.matchedStudentCount} Student Pool Match
                     </Badge>
                     <Badge variant="outline" className="text-[10px] bg-slate-50 text-slate-600">
                       {employer.status.replace('_', ' ')}
@@ -406,10 +406,10 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
                   </div>
 
                   <div className="flex items-center gap-4 text-xs text-slate-600 flex-wrap">
-                    <span>🏢 {employer.industry}</span>
-                    <span>📍 {employer.city} ({employer.region})</span>
-                    <span>🎯 Volume: <strong className="text-slate-900">{employer.hiringVolume} openings</strong></span>
-                    <span>🕒 {employer.experienceRange || '0-2 Years'}</span>
+                    <span className="flex items-center gap-1"><Building2 className="h-3.5 w-3.5 text-slate-400" /> {employer.industry}</span>
+                    <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5 text-slate-400" /> {employer.city} ({employer.region})</span>
+                    <span className="flex items-center gap-1"><Target className="h-3.5 w-3.5 text-slate-400" /> Volume: <strong className="text-slate-900">{employer.hiringVolume} openings</strong></span>
+                    <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5 text-slate-400" /> {employer.experienceRange || '0-2 Years'}</span>
                     <a
                       href={employer.website}
                       target="_blank"

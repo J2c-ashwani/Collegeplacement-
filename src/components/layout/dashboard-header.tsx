@@ -34,11 +34,11 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
 
   const getRoleLabel = (r?: string | null) => {
     switch (r) {
-      case 'STUDENT': return { label: 'Student Candidate', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' }
-      case 'INSTITUTION_ADMIN': return { label: 'TPO Administrator', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' }
-      case 'EMPLOYER': return { label: 'Corporate Recruiter', color: 'bg-sky-50 text-sky-700 border-sky-200' }
+      case 'STUDENT': return { label: 'Candidate', color: 'bg-slate-100 text-slate-700 border-slate-200' }
+      case 'INSTITUTION_ADMIN': return { label: 'Institution Admin', color: 'bg-emerald-50 text-emerald-800 border-emerald-200' }
+      case 'EMPLOYER': return { label: 'Corporate Recruiter', color: 'bg-sky-50 text-sky-800 border-sky-200' }
       case 'SUPER_ADMIN':
-      case 'OPERATIONS': return { label: 'Operations Admin', color: 'bg-purple-50 text-purple-700 border-purple-200' }
+      case 'OPERATIONS': return { label: 'Operations Admin', color: 'bg-indigo-50 text-[#0F2744] border-indigo-200' }
       default: return { label: 'Verified User', color: 'bg-slate-50 text-slate-700 border-slate-200' }
     }
   }
@@ -47,15 +47,15 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
 
   return (
     <>
-      <header className="flex h-14 items-center justify-between gap-4 border-b border-slate-200/80 bg-white/95 backdrop-blur-xs px-6 dark:bg-slate-900/95 dark:border-slate-800">
+      <header className="flex h-12 items-center justify-between gap-4 border-b border-slate-200/90 bg-white/95 backdrop-blur-xs px-5 dark:bg-slate-900/95 dark:border-slate-800 shrink-0">
         <div className="flex items-center gap-3">
           <SidebarTrigger />
           <div className="hidden sm:flex items-center gap-2">
-            <Badge variant="outline" className={`text-xs font-medium py-0.5 px-2.5 rounded-full ${roleMeta.color}`}>
+            <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-[11px] font-semibold border ${roleMeta.color}`}>
               {roleMeta.label}
-            </Badge>
-            <span className="text-xs text-slate-400">|</span>
-            <span className="text-xs text-slate-500 font-medium">Batch of 2026</span>
+            </span>
+            <span className="text-xs text-slate-300 dark:text-slate-700">|</span>
+            <span className="text-[11px] font-mono font-medium text-slate-500">Batch of 2026</span>
           </div>
         </div>
         

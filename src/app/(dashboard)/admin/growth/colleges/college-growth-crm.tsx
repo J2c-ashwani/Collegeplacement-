@@ -11,7 +11,7 @@ import {
 import {
   Building2, Search, Filter, ShieldCheck, Mail, Phone, ExternalLink,
   ChevronRight, Sparkles, CheckCircle2, AlertTriangle, UserCheck, Plus,
-  Layers, ArrowUpRight, Clock, Award, Check
+  Layers, ArrowUpRight, Clock, Award, Check, MapPin, BookOpen, Users
 } from 'lucide-react'
 import { toast } from 'sonner'
 import Link from 'next/link'
@@ -380,9 +380,9 @@ export function CollegeGrowthCrm({ initialProspects, sequences }: CollegeGrowthC
                   </div>
 
                   <div className="flex items-center gap-4 text-xs text-slate-600 flex-wrap">
-                    <span>📍 {prospect.city}, {prospect.state} ({prospect.region})</span>
-                    <span>🎓 Cohort: <strong className="text-slate-900">{prospect.estimatedCohort} students</strong></span>
-                    <span>📚 Programs: {prospect.courses.join(', ')}</span>
+                    <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5 text-slate-400" /> {prospect.city}, {prospect.state} ({prospect.region})</span>
+                    <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5 text-slate-400" /> Cohort: <strong className="text-slate-900">{prospect.estimatedCohort} students</strong></span>
+                    <span className="flex items-center gap-1"><BookOpen className="h-3.5 w-3.5 text-slate-400" /> Programs: {prospect.courses.join(', ')}</span>
                     <a
                       href={prospect.website}
                       target="_blank"

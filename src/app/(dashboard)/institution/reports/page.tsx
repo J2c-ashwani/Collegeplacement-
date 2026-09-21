@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Award, TrendingUp, DollarSign, Building2, BarChart3, Users } from 'lucide-react'
+import { PageHeader } from '@/components/layout/page-header'
 
 export default async function InstitutionReportsPage() {
   const session = await auth()
@@ -65,25 +66,32 @@ export default async function InstitutionReportsPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-              Institutional Intelligence
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Placement & CTC Analytics</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Placement & CTC Reports</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Verified institutional compensation distributions, salary percentiles, and department-wise placement conversions.
-          </p>
-        </div>
-
-        <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 text-xs">
-          Academic Batch 2026
-        </Badge>
-      </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Institution Portal', href: '/institution/overview' },
+          { label: 'Accreditation Reports' },
+        ]}
+        title="Placement Evidence & Accreditation Support"
+        description="Evidence relevant to institutional reporting and accreditation workflows, including verified compensation distributions, salary percentiles, and department-wise placement conversions."
+        statusChips={[
+          {
+            label: 'Accreditation Tier',
+            value: 'NAAC / NBA Evidence',
+            variant: 'neutral',
+          },
+          {
+            label: 'Batch',
+            value: 'Graduating 2026',
+            variant: 'neutral',
+          },
+          {
+            label: 'Median CTC',
+            value: `₹${medianCtc.toFixed(1)} LPA`,
+            variant: 'success',
+          },
+        ]}
+      />
 
       {/* Salary Quartiles & Compensation Distribution */}
       <Card className="border-slate-200/80 shadow-2xs bg-white">

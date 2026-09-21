@@ -34,6 +34,18 @@ export function AssessmentRunner({ studentId, questions, previousResult }: Asses
   const [submissionResult, setSubmissionResult] = React.useState<any>(null)
   const [error, setError] = React.useState<string | null>(null)
   const [isRetaking, setIsRetaking] = React.useState(false)
+  const [secondsRemaining, setSecondsRemaining] = React.useState(1500)
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsRemaining((prev) => (prev > 0 ? prev - 1 : 0))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const minutes = Math.floor(secondsRemaining / 60)
+  const seconds = secondsRemaining % 60
+  const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 
   // Show previous result if student already took the test and is not retaking
   if (previousResult && !isRetaking && !submissionResult) {
@@ -266,11 +278,11 @@ export function AssessmentRunner({ studentId, questions, previousResult }: Asses
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5 text-xs text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full font-mono">
+          <div className="flex items-center gap-1.5 text-xs text-slate-700 bg-slate-100 px-2.5 py-1 rounded-sm border border-slate-200 font-mono">
             <Clock className="h-3.5 w-3.5 text-slate-500" />
-            <span>Time Remaining: 24:18</span>
+            <span className="tabular-nums">Time Remaining: {formattedTime}</span>
           </div>
-          <span className="text-xs font-semibold text-slate-700">
+          <span className="text-xs font-semibold text-slate-700 font-mono tabular-nums">
             {answeredCount}/{totalQuestions} Answered
           </span>
         </div>

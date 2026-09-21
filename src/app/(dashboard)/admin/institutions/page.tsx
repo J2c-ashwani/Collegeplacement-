@@ -8,6 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Building2, CheckCircle2, QrCode, ExternalLink, Users, Plus } from 'lucide-react'
 import Link from 'next/link'
 
+import { PageHeader } from '@/components/layout/page-header'
+
 export default async function AdminInstitutionsPage() {
   const session = await auth()
   if (!session?.user?.id || (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'OPERATIONS')) {
@@ -34,28 +36,27 @@ export default async function AdminInstitutionsPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-              Institutional Network
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Partner Accreditation & Memberships</span>
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900">Partner Colleges & Universities</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Manage institutional placement agreements, active membership validity, and student batch denominators.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 text-xs">
-            {institutions.length} Partner Institutions
-          </Badge>
-        </div>
-      </div>
+      {/* 6-Element Page Header */}
+      <PageHeader
+        breadcrumb={[
+          { label: 'Platform Operations', href: '/admin/overview' },
+          { label: 'Partner Institutions' },
+        ]}
+        title="Partner Colleges & Universities"
+        description="Manage institutional placement agreements, active membership validity, and student batch denominators."
+        statusChips={[
+          {
+            label: 'Partner Colleges',
+            value: institutions.length.toString(),
+            variant: 'success',
+          },
+          {
+            label: 'Governance Tier',
+            value: 'Accredited',
+            variant: 'neutral',
+          },
+        ]}
+      />
 
       {/* Table */}
       <Card className="border-slate-200/80 shadow-xs bg-white overflow-hidden">
