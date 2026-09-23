@@ -27,6 +27,7 @@ export default function PublicLayout({
               <Link href="/for-students" className="text-slate-600 hover:text-indigo-600 font-medium">For Students</Link>
               <Link href="/for-employers" className="text-slate-600 hover:text-indigo-600 font-medium">For Employers</Link>
               <Link href="/placement-assurance" className="text-slate-600 hover:text-indigo-600 font-medium">Placement Assurance</Link>
+              <Link href="/pricing" className="text-slate-600 hover:text-indigo-600 font-medium">Pricing (INR)</Link>
             </nav>
 
             <div className="hidden md:flex items-center space-x-4">
@@ -53,6 +54,7 @@ export default function PublicLayout({
               <Link href="/for-students" className="block px-3 py-2 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-md font-medium">For Students</Link>
               <Link href="/for-employers" className="block px-3 py-2 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-md font-medium">For Employers</Link>
               <Link href="/placement-assurance" className="block px-3 py-2 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-md font-medium">Placement Assurance</Link>
+              <Link href="/pricing" className="block px-3 py-2 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 rounded-md font-medium">Pricing (INR)</Link>
               <Link href="/login" className="block px-3 py-2 text-indigo-600 hover:bg-indigo-50 rounded-md font-medium">Login</Link>
               <Link href="/register" className="block px-3 py-2 bg-indigo-600 text-white rounded-md font-medium">Register</Link>
             </div>
@@ -74,26 +76,27 @@ export default function PublicLayout({
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-slate-200">Solutions</h3>
+              <h3 className="text-lg font-semibold mb-4 text-slate-200">Products &amp; Services</h3>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><Link href="/for-colleges" className="hover:text-white transition">For Colleges</Link></li>
-                <li><Link href="/for-students" className="hover:text-white transition">For Students</Link></li>
-                <li><Link href="/for-employers" className="hover:text-white transition">For Employers</Link></li>
+                <li><Link href="/pricing" className="hover:text-white transition">Products &amp; Pricing (INR)</Link></li>
+                <li><Link href="/for-colleges" className="hover:text-white transition">For Colleges (₹15,000/yr)</Link></li>
+                <li><Link href="/for-students" className="hover:text-white transition">For Students (₹1,000 / ₹2,500)</Link></li>
+                <li><Link href="/for-employers" className="hover:text-white transition">For Employers (Free)</Link></li>
                 <li><Link href="/placement-assurance" className="hover:text-white transition">Placement Assurance</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-slate-200">Company</h3>
+              <h3 className="text-lg font-semibold mb-4 text-slate-200">Support &amp; Contact</h3>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><Link href="/about" className="hover:text-white transition">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition">Contact Us</Link></li>
                 <li><Link href="/faqs" className="hover:text-white transition">FAQs</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4 text-slate-200">Legal</h3>
+              <h3 className="text-lg font-semibold mb-4 text-slate-200">Policy &amp; Legal</h3>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li><Link href="/terms" className="hover:text-white transition">Terms of Service</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition">Terms &amp; Conditions</Link></li>
+                <li><Link href="/refund-policy" className="hover:text-white transition">Refunds &amp; Cancellations</Link></li>
                 <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
               </ul>
             </div>

@@ -164,9 +164,9 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
                 }
                 className="flex items-center gap-2 cursor-pointer"
               >
-                <Users className="h-4 w-4 text-indigo-600" />
-                <span>Cross-Entity 360 View: Student Profile Preview (Aarav Sharma)</span>
-                <Badge variant="outline" className="ml-auto text-[10px] bg-indigo-50 text-indigo-700">
+                <Users className="h-4 w-4 text-purple-600 mr-2" />
+                <span>Cross-Entity 360° View: Student Candidate Inspector</span>
+                <Badge variant="outline" className="ml-auto text-[10px] font-mono text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">
                   360 Live
                 </Badge>
               </CommandItem>
@@ -345,9 +345,6 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
                 <Users className="h-5 w-5 text-indigo-600" />
                 Cross-Entity 360° View — Student Candidate
               </DialogTitle>
-              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
-                Programme Active
-              </Badge>
             </div>
             <DialogDescription className="text-xs text-slate-500">
               Aggregated cross-entity snapshot linking academic profile, diagnostic scores, applications, assurance quota, and verified placement.
@@ -355,82 +352,15 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
           </DialogHeader>
 
           <div className="space-y-4 pt-2">
-            {/* Candidate Header */}
-            <div className="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h4 className="font-bold text-slate-900 text-base">Aarav Sharma</h4>
-                <p className="text-xs text-slate-600">
-                  Apex Institute of Technology • Computer Science & Engg (2026)
-                </p>
-                <p className="text-xs font-mono text-slate-500 mt-0.5">
-                  Enrollment: <strong>AIT-2026-CSE-0042</strong> • ID: STU-2026-000123
-                </p>
-              </div>
-              <div className="flex sm:flex-col items-end gap-1">
-                <span className="text-xs font-semibold text-indigo-700">Employability Score</span>
-                <span className="text-2xl font-bold text-indigo-700 font-mono">82.5%</span>
-                <span className="text-[11px] text-slate-500">88th Percentile</span>
-              </div>
-            </div>
-
-            {/* 360 Dimensions Matrix */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              {/* Box 1: 3-Assurance Quota */}
-              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
-                <div className="flex items-center justify-between font-semibold text-slate-800">
-                  <span>3-Assurance Legal Quota</span>
-                  <Badge className="bg-indigo-600 text-white text-[10px]">1 of 3 Consumed</Badge>
-                </div>
-                <div className="space-y-1 text-slate-600 text-[11px]">
-                  <p>• Slot 1: <strong>TechCorp</strong> (Software Engineer) — Completed / Attended</p>
-                  <p>• Slot 2: <strong>Available / Unassigned</strong> (Reserved)</p>
-                  <p>• Slot 3: <strong>Available / Unassigned</strong> (Reserved)</p>
-                </div>
-              </div>
-
-              {/* Box 2: Job Applications Pipeline */}
-              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
-                <div className="flex items-center justify-between font-semibold text-slate-800">
-                  <span>Job Applications (Independent)</span>
-                  <span className="font-mono text-slate-500">2 Applications</span>
-                </div>
-                <div className="space-y-1 text-slate-600 text-[11px]">
-                  <p>• TechCorp: <span className="text-emerald-700 font-semibold">Offer Issued</span> (6.5 LPA)</p>
-                  <p>• CloudNova: <span className="text-blue-700 font-semibold">Shortlisted for R2</span></p>
-                </div>
-              </div>
-
-              {/* Box 3: Verified Credentials & Badges */}
-              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
-                <div className="flex items-center justify-between font-semibold text-slate-800">
-                  <span>Verified Badges & Status</span>
-                  <Award className="h-3.5 w-3.5 text-amber-500" />
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  <Badge variant="outline" className="bg-amber-50 text-amber-800 border-amber-200 text-[10px]">
-                    Technical Ready (85%)
-                  </Badge>
-                  <Badge variant="outline" className="bg-blue-50 text-blue-800 border-blue-200 text-[10px]">
-                    Strong Communicator (80%)
-                  </Badge>
-                  <Badge variant="outline" className="bg-emerald-50 text-emerald-800 border-emerald-200 text-[10px]">
-                    Work Ethics Certified
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Box 4: Placement & Employer Fee Ledger */}
-              <div className="p-3.5 border border-slate-200 rounded-lg bg-white space-y-2">
-                <div className="flex items-center justify-between font-semibold text-slate-800">
-                  <span>Placement & Recruiter Fee</span>
-                  <FileCheck className="h-3.5 w-3.5 text-emerald-600" />
-                </div>
-                <div className="space-y-1 text-slate-600 text-[11px]">
-                  <p>• Placement Code: <strong className="font-mono">PLC-2026-000182</strong></p>
-                  <p>• Status: <strong className="text-emerald-700">VERIFIED JOINED</strong></p>
-                  <p>• Recruiter Fee: <em>As per agreement</em> (Invoice #INV-2026-001)</p>
-                </div>
-              </div>
+            <div className="p-6 text-center space-y-3">
+              <Search className="h-8 w-8 text-slate-300 mx-auto" />
+              <h4 className="font-semibold text-sm text-slate-700">Search for a student to view their 360° profile</h4>
+              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                Use the command palette search to find a specific student, then select &ldquo;360° View&rdquo; to see their aggregated profile across all platform entities.
+              </p>
+              <p className="text-[11px] text-slate-400 font-mono">
+                This view will display live data from the student&apos;s actual records.
+              </p>
             </div>
 
             {/* Actions */}
@@ -451,7 +381,7 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
                   router.push("/admin/students")
                 }}
               >
-                View in Student Directory <ExternalLink className="h-3 w-3 ml-1" />
+                View Student Directory <ExternalLink className="h-3 w-3 ml-1" />
               </Button>
             </div>
           </div>
@@ -460,3 +390,4 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
     </>
   )
 }
+

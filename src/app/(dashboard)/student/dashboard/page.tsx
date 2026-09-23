@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { 
   CheckCircle2, Clock, ShieldCheck, Trophy, Video, 
-  ArrowRight, ExternalLink, Calendar, Briefcase, FileCheck2, Sparkles, Building2
+  ArrowRight, ExternalLink, Calendar, Briefcase, FileCheck2, Sparkles, Building2, ClipboardCheck
 } from "lucide-react"
 
 import { resolveStudent } from '@/lib/auth-utils'
@@ -85,7 +85,7 @@ export default async function StudentDashboard() {
           <div className="flex items-center gap-2.5">
             <Link href="/student/assessment">
               <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white text-xs h-8 font-medium">
-                <Sparkles className="mr-1.5 h-3.5 w-3.5 text-blue-200" />
+                <ClipboardCheck className="mr-1.5 h-3.5 w-3.5 text-blue-200" />
                 {assessmentResult ? 'Diagnostic Scorecard' : 'Start Assessment'}
               </Button>
             </Link>

@@ -18,11 +18,21 @@ import { Calendar, Clock, Users, CheckCircle2, XCircle, AlertTriangle, ShieldChe
 interface MegaDriveSlotCoordinatorProps {
   initialJobTitle?: string
   initialEmployerName?: string
+  initialSlots?: Array<{
+    id: string
+    time: string
+    interviewer: string
+    candidate: string
+    college: string
+    status: DriveSlotStatus
+    assuranceImpact: string
+  }>
 }
 
 export function MegaDriveSlotCoordinator({
-  initialJobTitle = 'Junior Software Engineer (Fresher Batch 2026)',
-  initialEmployerName = 'TechCorp Solutions',
+  initialJobTitle = 'Campus Hiring Drive (Batch 2026)',
+  initialEmployerName = 'Corporate Partner',
+  initialSlots = [],
 }: MegaDriveSlotCoordinatorProps) {
   // Configurable Calculator State
   const [interviewers, setInterviewers] = useState<number>(3)
@@ -38,71 +48,7 @@ export function MegaDriveSlotCoordinator({
     breakMinutesTotal: breakMinutes,
   })
 
-  // Mock initial slots for active hiring drive
-  const [slots, setSlots] = useState<Array<{
-    id: string
-    time: string
-    interviewer: string
-    candidate: string
-    college: string
-    status: DriveSlotStatus
-    assuranceImpact: string
-  }>>([
-    {
-      id: 'SLOT-01',
-      time: '02:00 PM – 02:20 PM',
-      interviewer: 'Panel 1 (Lead Architect)',
-      candidate: 'Aarav Sharma',
-      college: 'Apex Institute of Technology',
-      status: 'ATTENDED',
-      assuranceImpact: 'Counts toward 3-opportunity quota (-1)',
-    },
-    {
-      id: 'SLOT-02',
-      time: '02:20 PM – 02:40 PM',
-      interviewer: 'Panel 1 (Lead Architect)',
-      candidate: 'Pooja Verma',
-      college: 'St. Xavier Institute',
-      status: 'ATTENDED',
-      assuranceImpact: 'Counts toward 3-opportunity quota (-1)',
-    },
-    {
-      id: 'SLOT-03',
-      time: '02:40 PM – 03:00 PM',
-      interviewer: 'Panel 1 (Lead Architect)',
-      candidate: 'Rohan Gupta',
-      college: 'Apex Institute of Technology',
-      status: 'NO_SHOW',
-      assuranceImpact: 'Unexcused no-show: Counts against quota (-1)',
-    },
-    {
-      id: 'SLOT-04',
-      time: '03:00 PM – 03:20 PM',
-      interviewer: 'Panel 2 (Engineering Manager)',
-      candidate: 'Sneha Patel',
-      college: 'National Institute of Science',
-      status: 'EMPLOYER_CANCELLED',
-      assuranceImpact: 'Employer cancelled: Returned to candidate quota (0)',
-    },
-    {
-      id: 'SLOT-05',
-      time: '03:20 PM – 03:40 PM',
-      interviewer: 'Panel 2 (Engineering Manager)',
-      candidate: 'Devendra Kulkarni',
-      college: 'Apex Institute of Technology',
-      status: 'CONFIRMED',
-      assuranceImpact: 'Scheduled — awaiting candidate join',
-    },
-    {
-      id: 'SLOT-06',
-      time: '03:40 PM – 04:00 PM',
-      interviewer: 'Panel 3 (Tech Lead)',
-      candidate: 'Unclaimed Slot',
-      college: 'Eligible Regional Pool',
-      status: 'OPEN',
-      assuranceImpact: 'Available for pre-screened candidate booking',
-    },
-  ])
+  const [slots, setSlots] = useState(initialSlots)
 
   // Handle status transitions with strict assurance accounting
   const handleUpdateStatus = (

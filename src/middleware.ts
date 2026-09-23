@@ -13,7 +13,9 @@ const publicRoutes = [
   '/contact',
   '/faqs',
   '/terms',
-  '/privacy'
+  '/privacy',
+  '/refund-policy',
+  '/pricing'
 ];
 
 const authRoutes = ['/login', '/register', '/forgot-password', '/verify-email'];
@@ -67,12 +69,22 @@ export default auth((req) => {
   }
 
 
+  const isProtectedPrefix =
+    nextUrl.pathname.startsWith('/admin') ||
+    nextUrl.pathname.startsWith('/institution') ||
+    nextUrl.pathname.startsWith('/employer') ||
+    nextUrl.pathname.startsWith('/student') ||
+    nextUrl.pathname.startsWith('/counsellor');
+
   if (!isLoggedIn) {
     if (nextUrl.pathname.startsWith('/api')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const callbackUrl = encodeURIComponent(nextUrl.pathname + nextUrl.search);
-    return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, nextUrl));
+    if (isProtectedPrefix) {
+      const callbackUrl = encodeURIComponent(nextUrl.pathname + nextUrl.search);
+      return NextResponse.redirect(new URL(`/login?callbackUrl=${callbackUrl}`, nextUrl));
+    }
+    return;
   }
 
   if (nextUrl.pathname.startsWith('/admin') && role !== 'SUPER_ADMIN' && role !== 'OPERATIONS') {

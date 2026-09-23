@@ -37,22 +37,22 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="py-12 bg-[#0F2744] text-white border-y border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center font-mono">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <p className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-white tabular-nums">50+</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Partner Colleges</p>
+              <p className="text-lg md:text-xl font-bold mb-2 tracking-tight text-white">Growing Network</p>
+              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Partner Institutions</p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-emerald-400 tabular-nums">1,000+</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Verified Placements</p>
+              <p className="text-lg md:text-xl font-bold mb-2 tracking-tight text-emerald-400">Verified & Documented</p>
+              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Placement Outcomes</p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-blue-400 tabular-nums">100+</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Corporate Recruiters</p>
+              <p className="text-lg md:text-xl font-bold mb-2 tracking-tight text-blue-400">Pre-Assessed Talent</p>
+              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Candidate Quality</p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-white tabular-nums">₹4.5 LPA</p>
-              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Median Fresher CTC</p>
+              <p className="text-lg md:text-xl font-bold mb-2 tracking-tight text-white">Structured Process</p>
+              <p className="text-xs uppercase tracking-wider text-slate-400 font-sans font-medium">Campus Recruitment</p>
             </div>
           </div>
         </div>

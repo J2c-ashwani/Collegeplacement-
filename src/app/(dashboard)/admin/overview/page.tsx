@@ -33,6 +33,7 @@ export default async function AdminOverview() {
     completedInterviewsCount,
     offerCount,
     totalAssuranceOpportunities,
+    recentLogs,
   ] = await Promise.all([
     prisma.institution.count(),
     prisma.student.count(),
@@ -46,6 +47,7 @@ export default async function AdminOverview() {
     prisma.interview.count({ where: { status: { in: ['COMPLETED', 'SELECTED', 'REJECTED'] } } }),
     prisma.offer.count(),
     prisma.assuranceOpportunity.count(),
+    prisma.auditLog.findMany({ take: 4, orderBy: { createdAt: 'desc' } }),
   ])
 
   // Aggregate order revenue
@@ -303,32 +305,31 @@ export default async function AdminOverview() {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 pb-3 border-b border-slate-100">
-                <div className="h-2 w-2 rounded-full bg-indigo-600 mt-1.5" />
-                <div className="flex-1 text-xs space-y-0.5">
-                  <p className="font-semibold text-slate-900">Apex Institute of Technology — Roster Activated</p>
-                  <p className="text-slate-500">600 students denominator configured for Batch of 2026.</p>
-                </div>
-                <span className="text-[11px] text-slate-400">Live</span>
+            {recentLogs.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-4">No recent operational events recorded.</p>
+            ) : (
+              <div className="space-y-4">
+                {recentLogs.map((log, idx) => (
+                  <div
+                    key={log.id}
+                    className={`flex items-start gap-3 ${idx < recentLogs.length - 1 ? 'pb-3 border-b border-slate-100' : ''}`}
+                  >
+                    <div className="h-2 w-2 rounded-full bg-indigo-600 mt-1.5" />
+                    <div className="flex-1 text-xs space-y-0.5">
+                      <p className="font-semibold text-slate-900">
+                        {log.action.replace(/_/g, ' ')} • {log.entity}
+                      </p>
+                      <p className="text-slate-500 font-mono text-[11px]">
+                        Entity ID: {log.entityId}
+                      </p>
+                    </div>
+                    <span className="text-[11px] text-slate-400 font-mono">
+                      {new Date(log.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-start gap-3 pb-3 border-b border-slate-100">
-                <div className="h-2 w-2 rounded-full bg-emerald-600 mt-1.5" />
-                <div className="flex-1 text-xs space-y-0.5">
-                  <p className="font-semibold text-slate-900">Placement Confirmation Verified — PLC-2026-000182</p>
-                  <p className="text-slate-500">Aarav Sharma placed at TechCorp Solutions (₹5.50 LPA). Employer success fee ₹10,000 generated.</p>
-                </div>
-                <span className="text-[11px] text-slate-400">Verified</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="h-2 w-2 rounded-full bg-sky-600 mt-1.5" />
-                <div className="flex-1 text-xs space-y-0.5">
-                  <p className="font-semibold text-slate-900">CloudNova Systems — DevOps Campus Drive Live</p>
-                  <p className="text-slate-500">3 openings published with 70+ employability score threshold.</p>
-                </div>
-                <span className="text-[11px] text-slate-400">Active</span>
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
       </div>

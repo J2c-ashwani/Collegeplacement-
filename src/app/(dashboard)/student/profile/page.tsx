@@ -87,7 +87,7 @@ export default async function StudentProfilePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label className="text-xs text-slate-500">Full Name</Label>
-              <Input value={user?.name || 'Aarav Sharma'} disabled className="bg-slate-50 font-medium" />
+              <Input value={user?.name || ''} disabled className="bg-slate-50 font-medium" />
             </div>
             <div className="space-y-1.5">
               <Label className="text-xs text-slate-500">Official Email</Label>

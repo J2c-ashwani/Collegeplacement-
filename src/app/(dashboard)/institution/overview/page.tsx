@@ -93,6 +93,8 @@ export default async function InstitutionOverviewPage() {
     placedCount,
     totalInterviews,
     totalOffers,
+    ctcAggregates,
+    activeEmployers,
   ] = await Promise.all([
     prisma.student.count({ where: { institutionId } }),
     prisma.student.count({
@@ -116,7 +118,25 @@ export default async function InstitutionOverviewPage() {
       },
     }),
     prisma.offer.count({ where: { institutionId } }),
+    prisma.placement.aggregate({
+      where: { institutionId },
+      _avg: { ctc: true },
+      _max: { ctc: true },
+    }),
+    prisma.assuranceOpportunity.findMany({
+      where: {
+        student: { institutionId },
+        job: { status: 'ACTIVE' },
+      },
+      select: { employerId: true },
+      distinct: ['employerId'],
+    }),
   ])
+
+  const formatCtc = (val: any) => val ? `₹${(Number(val) / 100000).toFixed(1)} LPA` : '—'
+  const averageCtcDisplay = formatCtc(ctcAggregates._avg.ctc)
+  const maxCtcDisplay = formatCtc(ctcAggregates._max.ctc)
+  const activeEmployersCount = activeEmployers.length > 0 ? `${activeEmployers.length} Compan${activeEmployers.length === 1 ? 'y' : 'ies'}` : '—'
 
   const notRegisteredCount = Math.max(totalExpectedCohort - registeredCount, 0)
   const interviewReadyCount = assessmentCompletedCount
@@ -351,15 +371,15 @@ export default async function InstitutionOverviewPage() {
             <CardContent className="space-y-3 text-xs">
               <div className="flex justify-between py-1 border-b">
                 <span className="text-slate-600">Average Verified CTC:</span>
-                <span className="font-bold text-slate-900">₹5.2 LPA</span>
+                <span className="font-bold text-slate-900">{averageCtcDisplay}</span>
               </div>
               <div className="flex justify-between py-1 border-b">
                 <span className="text-slate-600">Highest Verified CTC:</span>
-                <span className="font-bold text-emerald-600">₹8.5 LPA</span>
+                <span className="font-bold text-emerald-600">{maxCtcDisplay}</span>
               </div>
               <div className="flex justify-between py-1 border-b">
                 <span className="text-slate-600">Active Hiring Employers:</span>
-                <span className="font-bold text-slate-900">5 Companies</span>
+                <span className="font-bold text-slate-900">{activeEmployersCount}</span>
               </div>
               <div className="flex justify-between py-1">
                 <span className="text-slate-600">Interview Delivery Rate:</span>

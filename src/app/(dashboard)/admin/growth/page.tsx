@@ -34,9 +34,9 @@ export default async function AdminGrowthPage() {
   ]
 
   const capacityMetrics = calculateCapacityMetrics({
-    activeAssuranceStudents: Math.max(activeStudentsCount, 1420), // Baseline seed liquidity
-    totalOpenings: Math.max(totalOpenings, 98),
-    completedQualifiedInterviews: Math.max(completedInterviews, 2960),
+    activeAssuranceStudents: activeStudentsCount, // Baseline seed liquidity
+    totalOpenings,
+    completedQualifiedInterviews: completedInterviews,
     regionalData,
   })
 
@@ -92,33 +92,39 @@ export default async function AdminGrowthPage() {
       requiredOpportunities: capacityMetrics.requiredOpportunities,
       remainingObligation: capacityMetrics.remainingObligation,
       deliveredOpportunities: capacityMetrics.opportunitiesDelivered,
-      activeActionsCount: Math.max(activeActionsCount, actions.length),
+      activeActionsCount,
       pendingDraftsCount,
-      topMarketDeficits: [
-        { region: 'Delhi NCR', deficit: 320, primaryDomain: 'Inside Sales / Tech Support' },
-        { region: 'Gurgaon', deficit: 140, primaryDomain: 'Operations / Customer Success' },
-        { region: 'Pune', deficit: 80, primaryDomain: 'Core Mechanical / IT' },
-      ],
+      topMarketDeficits: capacityMetrics.regionalClusters
+        .slice()
+        .sort((a, b) => a.balance - b.balance)
+        .map((c) => {
+          const deficit = Math.max(0, -c.balance)
+          return {
+            region: c.region,
+            deficit,
+            primaryDomain: deficit > 0 ? 'Active Demand Deficit' : 'Balanced Liquidity',
+          }
+        }),
     },
     regionalClusters: capacityMetrics.regionalClusters as any,
     collegeFunnel: {
-      discovered: Math.max(collegeDiscovered, 1840),
-      qualified: Math.max(collegeQualified, 480),
-      contactIdentified: Math.max(collegeContactIdentified, 312),
-      outreachReady: Math.max(collegeOutreachActive, 217),
-      meetings: Math.max(collegeMeetings, 48),
-      mous: Math.max(collegeMous, 11),
-      paidInstitutions: Math.max(collegeWon, 7),
+      discovered: collegeDiscovered,
+      qualified: collegeQualified,
+      contactIdentified: collegeContactIdentified,
+      outreachReady: collegeOutreachActive,
+      meetings: collegeMeetings,
+      mous: collegeMous,
+      paidInstitutions: collegeWon,
     },
     employerFunnel: {
-      discovered: Math.max(employerDiscovered, 3420),
-      hiringNow: Math.max(employerHiringNow, 620),
-      qualified: Math.max(employerQualified, 280),
-      recruitersIdentified: Math.max(employerRecruiterIdentified, 210),
-      outreachReady: Math.max(employerOutreachActive, 165),
-      meetings: Math.max(employerMeetings, 39),
-      activeEmployers: Math.max(employerActive, 18),
-      hiringCampaigns: 31,
+      discovered: employerDiscovered,
+      hiringNow: employerHiringNow,
+      qualified: employerQualified,
+      recruitersIdentified: employerRecruiterIdentified,
+      outreachReady: employerOutreachActive,
+      meetings: employerMeetings,
+      activeEmployers: employerActive,
+      hiringCampaigns: activeJobs.length,
     },
     actions: actions.map((a) => ({
       ...a,

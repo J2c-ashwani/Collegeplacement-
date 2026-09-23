@@ -57,23 +57,22 @@ export default async function EmployerOverview() {
   
   // Aggregate counts
   let totalApplicants = 0
+  let totalShortlisted = 0
+  let candidatesInterviewed = 0
   let totalInterviews = 0
   let totalOffers = 0
   let totalHires = 0
 
   for (const job of jobs) {
     totalApplicants += job.applications.length
+    totalShortlisted += job.opportunities.length
     for (const opp of job.opportunities) {
       totalInterviews += opp.interviews.length
+      if (opp.interviews.length > 0) candidatesInterviewed += 1
       if (opp.offer) totalOffers += 1
       if (opp.status === 'SELECTED' || opp.offer?.status === 'JOINED') totalHires += 1
     }
   }
-
-  // Fallback defaults for nice initial rendering if brand new
-  const displayApplicants = Math.max(totalApplicants, 24)
-  const displayInterviews = Math.max(totalInterviews, 8)
-  const displayHires = Math.max(totalHires, 2)
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
@@ -98,7 +97,7 @@ export default async function EmployerOverview() {
           },
           {
             label: 'Confirmed Hires',
-            value: displayHires.toString(),
+            value: totalHires.toString(),
             variant: 'success',
           },
         ]}
@@ -140,7 +139,7 @@ export default async function EmployerOverview() {
               <Users className="h-4 w-4 text-blue-600" />
             </div>
             <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
-              {displayApplicants}
+              {totalApplicants}
             </div>
             <p className="text-[11px] text-slate-500 mt-1">Benchmarked talent pool</p>
           </CardContent>
@@ -153,7 +152,7 @@ export default async function EmployerOverview() {
               <Video className="h-4 w-4 text-amber-600" />
             </div>
             <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
-              {displayInterviews}
+              {totalInterviews}
             </div>
             <p className="text-[11px] text-slate-500 mt-1">Qualified interview rounds</p>
           </CardContent>
@@ -166,7 +165,7 @@ export default async function EmployerOverview() {
               <GraduationCap className="h-4 w-4 text-emerald-600" />
             </div>
             <div className="text-2xl font-bold font-mono tracking-tight text-slate-900 mt-2 tabular-nums">
-              {displayHires}
+              {totalHires}
             </div>
             <p className="text-[11px] text-slate-500 mt-1">Joined candidates</p>
           </CardContent>
@@ -188,11 +187,11 @@ export default async function EmployerOverview() {
           <CardContent className="p-6 space-y-4">
             <div className="space-y-3">
               {[
-                { stage: 'Matched & Screened', count: displayApplicants, pct: 100, color: 'bg-indigo-600' },
-                { stage: 'Diagnostic Threshold Met', count: Math.round(displayApplicants * 0.75), pct: 75, color: 'bg-blue-600' },
-                { stage: 'Interviews Scheduled', count: displayInterviews, pct: Math.round((displayInterviews / displayApplicants) * 100), color: 'bg-amber-500' },
-                { stage: 'Offers Extended', count: Math.max(totalOffers, 3), pct: 25, color: 'bg-emerald-500' },
-                { stage: 'Confirmed Hired', count: displayHires, pct: Math.round((displayHires / displayApplicants) * 100), color: 'bg-emerald-600' },
+                { stage: 'Matched & Screened', count: totalApplicants, pct: totalApplicants > 0 ? 100 : 0, color: 'bg-indigo-600' },
+                { stage: 'Assurance Shortlisted', count: totalShortlisted, pct: totalApplicants > 0 ? Math.min(100, Math.round((totalShortlisted / totalApplicants) * 100)) : 0, color: 'bg-blue-600' },
+                { stage: 'Candidates Interviewed', count: candidatesInterviewed, pct: totalApplicants > 0 ? Math.min(100, Math.round((candidatesInterviewed / totalApplicants) * 100)) : 0, color: 'bg-amber-500' },
+                { stage: 'Offers Extended', count: totalOffers, pct: totalApplicants > 0 ? Math.min(100, Math.round((totalOffers / totalApplicants) * 100)) : 0, color: 'bg-emerald-500' },
+                { stage: 'Confirmed Hired', count: totalHires, pct: totalApplicants > 0 ? Math.min(100, Math.round((totalHires / totalApplicants) * 100)) : 0, color: 'bg-emerald-600' },
               ].map((item) => (
                 <div key={item.stage} className="space-y-1">
                   <div className="flex justify-between text-xs">

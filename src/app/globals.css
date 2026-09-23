@@ -151,3 +151,48 @@
 .pedl-badge-pill {
   @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium border;
 }
+
+/* Enterprise Dark Mode Surface & Contrast Harmonization */
+.dark .bg-white {
+  background-color: oklch(0.19 0.02 255) !important;
+}
+.dark .bg-slate-50,
+.dark .bg-slate-50\/40,
+.dark .bg-slate-50\/50,
+.dark .bg-slate-50\/60,
+.dark .bg-slate-50\/80 {
+  background-color: oklch(0.16 0.02 255) !important;
+}
+.dark .bg-slate-100 {
+  background-color: oklch(0.24 0.02 255) !important;
+}
+.dark .border-slate-200,
+.dark .border-slate-200\/80,
+.dark .border-slate-200\/90,
+.dark .border-slate-100 {
+  border-color: oklch(0.27 0.02 255) !important;
+}
+.dark .text-slate-900,
+.dark .text-slate-950 {
+  color: oklch(0.96 0.005 250) !important;
+}
+.dark .text-slate-800,
+.dark .text-slate-700 {
+  color: oklch(0.88 0.01 250) !important;
+}
+.dark .text-slate-600,
+.dark .text-slate-500 {
+  color: oklch(0.72 0.015 250) !important;
+}
+.dark .bg-indigo-50\/60,
+.dark .bg-indigo-50 {
+  background-color: oklch(0.22 0.05 260) !important;
+}
+.dark .text-indigo-950,
+.dark .text-indigo-900 {
+  color: oklch(0.93 0.03 260) !important;
+}
+.dark .text-indigo-800\/80,
+.dark .text-indigo-700 {
+  color: oklch(0.82 0.06 260) !important;
+}

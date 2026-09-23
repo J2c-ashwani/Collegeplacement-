@@ -43,6 +43,16 @@ export default function TermsPage() {
           <p className="text-slate-700 mb-4">
             All content on the Platform, including text, graphics, logos, and software, is the property of PlacementConnect or its content suppliers and protected by copyright laws.
           </p>
+
+          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">7. Pricing, Services &amp; Currency (INR)</h2>
+          <p className="text-slate-700 mb-4">
+            All paid products and services—including the Student Placement Assurance Programme (₹1,000 + 18% GST), the Student Placement Plus Programme (₹2,500 + 18% GST), the 1-Year Institutional Placement Membership (₹15,000/year + 18% GST), and the 5-Year Premium Institutional Membership (₹60,000 for 5 years + 18% GST)—are listed and billed exclusively in Indian Rupees (INR / ₹). Access for verified corporate employers to post jobs and recruit freshers is provided free of charge (₹0).
+          </p>
+
+          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">8. Refunds &amp; Cancellations</h2>
+          <p className="text-slate-700 mb-4">
+            Cancellations requested within 7 days prior to diagnostic assessment or batch activation qualify for a 100% refund, and students whose 3 guaranteed interview opportunities are unfulfilled within their 12-month programme validity are eligible for a full base fee refund. Approved refunds are credited to the original payment method within 5–7 business days. Please refer to our dedicated <a href="/refund-policy" className="text-indigo-600 underline font-medium">Refunds &amp; Cancellations Policy</a> for full details.
+          </p>
         </div>
       </div>
     </div>

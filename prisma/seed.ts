@@ -80,12 +80,12 @@ async function main() {
 
   const placementPlan = await prisma.institutionPlan.upsert({
     where: { slug: 'placement' },
-    update: { price: 19999 },
+    update: { price: 15000, durationMonths: 12 },
     create: {
-      name: 'Placement',
+      name: '1-Year Campus Placement Membership',
       slug: 'placement',
       description: 'Comprehensive placement partnership with priority employer matching, assessment drives and workshop sessions.',
-      price: 19999,
+      price: 15000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
@@ -102,21 +102,21 @@ async function main() {
   })
 
   const placementPlusPlan = await prisma.institutionPlan.upsert({
-    where: { slug: 'placement-plus' },
-    update: { price: 34999 },
+    where: { slug: 'placement-5yr' },
+    update: { price: 60000, durationMonths: 60 },
     create: {
-      name: 'Placement Plus',
-      slug: 'placement-plus',
-      description: 'Flagship enterprise institutional network with unlimited students, direct campus interview drives, and industry visits.',
-      price: 34999,
+      name: '5-Year Premium Institutional Membership (NAAC Cycle)',
+      slug: 'placement-5yr',
+      description: 'Flagship 5-year institutional network covering a full NAAC cycle with unlimited students, direct campus interview drives, and industry visits.',
+      price: 60000,
       gstPercent: 18,
-      durationMonths: 12,
+      durationMonths: 60,
       features: [
-        'All Placement plan features',
+        'All Placement plan features for 5 continuous academic years',
         'Unlimited student registrations',
         'Exclusive virtual & campus hiring drives',
-        '4 Workshops + 2 Industry visits coordination',
-        'Formal institutional MOU management',
+        '5-Year Multi-Cohort NAAC Criterion 5.2.1 & NIRF Evidence Vault',
+        'Formal 5-year institutional MOU management',
         'Department-wise placement benchmarking',
         'Executive TPO review meetings quarterly'
       ],
@@ -128,12 +128,12 @@ async function main() {
   console.log('4. Seeding student programme plans...')
   const assurancePlan = await prisma.programmePlan.upsert({
     where: { slug: 'placement-assurance' },
-    update: { price: 999 },
+    update: { price: 1000 },
     create: {
-      name: 'Placement Assurance',
+      name: 'Placement Assurance Programme',
       slug: 'placement-assurance',
       description: 'Full assessment, employability score, badges, and minimum 3 qualified interview opportunities.',
-      price: 999,
+      price: 1000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
@@ -150,20 +150,20 @@ async function main() {
 
   const assurancePlusPlan = await prisma.programmePlan.upsert({
     where: { slug: 'placement-plus-student' },
-    update: { price: 1499 },
+    update: { price: 2500 },
     create: {
-      name: 'Placement Plus',
+      name: 'Placement Plus Programme',
       slug: 'placement-plus-student',
       description: 'Everything in Assurance plus 1-on-1 mock interviews and priority employer shortlisting.',
-      price: 1499,
+      price: 2500,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Everything in Placement Assurance',
-        '1-on-1 Mock interview with industry mentor',
+        'Everything in Placement Assurance (₹1,000 tier)',
+        '2x 1-on-1 Mock interviews with industry mentor',
         'Priority shortlisting on partner employer vacancies',
         'Detailed diagnostic subscore improvement report',
-        'Direct counsellor placement support'
+        'Minimum 5 qualified interview opportunities & dedicated counsellor support'
       ],
       sortOrder: 2,
     },

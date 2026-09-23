@@ -45,80 +45,7 @@ export interface OperationalNotification {
   link?: string
 }
 
-const INITIAL_NOTIFICATIONS: OperationalNotification[] = [
-  {
-    id: 'notif-1',
-    category: 'Assurance',
-    title: 'Assurance Capacity Alert: 540 Slot Gap',
-    message: 'Active student assurance obligations require employer acquisition before opening new college batches.',
-    timestamp: '10 mins ago',
-    read: false,
-    link: '/admin/overview',
-  },
-  {
-    id: 'notif-2',
-    category: 'Interviews',
-    title: 'Round 2 Interview Scheduled',
-    message: 'Candidate Aarav Sharma confirmed for Technical Architecture round with TechCorp.',
-    timestamp: '25 mins ago',
-    read: false,
-    link: '/employer/interviews',
-  },
-  {
-    id: 'notif-3',
-    category: 'Applications',
-    title: 'New Candidate Shortlisted',
-    message: 'CloudNova shortlisted 4 candidates matching Employability Score >= 80%.',
-    timestamp: '1 hour ago',
-    read: false,
-    link: '/employer/candidates',
-  },
-  {
-    id: 'notif-4',
-    category: 'Billing',
-    title: 'Employer Success Fee Invoice Generated',
-    message: 'Invoice #INV-2026-001 generated for verified placement at TechCorp (Agreement-based rate).',
-    timestamp: '2 hours ago',
-    read: false,
-    link: '/employer/invoices',
-  },
-  {
-    id: 'notif-5',
-    category: 'Documents',
-    title: 'Offer Letter Uploaded for Verification',
-    message: 'Aarav Sharma submitted signed offer letter from TechCorp for institutional verification.',
-    timestamp: '3 hours ago',
-    read: false,
-    link: '/institution/placements',
-  },
-  {
-    id: 'notif-6',
-    category: 'Placement',
-    title: 'Placement Verified & Joined',
-    message: 'Placement PLC-2026-000182 marked VERIFIED_JOINED by TPO admin.',
-    timestamp: '4 hours ago',
-    read: true,
-    link: '/institution/placements',
-  },
-  {
-    id: 'notif-7',
-    category: 'Membership',
-    title: 'Institution MoU Renewal Notice',
-    message: 'Apex Institute of Technology MoU is approaching 30-day review window.',
-    timestamp: '1 day ago',
-    read: true,
-    link: '/institution/mous',
-  },
-  {
-    id: 'notif-8',
-    category: 'System',
-    title: 'Platform Maintenance Complete',
-    message: 'Security audit trail engine updated with append-only integrity checks.',
-    timestamp: '2 days ago',
-    read: true,
-    link: '/admin/audit-logs',
-  },
-]
+const INITIAL_NOTIFICATIONS: OperationalNotification[] = []
 
 interface NotificationDrawerProps {
   open: boolean
@@ -127,11 +54,13 @@ interface NotificationDrawerProps {
 
 export function NotificationDrawer({ open, onOpenChange }: NotificationDrawerProps) {
   const router = useRouter()
-  const [notifications, setNotifications] = React.useState<OperationalNotification[]>(INITIAL_NOTIFICATIONS)
+  const [notifications, setNotifications] = React.useState<OperationalNotification[]>([])
+  const [loading, setLoading] = React.useState<boolean>(false)
   const [selectedCategory, setSelectedCategory] = React.useState<string>('ALL')
 
   React.useEffect(() => {
     if (!open) return
+    setLoading(true)
     fetch('/api/notifications')
       .then((res) => res.json())
       .then((data) => {
@@ -149,6 +78,7 @@ export function NotificationDrawer({ open, onOpenChange }: NotificationDrawerPro
         }
       })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [open])
 
   const unreadCount = notifications.filter((n) => !n.read).length
@@ -304,9 +234,20 @@ export function NotificationDrawer({ open, onOpenChange }: NotificationDrawerPro
 
         {/* Notification Feed */}
         <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
-          {filteredNotifications.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 text-xs">
-              No notifications in this category.
+          {loading ? (
+            <div className="p-8 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-2 h-32">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-indigo-600 border-t-transparent" />
+              <span>Loading notifications...</span>
+            </div>
+          ) : filteredNotifications.length === 0 ? (
+            <div className="p-12 flex flex-col items-center justify-center text-center space-y-3 h-full">
+              <div className="h-12 w-12 rounded-full bg-slate-50 flex items-center justify-center">
+                <Bell className="h-5 w-5 text-slate-300" />
+              </div>
+              <div>
+                <h4 className="text-sm font-medium text-slate-700">No new notifications</h4>
+                <p className="text-xs text-slate-500 mt-1">You're all caught up.</p>
+              </div>
             </div>
           ) : (
             filteredNotifications.map((item) => (

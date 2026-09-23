@@ -253,19 +253,32 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
         {/* Metric 5: Top Market Deficits */}
         <div className="pedl-card p-3.5 col-span-2 md:col-span-1">
           <div className="flex items-center justify-between">
-            <span className="pedl-label text-[11px]">Top Market Deficit</span>
+            <span className="pedl-label text-[11px]">Regional Liquidity Status</span>
             <Globe className="h-3.5 w-3.5 text-slate-400" />
           </div>
           <div className="mt-1.5">
-            <span className="text-sm font-bold text-rose-700 font-mono block">
-              {data.commandCenter.topMarketDeficits[0]?.region}: {data.commandCenter.topMarketDeficits[0]?.deficit} slots
-            </span>
-            <span className="text-[11px] text-slate-500 block truncate mt-0.5">
-              {data.commandCenter.topMarketDeficits[0]?.primaryDomain}
-            </span>
+            {(data.commandCenter.topMarketDeficits[0]?.deficit ?? 0) > 0 ? (
+              <>
+                <span className="text-sm font-bold text-rose-700 dark:text-rose-400 font-mono block">
+                  {data.commandCenter.topMarketDeficits[0]?.region}: {data.commandCenter.topMarketDeficits[0]?.deficit} slots
+                </span>
+                <span className="text-[11px] text-slate-500 block truncate mt-0.5">
+                  {data.commandCenter.topMarketDeficits[0]?.primaryDomain}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 font-mono block">
+                  0 Slot Deficit
+                </span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400 block truncate mt-0.5">
+                  All corridors above 1.2x threshold
+                </span>
+              </>
+            )}
           </div>
-          <p className="text-[11px] text-[#1E40AF] font-medium mt-1">
-            Employer AI active in Delhi NCR
+          <p className="text-[11px] text-[#1E40AF] dark:text-blue-400 font-medium mt-1">
+            {data.commandCenter.capacityGap > 0 ? 'Demand sourcing prioritized' : 'Ready for batch onboarding'}
           </p>
         </div>
       </div>
@@ -274,15 +287,15 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-[#1E40AF]" />
+            <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <Zap className="h-4 w-4 text-[#1E40AF] dark:text-blue-400" />
               Ranked AI Action Queue
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Operations triage computed by: Impact × Urgency × Confidence ÷ Effort.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+          <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1 font-mono text-[11px]">
               <Lock className="h-3 w-3 text-slate-400" />
               Safe Action Policy Active
@@ -299,48 +312,59 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
             return (
               <div
                 key={action.id}
-                className="p-4 rounded-md border border-slate-200/90 bg-white hover:border-slate-300 transition-colors shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="pedl-card p-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
                 <div className="space-y-2 max-w-3xl">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span
                       className={`px-2 py-0.5 rounded-[4px] text-[10px] font-mono font-bold border ${
                         isRed
-                          ? "bg-rose-50 text-rose-800 border-rose-200"
+                          ? "bg-rose-50 text-rose-800 border-rose-200 dark:bg-rose-950/50 dark:text-rose-300 dark:border-rose-800"
                           : isOrange
-                          ? "bg-amber-50 text-amber-800 border-amber-200"
-                          : "bg-slate-50 text-slate-700 border-slate-200"
+                          ? "bg-amber-50 text-amber-800 border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800"
+                          : "bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700"
                       }`}
                     >
                       {action.priority.replace('_', ' ')}
                     </span>
-                    <span className="text-xs text-slate-300">•</span>
-                    <span className="text-[11px] font-mono font-bold text-[#0F2744] bg-slate-100 px-2 py-0.5 rounded-[4px] border border-slate-200">
+                    <span className="text-xs text-slate-300 dark:text-slate-600">•</span>
+                    <span className="text-[11px] font-mono font-bold text-[#0F2744] dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-[4px] border border-slate-200 dark:border-slate-700">
                       Score: {action.actionScore}
                     </span>
                     {action.isSafeAction && (
-                      <span className="text-[10px] text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded-[4px] font-medium flex items-center gap-1">
-                        <Check className="h-3 w-3 text-emerald-600" />
+                      <span className="text-[10px] text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 px-1.5 py-0.5 rounded-[4px] font-medium flex items-center gap-1">
+                        <Check className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                         Policy Verified Safe
                       </span>
                     )}
                     {action.targetRegion && (
-                      <span className="text-xs text-slate-500">
-                        Region: <strong className="text-slate-800">{action.targetRegion}</strong>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">
+                        Region: <strong className="text-slate-800 dark:text-slate-200">{action.targetRegion}</strong>
                       </span>
                     )}
                   </div>
 
                   <div>
-                    <h3 className="font-semibold text-slate-900 text-sm">{action.title}</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed mt-0.5">{action.description}</p>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-sm">{action.title}</h3>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-0.5">{action.description}</p>
                   </div>
 
-                  {/* Temporal & Velocity Context Ribbon */}
-                  <div className="flex items-center gap-4 text-[11px] font-mono text-slate-500 flex-wrap pt-0.5">
-                    <span>Deadline: <strong className="text-slate-800">30 Nov 2026</strong></span>
-                    <span>Velocity: <strong className="text-emerald-700">+84 opps/wk</strong></span>
-                    <span>Projected Closure: <strong className="text-slate-800">5.0 wks</strong></span>
+                  {/* Execution & Provenance Context Ribbon */}
+                  <div className="flex items-center gap-4 text-[11px] font-mono text-slate-500 dark:text-slate-400 flex-wrap pt-0.5">
+                    <span>
+                      Lifecycle:{" "}
+                      <strong className={isPending ? "text-amber-700 dark:text-amber-400" : "text-emerald-700 dark:text-emerald-400"}>
+                        {isPending ? "RECOMMENDED (Not Yet Contacted)" : "APPROVED FOR EXECUTION"}
+                      </strong>
+                    </span>
+                    <span>
+                      Category: <strong className="text-slate-800 dark:text-slate-200">{action.actionType || 'LIQUIDITY_BALANCE'}</strong>
+                    </span>
+                    {action.reasoning?.confidenceScore && (
+                      <span>
+                        Model Confidence: <strong className="text-slate-800 dark:text-slate-200">{action.reasoning.confidenceScore}</strong>
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -349,9 +373,9 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedWhyAction(action)}
-                    className="h-8 text-xs text-[#0F2744] hover:bg-slate-50 border-slate-200 flex items-center gap-1"
+                    className="h-8 text-xs text-[#0F2744] dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 flex items-center gap-1"
                   >
-                    <HelpCircle className="h-3.5 w-3.5 text-slate-500" />
+                    <HelpCircle className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
                     <span>Why?</span>
                   </Button>
 
@@ -364,8 +388,8 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
                       Approve Action
                     </Button>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-[4px] border border-emerald-200">
-                      <Check className="h-3.5 w-3.5 text-emerald-600" />
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 rounded-[4px] border border-emerald-200 dark:border-emerald-800">
+                      <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                       Approved
                     </span>
                   )}

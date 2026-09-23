@@ -1,7 +1,8 @@
 'use client'
 
 import * as React from "react"
-import { Bell, UserCircle, LogOut, Search } from "lucide-react"
+import { Bell, UserCircle, LogOut, Search, Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -31,6 +32,18 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
   const role = user?.role
   const [commandOpen, setCommandOpen] = React.useState(false)
   const [notifOpen, setNotifOpen] = React.useState(false)
+  const [unreadCount, setUnreadCount] = React.useState(0)
+  const { theme, setTheme } = useTheme()
+
+  React.useEffect(() => {
+    fetch('/api/notifications')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const list = Array.isArray(json) ? json : json?.data || []
+        setUnreadCount(list.filter((n: any) => !n.read).length)
+      })
+      .catch(() => {})
+  }, [notifOpen])
 
   const getRoleLabel = (r?: string | null) => {
     switch (r) {
@@ -74,6 +87,19 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
             </kbd>
           </button>
 
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
+            aria-label="Toggle dark mode"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+
           {/* Slide-over Notification Drawer Trigger */}
           <Button
             variant="ghost"
@@ -83,7 +109,9 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
             aria-label="Open notifications"
           >
             <Bell className="h-4 w-4" />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-indigo-600 ring-2 ring-white"></span>
+            {unreadCount > 0 && (
+              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-indigo-600 ring-2 ring-white dark:ring-slate-900" />
+            )}
             <span className="sr-only">Notifications</span>
           </Button>
 

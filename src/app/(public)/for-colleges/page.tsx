@@ -43,12 +43,16 @@ export default function ForCollegesPage() {
             <ul className="space-y-4">
               <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">Dedicated Institutional Dashboard</span></li>
               <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">Official MOU and Partnership Certificate</span></li>
-              <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">Access to 100+ Employer Network</span></li>
+              <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">Access to Verified Corporate Employer Network</span></li>
               <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">Student Performance Analytics</span></li>
               <li className="flex items-start"><Check className="text-indigo-600 mt-1 mr-3 flex-shrink-0" /> <span className="text-slate-700">NAAC/NBA Ready Reports</span></li>
             </ul>
-            <div className="mt-8 pt-6 border-t border-slate-300">
-              <p className="font-semibold text-slate-900 text-lg">Plans starting from ₹9,999/year</p>
+            <div className="mt-8 pt-6 border-t border-slate-300 space-y-2">
+              <p className="font-bold text-slate-900 text-lg">Annual Membership: ₹15,000 / year <span className="text-xs font-normal text-slate-500">(+ 18% GST)</span></p>
+              <p className="font-semibold text-indigo-700 text-sm">5-Year Premium NAAC Cycle Membership: ₹60,000 <span className="text-xs font-normal text-slate-500">(Save ₹15,000 • 1 Year Free)</span></p>
+              <div className="pt-2">
+                <Link href="/pricing" className="text-sm font-medium text-indigo-600 hover:underline">Compare Institutional Plans (INR) &rarr;</Link>
+              </div>
             </div>
           </div>
         </div>
