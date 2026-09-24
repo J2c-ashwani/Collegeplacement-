@@ -128,11 +128,12 @@ export default function ForStudentsPage() {
               Build Your Job-Ready Profile and Access 3 Corporate Interview Opportunities
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              Don&apos;t let your resume get lost in mass job portals. Complete our{' '}
-              <strong className="font-semibold text-slate-900">9-Area Job-Readiness Assessment</strong>, access{' '}
-              <strong className="font-semibold text-slate-900">3 verified corporate interview opportunities</strong>{' '}
-              within 12 months of graduation, and share a verified profile with hiring managers—backed by a{' '}
-              <strong className="font-semibold text-slate-900">100% base fee refund guarantee</strong>.
+              Build more than a resume. Complete our{' '}
+              <strong className="font-semibold text-slate-900">9-Area Job-Readiness Assessment</strong>, show employers your verified readiness profile, and access{' '}
+              <strong className="font-semibold text-slate-900">
+                3 verified corporate interview opportunities within 12 months of assessment completion
+              </strong>
+              —backed by a <strong className="font-semibold text-slate-900">100% base fee refund guarantee</strong>.
             </p>
 
             {/* 3-Pillar Benefit Hierarchy: 1. Interviews -> 2. Assessment -> 3. Verified Profile */}
@@ -152,7 +153,7 @@ export default function ForStudentsPage() {
               <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200">
                 <div className="text-xs font-bold text-[#1E40AF]">3. 100% Base Fee Protection</div>
                 <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                  Full base fee refund (₹1,000 or ₹2,500) if 3 interviews are not facilitated in 12 months.
+                  Full base fee refund (₹1,000 or ₹2,500) if 3 interviews are not facilitated within 12 months of assessment completion.
                 </p>
               </div>
             </div>
@@ -389,7 +390,7 @@ export default function ForStudentsPage() {
               Choose Your Programme Track: Standard (₹1,180) vs Extended (₹2,950)
             </h2>
             <p className="text-sm text-slate-600">
-              Both tracks include the 9-Area Job-Readiness Assessment, a verified student profile, and <strong>3 Verified Corporate Interview Opportunities</strong> within 12 months.
+              Both tracks include the 9-Area Job-Readiness Assessment, a verified student profile, and <strong>3 Verified Corporate Interview Opportunities within 12 months of assessment completion</strong>.
             </p>
           </div>
 
