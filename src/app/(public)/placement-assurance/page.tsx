@@ -1,83 +1,104 @@
-import React from 'react';
 import Link from 'next/link';
-import { Metadata } from 'next';
-import { ShieldCheck, ArrowRight, FileText } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Placement Assurance Programme - PlacementConnect',
-  description: 'Details about the Placement Assurance Programme terms, eligibility, and process.',
-};
+import {
+  CheckCircle2,
+  ArrowRight,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  GOVERNANCE_MOAT_MECHANICS,
+} from '@/config/commercial-policy';
+import { SAFE_TERMINOLOGY } from '@/config/brand-system';
 
 export default function PlacementAssurancePage() {
   return (
-    <div className="bg-white">
-      {/* Hero */}
-      <section className="py-20 bg-indigo-50 border-b border-indigo-100">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <ShieldCheck className="w-16 h-16 text-indigo-600 mx-auto mb-6" />
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
-            Placement Assurance Programme
+    <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-14">
+        <div className="space-y-4 border-b border-slate-200 pb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-[#1E40AF]">
+            3-Interview Assurance &amp; Confirmed Employer Capacity
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            How PlacementConnect Guarantees 3 Verified Interviews Without Making False Job Promises
           </h1>
-          <p className="text-xl text-slate-600 mb-0">
-            A structured pathway connecting skilled students with hiring employers.
+          <p className="text-base text-slate-600 leading-relaxed max-w-3xl">
+            Unlike training agencies that promise unrealistic &ldquo;100% guaranteed jobs,&rdquo; PlacementConnect provides a transparent, contractually backed{' '}
+            <strong className="font-semibold text-slate-900">
+              {GOVERNANCE_MOAT_MECHANICS.interviewQuotaLabel}
+            </strong>{' '}
+            supported by{' '}
+            <strong className="font-semibold text-slate-900">
+              {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailLabel}
+            </strong>
+            .
           </p>
         </div>
-      </section>
 
-      <section className="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="prose prose-lg prose-indigo mx-auto text-slate-700">
-          
-          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">1. What is the Programme?</h2>
-          <p className="mb-6">
-            The PlacementConnect Placement Assurance Programme is a career-readiness track designed to bridge the gap between academic learning and industry expectations. Through comprehensive assessments and verified profiling, we connect eligible students directly with our network of hiring partners.
-          </p>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
-            <p className="text-yellow-800 text-sm font-medium">
-              <strong>Disclaimer:</strong> This programme assures structured interview opportunities with verified employers. It does not constitute an unconditional guarantee of employment. Final selection is at the sole discretion of the hiring company based on candidate performance.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-md border border-slate-200/90 p-6 space-y-2.5">
+            <div className="font-mono text-xs font-bold text-[#1E40AF]">
+              01 / Standardized Readiness
+            </div>
+            <h2 className="text-base font-bold text-slate-900">
+              Complete the {SAFE_TERMINOLOGY.assessmentShortName}
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Enrolled students complete the 36-item timed evaluation across 9 core competencies to establish their verified shortlist profile.
             </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">2. Eligibility Criteria</h2>
-          <ul className="list-disc pl-6 mb-8 space-y-2">
-            <li>Must be a final year student or recent graduate (up to 1 year) from a partner institution.</li>
-            <li>Must maintain a minimum academic aggregate as prescribed by the hiring companies (typically 60% or equivalent CGPA).</li>
-            <li>Must have no active backlogs at the time of appearing for the final assessments.</li>
-            <li>Must complete the PlacementConnect Core Assessment with a minimum score of 70th percentile.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">3. The Process</h2>
-          <div className="space-y-4 mb-8">
-            <div className="flex border border-slate-200 p-4 rounded-lg">
-              <div className="font-bold text-indigo-600 mr-4">Phase 1</div>
-              <div><strong>Registration & Profiling:</strong> Create an exhaustive digital profile verified by your institution.</div>
+          <div className="bg-white rounded-md border border-slate-200/90 p-6 space-y-2.5">
+            <div className="font-mono text-xs font-bold text-[#1E40AF]">
+              02 / Confirmed Interview Supply
             </div>
-            <div className="flex border border-slate-200 p-4 rounded-lg">
-              <div className="font-bold text-indigo-600 mr-4">Phase 2</div>
-              <div><strong>Core Assessment:</strong> Undergo rigorous aptitude, technical, and communication evaluations.</div>
-            </div>
-            <div className="flex border border-slate-200 p-4 rounded-lg">
-              <div className="font-bold text-indigo-600 mr-4">Phase 3</div>
-              <div><strong>Interview Pipelines:</strong> Eligible profiles are matched and routed to hiring partners for interviews.</div>
-            </div>
+            <h2 className="text-base font-bold text-slate-900">
+              {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailLabel}
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailExplanation}
+            </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">4. What Students Receive</h2>
-          <ul className="list-disc pl-6 mb-8 space-y-2">
-            <li>A verified digital portfolio shareable with any employer.</li>
-            <li>Detailed performance report identifying strengths and areas for improvement.</li>
-            <li>Minimum of 3 assured interview opportunities for candidates clearing the assessment threshold.</li>
-            <li>Access to company-specific preparation modules and mock interviews.</li>
+          <div className="bg-white rounded-md border border-slate-200/90 p-6 space-y-2.5">
+            <div className="font-mono text-xs font-bold text-emerald-800">
+              03 / 100% Base Fee Refund
+            </div>
+            <h2 className="text-base font-bold text-slate-900">
+              12-Month Contractual Refund Guarantee
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              If 3 verified corporate interviews are not facilitated within 12 months for an eligible candidate, 100% of the base fee (₹1,000 or ₹2,500) is refunded.
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 space-y-4">
+          <h3 className="text-lg font-bold text-slate-900">
+            Programme Eligibility &amp; Merit Boundaries
+          </h3>
+          <ul className="space-y-2.5 text-xs text-slate-600">
+            {GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures.map((item) => (
+              <li key={item} className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
-
+          <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+            <Button asChild className="bg-[#1E40AF] hover:bg-blue-900 text-white">
+              <Link href="/for-students">
+                Enter College Code to Enroll
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Link
+              href="/refund-policy"
+              className="text-xs font-semibold text-[#1E40AF] hover:underline"
+            >
+              Read Full Refund &amp; Assurance Policy &rarr;
+            </Link>
+          </div>
         </div>
-
-        <div className="mt-16 text-center border-t border-slate-200 pt-10">
-          <h3 className="text-xl font-bold text-slate-900 mb-6">Ready to accelerate your career?</h3>
-          <Link href="/for-students" className="inline-flex items-center justify-center bg-indigo-600 text-white px-8 py-3 rounded-md font-medium text-lg hover:bg-indigo-700 transition">
-            Join the Programme <ArrowRight className="ml-2 w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

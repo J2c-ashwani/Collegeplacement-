@@ -1,84 +1,144 @@
-import React from 'react';
-import { Metadata } from 'next';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: 'Refunds & Cancellations Policy - PlacementConnect',
-  description: 'Official Refund and Cancellation Policy for PlacementConnect institutional and student programmes in INR.',
-};
+import { FileCheck2, Scale, Mail, ArrowRight } from 'lucide-react';
+import { COMPANY_IDENTITY } from '@/config/company-identity';
+import {
+  INSTITUTION_COMMERCIAL_PLAN,
+  STUDENT_PROGRAMME_PLANS,
+  EMPLOYER_COMMERCIAL_POLICY,
+  GST_POLICY,
+} from '@/config/commercial-policy';
 
 export default function RefundPolicyPage() {
   return (
-    <div className="bg-white py-16 lg:py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-extrabold text-slate-900 mb-4">Refunds &amp; Cancellations Policy</h1>
-        <p className="text-sm text-slate-500 mb-8">
-          Effective Date: {new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })} • All transactions processed in Indian Rupees (INR / ₹)
-        </p>
-
-        <div className="prose prose-slate max-w-none space-y-8 text-slate-700">
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">1. Overview</h2>
-            <p>
-              PlacementConnect provides structured university placement infrastructure, employability diagnostics, and the 3N Placement Assurance Programme for graduating students, higher education institutions, and corporate employers across India. All pricing and transactions on the platform are denominated and settled exclusively in <strong>Indian Rupees (INR / ₹)</strong>.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">2. Student Programmes — Placement Assurance (₹1,000 + GST) &amp; Placement Plus (₹2,500 + GST)</h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>7-Day Cooling-Off Cancellation:</strong> Students enrolled in either the <strong>Placement Assurance Programme (₹1,000 + 18% GST)</strong> or the <strong>Placement Plus Programme (₹2,500 + 18% GST)</strong> may request a full 100% cancellation and refund within <strong>7 calendar days</strong> of payment, provided they have not yet initiated the 9-Dimension Employability Diagnostic Assessment, mentor mock interviews, or booked an interview slot.
-              </li>
-              <li>
-                <strong>Placement Assurance Quota Guarantee Refund:</strong> Eligible students who clear the diagnostic benchmark are guaranteed a minimum of <strong>3 qualified corporate interview opportunities</strong> (Placement Assurance — ₹1,000) or <strong>5 qualified corporate interview opportunities</strong> (Placement Plus — ₹2,500) within their 12-month programme validity. If PlacementConnect fails to deliver the guaranteed interview opportunities within the validity window (excluding student no-shows or student-initiated withdrawals), the student is eligible for a <strong>100% refund of the base programme fee</strong>.
-              </li>
-              <li>
-                <strong>Non-Refundable Scenarios:</strong> Fees are non-refundable once the student has attempted the diagnostic assessment and received at least 1 qualified interview allocation, or in cases of documented academic/interview malpractice.
-              </li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">3. Institutional Membership Plans (₹15,000/Year &amp; ₹60,000/5-Year Premium)</h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Pre-Activation Cancellation:</strong> Partner colleges and universities subscribing to either the <strong>1-Year Annual Membership (₹15,000 + 18% GST)</strong> or the <strong>5-Year Premium NAAC Cycle Membership (₹60,000 + 18% GST)</strong> may cancel within <strong>7 business days</strong> of payment for a full 100% refund, provided the institutional batch roster and unique student registration gateway (`/register/[code]`) have not yet been activated.
-              </li>
-              <li>
-                <strong>Multi-Year Pro-Rata Protection (5-Year Premium Plan):</strong> For institutions on the 5-Year Premium Plan (₹60,000), if an institution wishes to discontinue after completing at least 1 academic year with 30 days&apos; written notice prior to the next academic session, unused complete future years are eligible for a pro-rata refund calculated after accounting for the standard annual rate (₹15,000/year) for completed years.
-              </li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">4. Corporate Employers (Free Access — ₹0)</h2>
-            <p>
-              Verified corporate employers and recruitment partners access PlacementConnect to post fresher openings, evaluate pre-assessed candidates, and conduct campus hiring drives at <strong>₹0 cost</strong> (no job posting fees or recruitment commissions).
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">5. Refund Processing Timeline &amp; Mode</h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>Initiation:</strong> To request a refund or cancellation, email <a href="mailto:sukashwanikumar@gmail.com" className="text-indigo-600 font-medium underline">sukashwanikumar@gmail.com</a> or <a href="mailto:contact@placementconnect.com" className="text-indigo-600 font-medium underline">contact@placementconnect.com</a> with your Order ID / Razorpay Payment ID (`pay_...`) and registered email address.
-              </li>
-              <li>
-                <strong>Processing SLA:</strong> Approved refunds are initiated within <strong>48 hours</strong> of verification and are credited back to the <strong>original payment method</strong> (UPI, NetBanking, Credit/Debit Card, or Corporate Bank Account via Razorpay) within <strong>5 to 7 business days</strong>.
-              </li>
-            </ul>
-          </section>
-
-          <div className="mt-10 p-6 bg-slate-50 border border-slate-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="font-bold text-slate-900">Need help with an order or billing query?</h3>
-              <p className="text-sm text-slate-600">Our billing compliance desk responds within 24 business hours.</p>
-            </div>
-            <Link href="/contact" className="bg-indigo-600 text-white px-5 py-2.5 rounded-md text-sm font-medium hover:bg-indigo-700 transition shrink-0">
-              Contact Billing Support
-            </Link>
+    <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-10">
+        <div className="space-y-3 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-blue-50 text-[#1E40AF] border border-blue-200">
+              Commercial Refund &amp; Assurance Policy
+            </span>
+            <span className="font-mono text-xs text-slate-500">
+              Effective Date: {COMPANY_IDENTITY.governanceEffectiveDate}
+            </span>
           </div>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            Refund, Cancellation &amp; 3-Interview Assurance Policy
+          </h1>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            This policy governs all commercial transactions, student employability programme enrollments, institutional licenses, and corporate hiring agreements across{' '}
+            <strong className="font-semibold text-slate-900">{COMPANY_IDENTITY.brandName}</strong>.
+          </p>
+        </div>
+
+        <div className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-10 space-y-8 text-sm text-slate-700 leading-relaxed">
+          {/* Section 1 */}
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Scale className="h-5 w-5 text-blue-700" />
+              1. Student Programme Tracks &amp; 100% Base Fee Refund Guarantee
+            </h2>
+            <p>
+              Students enrolling through their college&apos;s verified campus code select between two tracks:
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5">
+              <li>
+                <strong>{STUDENT_PROGRAMME_PLANS[0].name}:</strong>{' '}
+                <span className="font-mono font-semibold text-slate-900">
+                  {STUDENT_PROGRAMME_PLANS[0].formattedBase} {STUDENT_PROGRAMME_PLANS[0].formattedGst} ({STUDENT_PROGRAMME_PLANS[0].formattedTotal})
+                </span>
+              </li>
+              <li>
+                <strong>{STUDENT_PROGRAMME_PLANS[1].name}:</strong>{' '}
+                <span className="font-mono font-semibold text-slate-900">
+                  {STUDENT_PROGRAMME_PLANS[1].formattedBase} {STUDENT_PROGRAMME_PLANS[1].formattedGst} ({STUDENT_PROGRAMME_PLANS[1].formattedTotal})
+                </span>
+              </li>
+            </ul>
+            <div className="p-4 rounded-md bg-blue-50/70 border border-blue-200 text-xs text-blue-950 space-y-1.5">
+              <p className="font-bold">12-Month 3-Interview Assurance Refund Guarantee:</p>
+              <p>
+                If an enrolled student completes the 9-Dimension Employability Assessment, maintains active institutional verification, attends scheduled interviews without unexcused absences, and PlacementConnect fails to facilitate at least{' '}
+                <strong>3 verified employer interview opportunities</strong> within 12 months of assessment completion, the student is entitled to a{' '}
+                <strong>100% refund of the Base Programme Fee (₹1,000 or ₹2,500)</strong>.
+              </p>
+              <p className="text-[11px] text-blue-900">
+                *Statutory Tax Note: In accordance with Indian GST regulations, the 18% GST component (₹180 or ₹450) remitted to government tax authorities upon invoice issuance is non-refundable.
+              </p>
+            </div>
+          </section>
+
+          {/* Section 2 */}
+          <section className="space-y-3 border-t border-slate-200 pt-6">
+            <h2 className="text-lg font-bold text-slate-900">
+              2. Pre-Assessment Student Cancellation Window (7 Calendar Days)
+            </h2>
+            <p>
+              If a student requests cancellation within <strong>7 calendar days of payment</strong> and has <strong>not yet initiated or completed</strong> the 9-Dimension Employability Assessment or issued a verifiable credential badge, the base programme fee (₹1,000 or ₹2,500) is refundable within 5–7 business days to the original payment method. Once the evaluation is initiated or a scorecard is generated, the 12-month 3-Interview Assurance Refund Guarantee governs the enrollment.
+            </p>
+          </section>
+
+          {/* Section 3 */}
+          <section className="space-y-3 border-t border-slate-200 pt-6">
+            <h2 className="text-lg font-bold text-slate-900">
+              3. Institutional Placement OS License ({INSTITUTION_COMMERCIAL_PLAN.formattedBase}/year + GST)
+            </h2>
+            <p>
+              Colleges subscribing to the {INSTITUTION_COMMERCIAL_PLAN.name} ({INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) receive a 30-day onboarding milestone commitment. Under our standard Institutional MoU, the Year-1 license fee is waived or credited back when 100 or more final-year students enroll in the Interview Assurance Programme.
+            </p>
+          </section>
+
+          {/* Section 4 */}
+          <section className="space-y-3 border-t border-slate-200 pt-6">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <FileCheck2 className="h-5 w-5 text-emerald-700" />
+              4. Corporate Employer Partners — {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}
+            </h2>
+            <p>
+              {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeDetail}
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
+              <li>
+                <strong>Platform Access &amp; Shortlisting Fee:</strong> ₹0 (No annual subscription tier is required to post roles, filter 9-dimension scorecards, or coordinate campus interviews).
+              </li>
+              <li>
+                <strong>Per-Hire Success Fee:</strong> {EMPLOYER_COMMERCIAL_POLICY.formattedPerJoinFee}, invoiced only after the selected candidate formally joins payroll.
+              </li>
+              <li>
+                <strong>60-Day Probation Protection:</strong> If a placed candidate resigns or is terminated for cause within 60 calendar days of joining, PlacementConnect facilitates a priority replacement shortlist at no additional fee or issues a 100% credit note toward future joins.
+              </li>
+            </ul>
+          </section>
+
+          {/* Section 5 */}
+          <section className="space-y-3 border-t border-slate-200 pt-6">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Mail className="h-5 w-5 text-blue-700" />
+              5. Official Billing, Tax Invoice &amp; Refund Desk
+            </h2>
+            <div className="p-4 rounded-md bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="text-xs font-bold text-slate-700">
+                  {COMPANY_IDENTITY.desks.billingAndRefunds.label}
+                </div>
+                <a
+                  href={`mailto:${COMPANY_IDENTITY.desks.billingAndRefunds.email}`}
+                  className="font-mono text-sm font-bold text-blue-700 hover:underline"
+                >
+                  {COMPANY_IDENTITY.desks.billingAndRefunds.email}
+                </a>
+                <div className="text-xs text-slate-500">
+                  General Support: {COMPANY_IDENTITY.desks.privacyAndGrievance.generalContactEmail} • {GST_POLICY.legalNote}
+                </div>
+              </div>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-800 hover:text-blue-950 shrink-0"
+              >
+                Submit Billing Inquiry Online
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </section>
         </div>
       </div>
     </div>

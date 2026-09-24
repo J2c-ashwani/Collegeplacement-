@@ -7,9 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -150,6 +150,23 @@
 
 .pedl-badge-pill {
   @apply inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[11px] font-medium border;
+}
+
+/* Brand Distinctiveness Layer — Architectural Hairline Grids & Registry Instruments */
+.ledger-grid {
+  @apply bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-[4px] grid gap-px overflow-hidden;
+}
+
+.ledger-cell {
+  @apply bg-white dark:bg-slate-900 p-5 sm:p-6;
+}
+
+.instrument-frame {
+  @apply bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-[6px] shadow-xs overflow-hidden;
+}
+
+.registry-stamp {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[3px] font-mono text-[11px] font-semibold uppercase tracking-wider border;
 }
 
 /* Enterprise Dark Mode Surface & Contrast Harmonization */

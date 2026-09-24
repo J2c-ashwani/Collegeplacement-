@@ -160,7 +160,7 @@ export function AdminAuditTable({ logs }: { logs: AdminAuditLogRow[] }) {
 
             <div className="p-3 bg-slate-50 rounded border border-slate-200 text-slate-600 flex items-center justify-between text-[11px]">
               <span>Actor IP: <strong className="font-mono">{activeDiff?.ip}</strong></span>
-              <span className="text-emerald-700 font-semibold">Cryptographic Integrity: Verified</span>
+              <span className="text-emerald-700 font-semibold">Audit Log Integrity: Verified</span>
             </div>
           </div>
         </DialogContent>

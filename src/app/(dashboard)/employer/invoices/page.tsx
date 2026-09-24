@@ -58,21 +58,21 @@ export default async function EmployerInvoicesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">
-              Corporate Billing
+            <span className="text-xs uppercase font-bold tracking-wider text-blue-800 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+              Corporate Billing &amp; Pay-on-Join Ledger
             </span>
             <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Placement Success Fee Ledger</span>
+            <span className="text-xs text-slate-500">Platform Subscription: ₹0</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Invoices & Success Fees</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Invoices &amp; Pay-on-Join Fee Ledger</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Official billing for verified student hires. Success fees are triggered strictly upon confirmed candidate joining.
+            Platform access, role posting, and 9-dimension candidate shortlisting carry ₹0 subscription cost. Per-hire fees (₹10,000 + 18% GST) apply strictly upon confirmed candidate joining, backed by a 60-day replacement guarantee.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge className="bg-purple-50 text-purple-700 border-purple-200 text-xs font-semibold">
-            Success Fee: As per your employer agreement
+          <Badge className="bg-emerald-50 text-emerald-800 border-emerald-200 text-xs font-semibold">
+            ₹0 Subscription • ₹10,000 + GST on Joining
           </Badge>
         </div>
       </div>

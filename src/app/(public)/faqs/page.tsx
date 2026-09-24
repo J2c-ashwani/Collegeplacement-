@@ -1,58 +1,123 @@
-import React from 'react';
-import { Metadata } from 'next';
+import Link from 'next/link';
+import { HelpCircle, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  INSTITUTION_COMMERCIAL_PLAN,
+  STUDENT_PROGRAMME_PLANS,
+  EMPLOYER_COMMERCIAL_POLICY,
+  GOVERNANCE_MOAT_MECHANICS,
+} from '@/config/commercial-policy';
+import { SAFE_TERMINOLOGY } from '@/config/brand-system';
+import { COMPANY_IDENTITY } from '@/config/company-identity';
 
-export const metadata: Metadata = {
-  title: 'Frequently Asked Questions - PlacementConnect',
-  description: 'Find answers to common questions about PlacementConnect for colleges, students, and employers.',
-};
+const FAQ_SECTIONS = [
+  {
+    category: 'For Colleges, Universities & Placement Officers (TPOs)',
+    items: [
+      {
+        q: 'How does PlacementConnect report campus placement percentages clearly for accreditation reviews?',
+        a: `Under our ${SAFE_TERMINOLOGY.institutionalGovernanceName}, every graduating cohort is tracked across four clear denominators simultaneously: (1) Total Graduating Batch, (2) Registered for Placement, (3) Enrolled in Interview Assurance, and (4) Assessed & Eligible Candidates. TPOs and Principals can export structured CSV and PDF reports showing exact numerator and denominator figures.`,
+      },
+      {
+        q: 'What is the annual license fee for an engineering, management, or degree college?',
+        a: `The ${INSTITUTION_COMMERCIAL_PLAN.name} is priced at ${INSTITUTION_COMMERCIAL_PLAN.formattedBase} per year + ${INSTITUTION_COMMERCIAL_PLAN.formattedGst} (${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
+      },
+      {
+        q: 'How do students from our college register without unauthorized outsiders joining our batch roster?',
+        a: 'Each partner institution receives a dedicated 6-character Campus Code (for example, APX123) and a custom QR onboarding portal that verifies student roll numbers and academic branches against your uploaded batch roster.',
+      },
+    ],
+  },
+  {
+    category: 'For Corporate Employers & Talent Acquisition Teams',
+    items: [
+      {
+        q: 'Does PlacementConnect charge employers a platform subscription fee to post jobs or view shortlists?',
+        a: `No. Platform access, role posting, 9-dimension candidate filtering, and multi-campus interview scheduling carry ${EMPLOYER_COMMERCIAL_POLICY.formattedPlatformFee} (no annual subscription tier required). Under our Standard Hiring Agreement, employers pay ${EMPLOYER_COMMERCIAL_POLICY.formattedPerJoinFee} only after a selected candidate formally joins, backed by our ${EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}.`,
+      },
+      {
+        q: 'How can our HR team verify that a candidate’s 9-Dimension Scorecard is authentic?',
+        a: `Every evaluated student receives a unique Credential ID (such as ${COMPANY_IDENTITY.sampleCredentials.validStudentId}). Recruiters can enter any ID at /verify to confirm whether the credential is Valid, Inactive/Expired, or Not Found.`,
+      },
+      {
+        q: 'What happens if a candidate hired through PlacementConnect leaves during probation?',
+        a: `Every verified hire is protected by our ${EMPLOYER_COMMERCIAL_POLICY.probationReplacementDays}-Day Candidate Replacement Guarantee. If a hire exits within 60 days of joining, we facilitate a priority replacement shortlist at no additional fee or issue a 100% credit note toward your next hire.`,
+      },
+    ],
+  },
+  {
+    category: 'For Graduating Students & 3-Interview Assurance',
+    items: [
+      {
+        q: 'Does the programme guarantee a job offer, or does it guarantee verified corporate interviews?',
+        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[0]} Every eligible student is protected by our ${GOVERNANCE_MOAT_MECHANICS.interviewQuotaLabel} (minimum of 3 verified corporate interview opportunities within 12 months).`,
+      },
+      {
+        q: 'What is the difference between the ₹1,000 and ₹2,500 student programme tracks?',
+        a: `The ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + ₹180 GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) includes the full 9-Dimension Employability Evaluation, a verifiable LinkedIn credential, and 3 guaranteed interview opportunities. The ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + ₹450 GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}) adds a second re-evaluation attempt, structured readiness modules, and priority pooled-drive shortlist routing.`,
+      },
+      {
+        q: 'How does the 100% Base Fee Refund Guarantee work if 3 interviews are not scheduled?',
+        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[2]}`,
+      },
+    ],
+  },
+];
 
 export default function FAQsPage() {
-  const faqs = {
-    "For Colleges": [
-      { q: "How long does the onboarding process take?", a: "Institutional onboarding typically takes 2-3 weeks, including the signing of the MOU, setting up the dedicated dashboard, and initial student data migration." },
-      { q: "Do you integrate with our existing ERP?", a: "Yes, we offer custom integrations with most major college ERP systems to seamlessly sync student academic data." }
-    ],
-    "For Students": [
-      { q: "Is the Placement Assurance Programme free?", a: "The program requires a nominal assessment fee which covers the cost of standardized testing, verified digital profiling, and administrative processing." },
-      { q: "What happens if I fail the assessment?", a: "Students who do not meet the cutoff score can opt for a re-evaluation after 45 days. We provide feedback reports to help you prepare better for the next attempt." }
-    ],
-    "For Employers": [
-      { q: "How are the student skills verified?", a: "We conduct proctored assessments covering cognitive abilities, domain-specific technical skills, and behavioral traits. Academic records are verified directly by the partner institutions." },
-      { q: "Is there a limit on the number of hires?", a: "No, employer partners can hire an unlimited number of candidates from our pre-assessed talent pool based on their subscription tier." }
-    ]
-  };
-
   return (
-    <div className="bg-slate-50 min-h-screen py-16 lg:py-24">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-4">Frequently Asked Questions</h1>
-          <p className="text-lg text-slate-600">Everything you need to know about the product and billing.</p>
+    <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-12">
+        <div className="space-y-3 border-b border-slate-200 pb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-[#1E40AF]">
+            <HelpCircle className="h-3.5 w-3.5" />
+            Frequently Asked Questions
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            Institutional, Employer &amp; Student Programme FAQs
+          </h1>
+          <p className="text-base text-slate-600">
+            Clear answers on four-level placement reporting, INR pricing &amp; GST invoicing, the 9-Dimension Employability Evaluation, and our 3-Interview Assurance commitment.
+          </p>
         </div>
 
-        <div className="space-y-12">
-          {Object.entries(faqs).map(([category, questions], idx) => (
-            <div key={idx}>
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">{category}</h2>
+        <div className="space-y-10">
+          {FAQ_SECTIONS.map((section) => (
+            <div key={section.category} className="space-y-4">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E40AF]">
+                {section.category}
+              </h2>
               <div className="space-y-4">
-                {questions.map((faq, fIdx) => (
-                  <details key={fIdx} className="group bg-white border border-slate-200 rounded-lg shadow-sm [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between gap-1.5 p-4 text-slate-900 font-medium">
-                      {faq.q}
-                      <span className="shrink-0 rounded-full bg-slate-50 p-1.5 text-slate-900 sm:p-3 group-open:-rotate-180 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </span>
-                    </summary>
-                    <div className="px-4 pb-4 text-slate-600 text-base border-t border-slate-100 pt-4">
-                      {faq.a}
-                    </div>
-                  </details>
+                {section.items.map((item) => (
+                  <div
+                    key={item.q}
+                    className="bg-white rounded-md border border-slate-200/90 p-6 space-y-2"
+                  >
+                    <h3 className="text-base font-bold text-slate-900">{item.q}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.a}</p>
+                  </div>
                 ))}
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+              <ShieldCheck className="h-4 w-4 text-blue-700" />
+              Have a specific institutional or corporate question?
+            </div>
+            <p className="text-xs text-slate-600">
+              Contact our Institutional Partnerships Desk ({COMPANY_IDENTITY.desks.institutionalPartnerships.email}) for 1-business-day response.
+            </p>
+          </div>
+          <Button asChild className="bg-[#1E40AF] hover:bg-blue-900 text-white shrink-0">
+            <Link href="/contact">
+              Contact Operations Desk
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

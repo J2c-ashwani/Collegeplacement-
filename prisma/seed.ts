@@ -54,25 +54,24 @@ async function main() {
     },
   })
 
-  // 3. Institution Plans (Configurable pricing, NOT hardcoded)
+  // 3. Institution Plans (Aligned with src/config/commercial-policy.ts: ₹15,000/yr)
   console.log('3. Seeding institution membership plans...')
   const partnerPlan = await prisma.institutionPlan.upsert({
     where: { slug: 'partner' },
-    update: { price: 9999 },
+    update: { price: 15000 },
     create: {
-      name: 'Partner',
+      name: 'Institutional Placement Operating System',
       slug: 'partner',
-      description: 'Essential institutional placement partnership with student registration access and basic reporting.',
-      price: 9999,
+      description: 'Annual institutional placement OS license with four-level cohort reporting and QR onboarding.',
+      price: 15000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Dedicated student registration portal',
-        'Custom institutional QR & URL',
-        'Up to 500 student registrations',
-        'Standard placement dashboard',
-        'Placement verification & documentation',
-        'Email support'
+        'Dedicated student registration portal & Campus Code',
+        'Four-level cohort placement reporting (Full Batch, Opted, Programme, Assessed)',
+        'Structured CSV/PDF summaries designed to support institutional placement documentation',
+        'Placement verification & documentation vault',
+        'Dedicated Institutional Partnerships Desk support'
       ],
       sortOrder: 1,
     },
@@ -84,17 +83,16 @@ async function main() {
     create: {
       name: '1-Year Campus Placement Membership',
       slug: 'placement',
-      description: 'Comprehensive placement partnership with priority employer matching, assessment drives and workshop sessions.',
+      description: 'Comprehensive placement partnership with four-level cohort reporting, assessment drives and employer network access.',
       price: 15000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'All Partner plan features',
+        'All Institutional Placement OS features',
         'Up to 1,500 student registrations',
         'Priority employer drive matching',
-        '2 Career readiness workshops / year',
-        '1 Industry interaction session / year',
-        'Advanced funnel analytics & NAAC-style reports',
+        '9-Dimension Employability Assessment administration',
+        'Structured exports designed to support institutional placement documentation',
         'Dedicated TPO relationship manager'
       ],
       sortOrder: 2,
@@ -105,44 +103,42 @@ async function main() {
     where: { slug: 'placement-5yr' },
     update: { price: 60000, durationMonths: 60 },
     create: {
-      name: '5-Year Premium Institutional Membership (NAAC Cycle)',
+      name: '5-Year Multi-Cohort Institutional Agreement',
       slug: 'placement-5yr',
-      description: 'Flagship 5-year institutional network covering a full NAAC cycle with unlimited students, direct campus interview drives, and industry visits.',
+      description: 'Multi-year institutional agreement covering 5 academic cohorts with multi-batch benchmarking and campus drives.',
       price: 60000,
       gstPercent: 18,
       durationMonths: 60,
       features: [
-        'All Placement plan features for 5 continuous academic years',
-        'Unlimited student registrations',
-        'Exclusive virtual & campus hiring drives',
-        '5-Year Multi-Cohort NAAC Criterion 5.2.1 & NIRF Evidence Vault',
-        'Formal 5-year institutional MOU management',
+        'All Institutional Placement OS features for 5 continuous academic years',
+        'Unlimited student registrations across 5 graduating batches',
+        'Multi-cohort placement documentation & historical export archive',
+        'Formal 5-year institutional MoU governance',
         'Department-wise placement benchmarking',
-        'Executive TPO review meetings quarterly'
+        'Quarterly Executive & Principal review meetings'
       ],
       sortOrder: 3,
     },
   })
 
-  // 4. Student Programme Plans (Configurable, NOT hardcoded)
+  // 4. Student Programme Plans (Aligned with src/config/commercial-policy.ts: ₹1,000 and ₹2,500)
   console.log('4. Seeding student programme plans...')
   const assurancePlan = await prisma.programmePlan.upsert({
     where: { slug: 'placement-assurance' },
     update: { price: 1000 },
     create: {
-      name: 'Placement Assurance Programme',
+      name: 'Graduate Assessment & 3-Interview Assurance Track',
       slug: 'placement-assurance',
-      description: 'Full assessment, employability score, badges, and minimum 3 qualified interview opportunities.',
+      description: '9-Dimension Employability Evaluation, Verifiable Readiness Credential, and 3 Guaranteed Employer Interviews.',
       price: 1000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Comprehensive 9-dimension employability assessment',
-        'Verified career-readiness scorecard & profile',
-        'Earn industry badges',
-        'Minimum 3 qualified interview opportunities',
-        'Resume review & guidance',
-        'Interview preparation materials'
+        'Complete 9-Dimension Employability Evaluation',
+        'Verifiable digital scorecard & credential (/verify/[id])',
+        'Minimum of 3 verified corporate interview opportunities within 12 months',
+        '100% Base Fee Refund Guarantee (₹1,000) if 3 interviews are not facilitated',
+        'Student-controlled profile visibility'
       ],
       sortOrder: 1,
     },
@@ -152,18 +148,18 @@ async function main() {
     where: { slug: 'placement-plus-student' },
     update: { price: 2500 },
     create: {
-      name: 'Placement Plus Programme',
+      name: 'Advanced Career Readiness & Priority Drive Track',
       slug: 'placement-plus-student',
-      description: 'Everything in Assurance plus 1-on-1 mock interviews and priority employer shortlisting.',
+      description: 'Everything in the ₹1,000 Assurance Track plus a second post-preparation evaluation attempt and priority pooled drive shortlisting.',
       price: 2500,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Everything in Placement Assurance (₹1,000 tier)',
-        '2x 1-on-1 Mock interviews with industry mentor',
-        'Priority shortlisting on partner employer vacancies',
-        'Detailed diagnostic subscore improvement report',
-        'Minimum 5 qualified interview opportunities & dedicated counsellor support'
+        'Everything in the ₹1,000 Graduate Assessment & 3-Interview Assurance Track',
+        'Two assessment attempts (baseline + post-preparation evaluation)',
+        'Structured communication, analytical, and domain preparation modules',
+        'Priority shortlist routing for multi-campus pooled hiring drives',
+        '100% Base Fee Refund Guarantee (₹2,500) if 3 interviews are not facilitated'
       ],
       sortOrder: 2,
     },

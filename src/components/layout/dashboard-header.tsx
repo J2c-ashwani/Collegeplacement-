@@ -69,6 +69,16 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
             </span>
             <span className="text-xs text-slate-300 dark:text-slate-700">|</span>
             <span className="text-[11px] font-mono font-medium text-slate-500">Batch of 2026</span>
+            {(user?.email?.includes('apextech.edu.in') ||
+              user?.email?.includes('techcorp.example.com') ||
+              user?.email?.includes('placementconnect.com')) && (
+              <>
+                <span className="text-xs text-slate-300 dark:text-slate-700">|</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-[3px] font-mono text-[10px] font-bold uppercase tracking-wider bg-amber-50 text-amber-900 border border-amber-200">
+                  Sample Sandbox Workspace — Illustrative Data
+                </span>
+              </>
+            )}
           </div>
         </div>
         
