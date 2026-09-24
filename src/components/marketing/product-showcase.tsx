@@ -115,16 +115,20 @@ export function ProductShowcaseInstrument() {
               {FOUR_DENOMINATOR_MODEL.map((d) => (
                 <div
                   key={d.id}
-                  className="p-4 rounded-md border border-slate-200 bg-slate-50/60 space-y-1.5"
+                  className="p-4 rounded-md border border-slate-200 bg-slate-50/60 space-y-2"
                 >
                   <div className="flex items-center justify-between text-xs text-slate-500">
-                    <span className="font-medium">{d.code}</span>
-                    <span className="font-mono">{d.sampleCount} students</span>
+                    <span className="font-semibold text-slate-700">{d.code}</span>
+                    <span className="font-mono font-semibold text-slate-700">{d.percentOfBatch} of batch</span>
                   </div>
-                  <div className="text-sm font-bold text-slate-900">{d.label}</div>
-                  <div className="text-2xl font-mono font-bold text-[#1E40AF] tabular-nums">
-                    {d.samplePlacementRate}
+                  <div className="text-2xl font-mono font-bold text-slate-900 tabular-nums">
+                    {d.sampleCount} <span className="text-xs font-sans font-normal text-slate-500">students</span>
                   </div>
+                  <div className="p-2 rounded bg-white border border-slate-200/80 flex items-center justify-between text-xs">
+                    <span className="text-slate-600 font-medium">Placement Rate:</span>
+                    <span className="font-mono font-bold text-[#1E40AF]">{d.samplePlacementRate}</span>
+                  </div>
+                  <div className="text-[11px] font-mono text-slate-500">{d.formulaText}</div>
                   <p className="text-xs text-slate-600 leading-relaxed">{d.description}</p>
                 </div>
               ))}

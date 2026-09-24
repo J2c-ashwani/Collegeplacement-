@@ -120,14 +120,14 @@ export default function HomePage() {
               <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
                 <div>
                   <div className="text-xs font-semibold text-[#1E40AF]">
-                    Four-Level Cohort Reporting
+                    Four-Stage Cohort Reporting
                   </div>
                   <h2 className="text-base font-bold text-slate-900 mt-0.5">
-                    Clear Denominators for Institutional Reviews
+                    Clear Batch Numbers for Principals &amp; Reviews
                   </h2>
                 </div>
-                <span className="text-[11px] font-medium px-2.5 py-1 rounded bg-white border border-slate-200 text-slate-600">
-                  Sample Batch (2026)
+                <span className="text-[11px] font-medium px-2.5 py-1 rounded bg-white border border-slate-200 text-slate-700">
+                  600 Batch • 384 Placed
                 </span>
               </div>
 
@@ -135,15 +135,18 @@ export default function HomePage() {
                 {FOUR_DENOMINATOR_MODEL.map((d) => (
                   <div
                     key={d.id}
-                    className="p-4 rounded-md border border-slate-200/90 bg-white space-y-1"
+                    className="p-4 rounded-md border border-slate-200/90 bg-white space-y-1.5"
                   >
                     <div className="flex items-center justify-between text-[11px] text-slate-500">
-                      <span>{d.code}</span>
-                      <span className="font-mono">{d.sampleCount}</span>
+                      <span className="font-semibold text-slate-700">{d.code}</span>
+                      <span className="font-mono font-semibold text-slate-600">{d.percentOfBatch} of batch</span>
                     </div>
-                    <div className="text-xs font-bold text-slate-800">{d.label}</div>
-                    <div className="text-2xl font-mono font-bold text-[#1E40AF] tabular-nums pt-0.5">
-                      {d.samplePlacementRate}
+                    <div className="text-2xl font-mono font-bold text-slate-900 tabular-nums">
+                      {d.sampleCount} <span className="text-xs font-sans font-normal text-slate-500">students</span>
+                    </div>
+                    <div className="pt-1 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                      <span className="text-slate-500">384 Placed:</span>
+                      <span className="font-mono font-bold text-[#1E40AF]">{d.samplePlacementRate}</span>
                     </div>
                   </div>
                 ))}

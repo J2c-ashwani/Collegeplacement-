@@ -88,7 +88,7 @@ export default function PublicLayout({
                 href="/placement-assurance"
                 className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
               >
-                Interview Assurance
+                3 Corporate Interview Assurance
               </Link>
               <Link
                 href="/pricing"
@@ -175,7 +175,7 @@ export default function PublicLayout({
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-medium"
               >
-                3-Interview Assurance Programme
+                3 Corporate Interview Assurance
               </Link>
               <Link
                 href="/pricing"

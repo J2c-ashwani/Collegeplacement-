@@ -109,11 +109,11 @@ export const EMPLOYER_COMMERCIAL_POLICY = {
 
 export const GOVERNANCE_MOAT_MECHANICS = {
   liquidityGuardrailMultiplier: 1.2,
-  liquidityGuardrailLabel: 'Confirmed Employer Interview Capacity (1.20x Supply Buffer)',
+  liquidityGuardrailLabel: 'We Secure More Interview Capacity Than the Number of Students We Commit To',
   liquidityGuardrailExplanation:
-    'PlacementConnect never enrolls student cohorts without confirmed employer interview demand. We maintain at least 1.20x verified employer interview capacity in our active hiring pipeline for every promised student interview before expanding cohort intake.',
+    'Before expanding a student cohort, PlacementConnect maintains additional confirmed employer interview capacity (at least a 1.20× capacity reserve) in our active hiring pipeline so every eligible student can be scheduled across 3 corporate interviews.',
   interviewQuotaMultiplier: 3,
-  interviewQuotaLabel: '3-Interview Assurance Commitment',
+  interviewQuotaLabel: '3 Corporate Interview Assurance',
   interviewQuotaExplanation:
     'Every eligible student is tracked from enrollment through 3 completed corporate interviews (0/3 to 3/3), receiving priority shortlist placement until their interview commitment is fulfilled.',
   assuranceBoundaryDisclosures: [
