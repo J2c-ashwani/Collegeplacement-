@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Multi-tenant institutional placement operating system combining 4-denominator cohort accounting, the 9-Dimension Employability Assessment Framework, and a 1.20x liquidity-backed 3N interview assurance engine.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
