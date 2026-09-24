@@ -100,9 +100,9 @@ export const EMPLOYER_COMMERCIAL_POLICY = {
     'Platform access, role posting, 9-dimension candidate screening, and multi-campus interview coordination carry ₹0 subscription cost. Under our Standard Hiring Agreement, a success fee of ₹10,000 + 18% GST applies only after a selected candidate formally joins your organization, backed by a 60-day free replacement or credit note if the hire exits during probation.',
   deliverables: [
     '₹0 annual subscription — post graduate and entry-level roles across partner institutions at no upfront cost',
-    'Pre-assessed candidate shortlists filtered across 9 core employability dimensions (0–100 scale)',
+    'Pre-assessed candidate shortlists ranked by your role-specific thresholds across 9 core competency areas (0–100 scale)',
     'Institution-verified academic records (CGPA, active backlog status, graduation batch, and enrollment ID)',
-    'Automated interview slot scheduling and structured panel evaluation sheets for campus and pooled drives',
+    'Coordinate campus and multi-campus pooled interviews in one workspace without managing scattered spreadsheets, college email threads, and manual candidate lists',
     'Pay-on-join commercial model (₹10,000 + GST) protected by a 60-day probation replacement guarantee',
   ],
 } as const;
