@@ -42,13 +42,19 @@ jobs:
         run: npm ci
 
       - name: Generate Prisma Client
-        run: npx prisma generate
+        run: npx prisma generate --schema prisma/schema
         env:
           DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
           DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
 
       - name: Push Database Schema
-        run: npx prisma db push --skip-generate
+        run: npx prisma db push --schema prisma/schema --skip-generate
+        env:
+          DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
+          DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
+
+      - name: Seed Test Database
+        run: npm run db:seed
         env:
           DATABASE_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"
           DIRECT_URL: "postgresql://postgres:postgrespassword@localhost:5432/placementconnect_test?schema=public"

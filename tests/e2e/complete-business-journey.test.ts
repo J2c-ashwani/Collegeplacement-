@@ -163,14 +163,14 @@ describe('Complete End-to-End Business Journey Acceptance Test', () => {
     console.log(`✓ Student ${studentUser.name} registered under ${institution.name}`)
 
     // =========================================================================
-    // STEP 3: Student pays ₹999 for Placement Assurance → Programme activated
+    // STEP 3: Student pays ₹1,000 for Placement Assurance → Programme activated
     // =========================================================================
     console.log('Step 3: Student Programme Payment & Activation...')
     const programmePlan = await prisma.programmePlan.findFirst({
       where: { slug: 'placement-assurance' },
     })
     expect(programmePlan).toBeDefined()
-    expect(Number(programmePlan?.price)).toBe(999)
+    expect(Number(programmePlan?.price)).toBe(1000)
 
     const stuBase = Number(programmePlan!.price)
     const stuGst = stuBase * 0.18

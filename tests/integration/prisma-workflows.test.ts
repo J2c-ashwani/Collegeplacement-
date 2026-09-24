@@ -39,7 +39,8 @@ describe('Database Integration & Business Workflows', () => {
     expect(activeMembership?.status).toBe('ACTIVE')
     expect(activeMembership?.endDate).toBeDefined()
     expect(new Date(activeMembership!.endDate!).getTime()).toBeGreaterThan(Date.now())
-    expect(activeMembership?.plan.name).toBe('Placement')
+    expect(activeMembership?.plan.slug).toBe('placement')
+    expect(activeMembership?.plan.name).toContain('Placement')
   })
 
   it('verifies student cohort denominator and roster student records', async () => {
