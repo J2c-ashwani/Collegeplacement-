@@ -38,9 +38,14 @@ export function ProductShowcaseInstrument() {
             {SAFE_TERMINOLOGY.productPreviewLabel}
           </span>
         </div>
-        <span className="font-mono text-[11px] text-slate-400">
-          Sample Workspace: Apex Institute of Technology (Batch 2026)
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="px-2.5 py-0.5 rounded bg-amber-500/20 border border-amber-400/50 text-amber-200 font-mono text-[10px] font-semibold uppercase tracking-wider">
+            DEMO DATA — NOT LIVE INSTITUTIONAL RESULTS
+          </span>
+          <span className="font-mono text-[11px] text-slate-400">
+            Sample Workspace: Apex Institute of Technology (Batch 2026)
+          </span>
+        </div>
       </div>
 
       {/* Role Switcher Tabs */}
@@ -93,20 +98,25 @@ export function ProductShowcaseInstrument() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div>
-                <div className="text-xs font-semibold text-[#1E40AF]">
-                  Four-Level Placement Reporting
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold text-[#1E40AF]">
+                    Four-Level Placement Reporting
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-amber-50 border border-amber-300 text-amber-900 font-mono text-[10px] font-bold uppercase tracking-wide">
+                    ILLUSTRATIVE SAMPLE WORKSPACE
+                  </span>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mt-0.5">
-                  Apex Institute of Technology — Graduating Batch 2026
+                <h3 className="text-lg font-bold text-slate-900 mt-1">
+                  Apex Institute of Technology — Graduating Batch 2026 (Sample Cohort)
                 </h3>
               </div>
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 <span className="px-3 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 font-mono">
                   <QrCode className="h-3.5 w-3.5 inline mr-1.5 text-blue-700" />
-                  Campus Code: APX123
+                  Campus Code: APX123 (Demo)
                 </span>
                 <span className="px-3 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold">
-                  384 Confirmed Placements
+                  384 Confirmed Placements (Sample Data)
                 </span>
               </div>
             </div>

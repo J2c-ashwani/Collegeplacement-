@@ -9,9 +9,9 @@ export const COMPANY_IDENTITY = {
   legalUnitName: 'PlacementConnect Institutional Systems (India Operations Desk)',
   tagline: 'Institutional Campus Placement & Verified Fresher Hiring Infrastructure',
   operatingModelDisclosure:
-    'PlacementConnect is an India-focused multi-tenant institutional SaaS and verified campus hiring infrastructure platform currently onboarding founding engineering, management, and degree institutions under structured MoU partnerships.',
+    'PlacementConnect is an institutional placement and verified fresher hiring platform that helps colleges manage student placement operations, employer interviews, readiness assessment, and placement reporting in one workspace.',
   pilotTransparencyNote:
-    'Public interactive previews and sandbox workspaces (e.g., Apex Institute of Technology, TechCorp Solutions) use illustrative institutional cohort datasets to demonstrate 4-denominator placement accounting, 9-dimension employability evaluation, and 3N interview quota governance.',
+    'Public previews use illustrative sample data (such as Apex Institute of Technology and TechCorp Solutions) to demonstrate placement reporting, student evaluation, and interview-capacity management.',
   governanceEffectiveDate: '1 August 2026',
   lastReviewedDate: '15 September 2026',
   jurisdiction: 'New Delhi / National Capital Region (NCR), India',

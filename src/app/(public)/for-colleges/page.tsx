@@ -144,11 +144,11 @@ export default function ForCollegesPage() {
                 What Your Students Get
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                Up to 3 Verified Corporate Interview Opportunities
+                3 Verified Corporate Interview Opportunities
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 For eligible final-year students enrolled in the{' '}
-                <strong className="text-slate-900">3 Corporate Interview Assurance Programme</strong>, subject to programme eligibility and attendance terms. Note: PlacementConnect assures verified corporate interview opportunities—final job selection always rests on candidate performance and employer evaluation.
+                <strong className="text-slate-900">3 Corporate Interview Assurance Programme</strong>, subject to programme eligibility and attendance requirements. Note: PlacementConnect assures 3 verified corporate interview opportunities—final job selection always rests on candidate performance and employer evaluation.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-1">
@@ -156,7 +156,7 @@ export default function ForCollegesPage() {
                     100% Base Programme Fee Refund Protection
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    If the stated 3-interview commitment is not met within 12 months of readiness evaluation completion for an eligible student, PlacementConnect refunds 100% of their base programme fee (₹1,000 or ₹2,500).
+                    If the 3 verified corporate interview opportunities are not facilitated within 12 months of readiness evaluation completion for an eligible student, PlacementConnect refunds 100% of their base programme fee (₹1,000 or ₹2,500).
                   </p>
                 </div>
                 <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-1">
@@ -172,10 +172,10 @@ export default function ForCollegesPage() {
 
             <div className="lg:col-span-5 bg-slate-50 rounded-lg border border-slate-200 p-6 space-y-4">
               <div className="text-xs font-semibold uppercase tracking-wider text-[#1E40AF]">
-                Student Readiness Assessment
+                Student Readiness Assessment (All 9 Areas)
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Students are evaluated across nine employability areas (Analytical Logic, Technical Foundations, Communication Clarity, Learning Agility, Teamwork, and Professional Reliability) before they enter the verified corporate interview pool.
+                Students are evaluated across all nine employability areas—<strong>1. Analytical Logic, 2. Technical Foundations, 3. Role Execution, 4. Communication Clarity, 5. Behavioral Maturity, 6. Learning Agility, 7. Teamwork &amp; Collaboration, 8. Quantitative Reasoning, and 9. Professional Reliability</strong>—before they enter the verified corporate interview pool.
               </p>
               <div className="p-3.5 rounded bg-white border border-slate-200 flex items-center justify-between text-xs">
                 <div>
@@ -260,7 +260,7 @@ export default function ForCollegesPage() {
               Transparent Pricing
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              Clear Economics Across College, Student &amp; Visiting Employers
+              Clear Economics Across College, Student &amp; Hiring Employers
             </h2>
             <p className="text-sm text-slate-600">
               Here is how the commercial model works across all three participants so you can explain it directly to your Principal and management:
@@ -325,7 +325,7 @@ export default function ForCollegesPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                    <span>Up to 3 verified corporate interview opportunities within 12 months</span>
+                    <span>3 verified corporate interview opportunities within 12 months for eligible students</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />

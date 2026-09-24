@@ -271,7 +271,7 @@ export default function PublicLayout({
                 </li>
                 <li>
                   <Link href="/placement-assurance" className="hover:text-white transition">
-                    3-Interview Assurance
+                    3 Corporate Interview Assurance
                   </Link>
                 </li>
                 <li>
