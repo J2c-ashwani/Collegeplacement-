@@ -305,6 +305,10 @@ export default function ForStudentsPage() {
             ))}
           </div>
 
+          <p className="text-xs text-slate-500 italic">
+            Note: CTC ranges are indicative; actual openings, employers, locations, and compensation depend on live hiring requirements and candidate eligibility.
+          </p>
+
           {/* How Matching Works in 4 Steps */}
           <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-4">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800">

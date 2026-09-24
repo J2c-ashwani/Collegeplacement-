@@ -78,7 +78,7 @@ export const STUDENT_PROGRAMME_PLANS = [
       'Everything in the Standard Track (₹1,180): 3 verified corporate interview opportunities within 12 months of assessment completion + 9-area assessment + verified profile',
       'Guided preparation modules across communication, analytical problem-solving, and role execution mapped to your baseline score',
       'Second full assessment attempt after preparation so you can improve your percentile (your higher score is kept for recruiters)',
-      'Priority shortlist consideration for multi-campus pooled corporate hiring drives',
+      'Priority shortlist presentation for multi-campus pooled corporate hiring drives (your profile is included in the first batch of verified shortlists shared with hiring teams when you meet role cutoffs)',
       '100% Base Fee Refund Guarantee (₹2,500 refunded if 3 verified corporate interviews are not facilitated within 12 months of assessment completion)',
     ],
   },
@@ -119,6 +119,7 @@ export const GOVERNANCE_MOAT_MECHANICS = {
   assuranceBoundaryDisclosures: [
     'PlacementConnect provides a 3 Corporate Interview Assurance (3 verified corporate interview opportunities within 12 months of assessment completion for eligible students, subject to programme eligibility and attendance terms)—not a guaranteed job offer. Final selection decisions always rest on candidate merit and employer evaluation.',
     'Definition of a Verified Corporate Interview Opportunity: A confirmed first-round corporate interview slot with a registered employer for a fresher role matching your degree stream and academic eligibility criteria.',
+    'Definition of Priority Pooled Drive Consideration (Extended Track): When you meet an employer’s academic and 9-area cutoff for a multi-campus pooled hiring drive, your profile is placed in the first-wave shortlist batch presented to the hiring team.',
     'Eligibility requires completing the 9-Area Employability Assessment, maintaining verified college enrollment, and attending scheduled interviews without unexcused absences.',
     'If PlacementConnect does not facilitate 3 verified corporate interview opportunities within 12 months of assessment completion for an eligible student, 100% of the base programme fee (₹1,000 or ₹2,500) is refunded; statutory 18% GST remitted to tax authorities is non-refundable under Indian tax law.',
   ],
