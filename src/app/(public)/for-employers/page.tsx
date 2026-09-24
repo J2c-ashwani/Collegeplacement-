@@ -3,7 +3,7 @@ import {
   CheckCircle2,
   ArrowRight,
   CalendarCheck2,
-  FileCheck2,
+  Briefcase,
   ShieldCheck,
   Users,
   SlidersHorizontal,
@@ -58,23 +58,22 @@ export default function ForEmployersPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-slate-900">
       <div className="max-w-6xl mx-auto space-y-16">
-        {/* Hero: Talent Quality -> Screening -> Shortlist -> Interviews -> Hiring */}
+        {/* Hero: Pure Recruiter Value Proposition (No Employer Pricing / Commercial Terms) */}
         <div className="space-y-5 border-b border-slate-200 pb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-900">
             For Corporate Talent Acquisition, HR Heads &amp; University Relations Teams
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 max-w-4xl leading-tight">
-            Structured Graduate Hiring: Pre-Assessed Shortlists, Coordinated Interviews, Zero Platform Fee
+            Structured Graduate Hiring: Institution-Verified Cohorts, Pre-Assessed Shortlists, and Coordinated Interviews
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
             Replace high-volume resume screening with verified competency data. Give us your fresher role, location, and eligibility criteria—we deliver institution-verified, pre-assessed candidate shortlists across our{' '}
-            <strong className="font-semibold text-slate-900">9 Competency Areas</strong>, coordinate interview panels in one workspace, and charge{' '}
-            <strong className="font-semibold text-slate-900">₹0 platform fee</strong> until a selected candidate formally joins your team.
+            <strong className="font-semibold text-slate-900">9 Competency Areas</strong> and coordinate single-campus or multi-campus interview panels in one workspace.
           </p>
           <div className="flex flex-wrap items-center gap-3.5 pt-2">
             <Button asChild className="h-11 px-6 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold">
-              <Link href="/register">
-                Start Hiring at ₹0 Platform Fee
+              <Link href="/contact">
+                Discuss Your Hiring Requirements
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -126,9 +125,9 @@ export default function ForEmployersPage() {
               },
               {
                 step: '05 / Hiring',
-                title: 'Pay Only on Joining',
+                title: 'Offer & Joining Coordination',
                 detail:
-                  '₹0 upfront fee; ₹10,000 + GST applies only after onboarding, protected by a 60-day replacement guarantee.',
+                  'Extend offers, track candidate acceptance and joining timelines, and onboard verified graduates with complete readiness records.',
               },
             ].map((item) => (
               <div
@@ -143,7 +142,7 @@ export default function ForEmployersPage() {
           </div>
         </section>
 
-        {/* NEW SECTION: Candidate Supply Pools + Actionable Role-Specific Thresholds & Ranking Logic */}
+        {/* Candidate Supply Pools + Actionable Role-Specific Thresholds & Ranking Logic */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left 6 Cols: Candidate Supply & Pooled Drive Sourcing */}
           <div className="lg:col-span-6 bg-white rounded-lg border border-slate-200/90 p-7 space-y-5">
@@ -270,25 +269,33 @@ export default function ForEmployersPage() {
           </div>
         </section>
 
-        {/* Commercial Terms & Replacement Protection */}
+        {/* Bottom 2-Column Section: Designed for Efficient Graduate Hiring + Included Recruiter Capabilities */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 space-y-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800">
-              <FileCheck2 className="h-4 w-4" />
-              Transparent Commercial Model
-            </div>
-            <h3 className="text-xl font-bold text-slate-900">
-              {EMPLOYER_COMMERCIAL_POLICY.formattedPlatformFee} • Pay Only on Verified Join
-            </h3>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeDetail}
-            </p>
-            <div className="p-4 rounded-md bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-950 space-y-1">
-              <div className="font-bold">{EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}</div>
-              <p className="leading-relaxed">
-                If a hired candidate resigns or exits during probation within 60 calendar days of their official joining date, PlacementConnect provides a priority replacement candidate shortlist at zero additional fee or issues a 100% credit note toward your next hire under the Standard Hiring Agreement.
+          <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between space-y-5">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800">
+                <Briefcase className="h-4 w-4" />
+                Designed for Efficient Graduate Hiring
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">
+                Structured Around Your Graduate Hiring Requirements
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Whether you are hiring for a specialized technical team or running a multi-city fresher intake, PlacementConnect structures your candidate pipeline around institution-verified academic eligibility, 9-competency role thresholds, and coordinated interview panels.
               </p>
+              <div className="p-4 rounded-md bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                <div className="font-bold text-slate-900">Employer Onboarding &amp; Partnership Scope</div>
+                <p className="leading-relaxed">
+                  Hiring partnerships are structured based on employer requirements and partnership scope. Commercial terms are discussed during employer onboarding.
+                </p>
+              </div>
             </div>
+            <Button asChild className="w-full h-11 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold">
+              <Link href="/contact">
+                Request a Hiring Walkthrough
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
 
           <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 space-y-4">

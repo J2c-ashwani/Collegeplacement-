@@ -91,22 +91,11 @@ export default function RefundPolicyPage() {
           <section className="space-y-3 border-t border-slate-200 pt-6">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <FileCheck2 className="h-5 w-5 text-emerald-700" />
-              4. Corporate Employer Partners — {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}
+              4. Corporate Employer Hiring Agreements
             </h2>
             <p>
-              {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeDetail}
+              Hiring partnerships with corporate employers are structured based on hiring requirements and partnership scope. Specific commercial terms, invoicing milestones, and service commitments for corporate employers are governed by the executed Employer Hiring Agreement established during employer onboarding.
             </p>
-            <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-600">
-              <li>
-                <strong>Platform Access &amp; Shortlisting Fee:</strong> ₹0 (No annual subscription tier is required to post roles, filter 9-dimension scorecards, or coordinate campus interviews).
-              </li>
-              <li>
-                <strong>Per-Hire Success Fee:</strong> {EMPLOYER_COMMERCIAL_POLICY.formattedPerJoinFee}, invoiced only after the selected candidate formally joins payroll.
-              </li>
-              <li>
-                <strong>60-Day Probation Protection:</strong> If a placed candidate resigns or is terminated for cause within 60 calendar days of joining, PlacementConnect facilitates a priority replacement shortlist at no additional fee or issues a 100% credit note toward future joins.
-              </li>
-            </ul>
           </section>
 
           {/* Section 5 */}

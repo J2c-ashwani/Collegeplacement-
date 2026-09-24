@@ -21,17 +21,17 @@ export default function PricingPage() {
         {/* Header: Simple Commercial Decision */}
         <div className="space-y-4 border-b border-slate-200 pb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-[#1E40AF]">
-            Commercial Pricing Schedule (INR + 18% GST)
+            Institutional &amp; Student Programme Pricing (INR + 18% GST)
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
-            Simple, Transparent Pricing for Colleges, Employers, and Students
+            Transparent Institutional &amp; Student Programme Pricing
           </h1>
           <p className="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
             {GST_POLICY.legalNote}
           </p>
         </div>
 
-        {/* 3-Column Commercial Matrix */}
+        {/* 3-Column Matrix: College Pricing, Student Pricing, Employer Onboarding Inquiry */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {/* Column 1: Institutions */}
           <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between space-y-6">
@@ -78,8 +78,8 @@ export default function PricingPage() {
             </Button>
           </div>
 
-          {/* Column 2: Corporate Employers */}
-          <div className="bg-white rounded-md border border-emerald-300 p-7 sm:p-8 flex flex-col justify-between space-y-6 shadow-2xs">
+          {/* Column 2: Corporate Employers (No Public Pricing Displayed) */}
+          <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-emerald-800">
@@ -88,17 +88,10 @@ export default function PricingPage() {
                 <Briefcase className="h-5 w-5 text-emerald-700" />
               </div>
               <h2 className="text-xl font-bold text-slate-900">
-                {EMPLOYER_COMMERCIAL_POLICY.name}
+                Corporate Graduate Hiring Partnerships
               </h2>
-              <div>
-                <div className="text-3xl font-mono font-bold text-emerald-700">₹0</div>
-                <div className="text-xs text-slate-600 mt-1">
-                  Platform Subscription Fee •{' '}
-                  <strong className="font-mono text-slate-800">₹10,000 + 18% GST</strong> per verified join
-                </div>
-              </div>
-              <div className="p-3.5 rounded-md bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-900 font-medium leading-relaxed">
-                Includes our {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}.
+              <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+                Hiring partnerships are structured based on employer requirements and partnership scope. Commercial terms are discussed during employer onboarding. Contact our team to discuss your hiring needs.
               </div>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 {EMPLOYER_COMMERCIAL_POLICY.deliverables.map((item) => (
@@ -110,9 +103,9 @@ export default function PricingPage() {
               </ul>
             </div>
 
-            <Button asChild className="w-full h-11 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold">
-              <Link href="/register">
-                Create Corporate Recruiter Account
+            <Button asChild className="w-full h-11 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold">
+              <Link href="/contact">
+                Discuss Your Hiring Requirements
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

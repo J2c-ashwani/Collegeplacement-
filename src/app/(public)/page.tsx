@@ -95,7 +95,7 @@ export default function HomePage() {
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
                 <div className="text-xs text-slate-600 mt-1">
-                  Pre-assessed graduate shortlists (<span className="font-mono font-semibold text-slate-900">₹0 platform fee</span>)
+                  Pre-assessed graduate shortlists &amp; coordinated drives
                 </div>
               </Link>
 
@@ -194,7 +194,7 @@ export default function HomePage() {
             {
               num: '03',
               title: 'Verified Shortlists & Campus Drives',
-              body: 'Employers filter pre-assessed candidates at zero platform subscription cost and coordinate interview panels across partner campuses.',
+              body: 'Employers filter pre-assessed candidates across 9 competency areas and coordinate interview panels across partner campuses.',
             },
             {
               num: '04',
@@ -287,7 +287,7 @@ export default function HomePage() {
                 <Briefcase className="h-5 w-5 text-emerald-700" />
               </div>
               <h3 className="text-xl font-bold text-slate-900">
-                Pre-Assessed Graduate Talent &amp; 60-Day Replacement Protection
+                Built for High-Efficiency Graduate Hiring Teams
               </h3>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 {EMPLOYER_COMMERCIAL_POLICY.deliverables.map((item) => (
@@ -371,7 +371,7 @@ export default function HomePage() {
 
           <div className="lg:col-span-7 space-y-4">
             <div className="text-xs font-semibold uppercase tracking-wider text-[#1E40AF]">
-              Simple, Transparent Commercial Terms (INR + 18% GST)
+              Transparent Institutional &amp; Student Programme Pricing
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-5 rounded-md border border-slate-200 bg-slate-50/70 space-y-1.5">
@@ -393,12 +393,14 @@ export default function HomePage() {
                 <div className="text-xs font-semibold text-emerald-900">
                   Corporate Employers
                 </div>
-                <div className="text-2xl font-mono font-bold text-emerald-700">₹0</div>
+                <div className="text-lg font-bold text-slate-900">
+                  Custom Hiring Scope
+                </div>
                 <div className="text-xs text-slate-500">
-                  Platform Access &amp; Shortlists
+                  Single-College &amp; Multi-Campus Drives
                 </div>
                 <p className="text-xs text-slate-600 pt-1">
-                  <span className="font-mono font-semibold text-slate-800">₹10,000 + GST</span> only upon verified candidate joining (60-day replacement guarantee).
+                  Hiring partnerships are structured based on employer requirements and partnership scope. Commercial terms are discussed during employer onboarding.
                 </p>
               </div>
 

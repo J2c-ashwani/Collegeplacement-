@@ -158,7 +158,7 @@ export function ProductShowcaseInstrument() {
                 </h3>
               </div>
               <span className="text-xs px-3 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 font-semibold">
-                ₹0 Platform Fee • 60-Day Replacement Guarantee
+                Institution-Verified Cohort • 9-Competency Shortlist (Sample Data)
               </span>
             </div>
 

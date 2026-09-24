@@ -86,24 +86,25 @@ export const STUDENT_PROGRAMME_PLANS = [
 
 export const EMPLOYER_COMMERCIAL_POLICY = {
   id: 'EMPLOYER_VERIFIED_HIRING',
-  name: 'Corporate Graduate Hiring & Verified Shortlists',
+  name: 'Built for High-Efficiency Graduate Hiring Teams',
   audience: 'Corporate HR, Talent Acquisition Heads & University Relations Teams',
   platformAccessFeeInr: 0,
-  formattedPlatformFee: '₹0 Platform Subscription Fee',
+  formattedPlatformFee: 'Custom Hiring Partnership',
   perVerifiedJoinFeeInr: 10000,
   perVerifiedJoinGstInr: 1800,
   perVerifiedJoinTotalInr: 11800,
-  formattedPerJoinFee: '₹10,000 + 18% GST per verified hire upon joining (Zero upfront cost)',
+  formattedPerJoinFee: 'Commercial terms are discussed during employer onboarding',
   probationReplacementDays: 60,
-  replacementGuaranteeHeadline: '60-Day Candidate Replacement Guarantee',
+  replacementGuaranteeHeadline: 'Designed for Efficient Graduate Hiring',
   replacementGuaranteeDetail:
-    'Platform access, role posting, 9-dimension candidate screening, and multi-campus interview coordination carry ₹0 subscription cost. Under our Standard Hiring Agreement, a success fee of ₹10,000 + 18% GST applies only after a selected candidate formally joins your organization, backed by a 60-day free replacement or credit note if the hire exits during probation.',
+    'Hiring partnerships are structured based on your graduate role requirements, target degree streams, and interview coordination scope. Commercial terms are discussed directly during employer onboarding.',
   deliverables: [
-    '₹0 annual subscription — post graduate and entry-level roles across partner institutions at no upfront cost',
+    'Institution-verified candidate pools across partner engineering, management, and degree institutions',
     'Pre-assessed candidate shortlists ranked by your role-specific thresholds across 9 core competency areas (0–100 scale)',
     'Institution-verified academic records (CGPA, active backlog status, graduation batch, and enrollment ID)',
-    'Coordinate campus and multi-campus pooled interviews in one workspace without managing scattered spreadsheets, college email threads, and manual candidate lists',
-    'Pay-on-join commercial model (₹10,000 + GST) protected by a 60-day probation replacement guarantee',
+    'Coordinate campus and multi-campus pooled interviews in one workspace without managing scattered spreadsheets and email threads',
+    'Verifiable candidate scorecards with unique verification IDs and structured panel evaluation rubrics',
+    'Multi-campus hiring support from shortlist presentation through final offer and joining coordination',
   ],
 } as const;
 

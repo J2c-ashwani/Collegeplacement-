@@ -62,10 +62,10 @@ export default function TermsOfServicePage() {
 
           <section className="space-y-3 border-t border-slate-200 pt-6">
             <h2 className="text-lg font-bold text-slate-900">
-              4. Corporate Employer Terms &amp; 60-Day Replacement Guarantee
+              4. Corporate Employer Hiring Agreements
             </h2>
             <p>
-              {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeDetail} Participating employers agree to record structured interview dispositions within 5 business days of each scheduled campus or pooled interview slot.
+              {EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeDetail} Participating employers agree to record structured interview dispositions within 5 business days of each scheduled campus or pooled interview slot, with specific commercial terms governed by the executed Employer Hiring Agreement.
             </p>
           </section>
 

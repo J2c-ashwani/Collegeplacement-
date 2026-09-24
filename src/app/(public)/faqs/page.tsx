@@ -32,16 +32,16 @@ const FAQ_SECTIONS = [
     category: 'For Corporate Employers & Talent Acquisition Teams',
     items: [
       {
-        q: 'Does PlacementConnect charge employers a platform subscription fee to post jobs or view shortlists?',
-        a: `No. Platform access, role posting, 9-dimension candidate filtering, and multi-campus interview scheduling carry ${EMPLOYER_COMMERCIAL_POLICY.formattedPlatformFee} (no annual subscription tier required). Under our Standard Hiring Agreement, employers pay ${EMPLOYER_COMMERCIAL_POLICY.formattedPerJoinFee} only after a selected candidate formally joins, backed by our ${EMPLOYER_COMMERCIAL_POLICY.replacementGuaranteeHeadline}.`,
+        q: 'How does PlacementConnect help employers shortlist graduating candidates?',
+        a: 'Employers define role requirements across engineering, analytics, operations, or business tracks and receive candidate shortlists from verified college rosters ranked across 9 standardized readiness dimensions, eliminating manual screening of hundreds of unverified resumes.',
       },
       {
         q: 'How can our HR team verify that a candidate’s 9-Dimension Scorecard is authentic?',
         a: `Every evaluated student receives a unique Credential ID (such as ${COMPANY_IDENTITY.sampleCredentials.validStudentId}). Recruiters can enter any ID at /verify to confirm whether the credential is Valid, Inactive/Expired, or Not Found.`,
       },
       {
-        q: 'What happens if a candidate hired through PlacementConnect leaves during probation?',
-        a: `Every verified hire is protected by our ${EMPLOYER_COMMERCIAL_POLICY.probationReplacementDays}-Day Candidate Replacement Guarantee. If a hire exits within 60 days of joining, we facilitate a priority replacement shortlist at no additional fee or issue a 100% credit note toward your next hire.`,
+        q: 'How are corporate hiring partnerships structured?',
+        a: 'Hiring partnerships are structured based on employer requirements and partnership scope—supporting single-college drives, multi-campus pooled drives, or role-specific shortlists. Commercial terms are discussed during employer onboarding.',
       },
     ],
   },

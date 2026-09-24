@@ -253,21 +253,21 @@ export default function ForCollegesPage() {
           </div>
         </section>
 
-        {/* LAYER 5: What does it cost? (Side-by-Side College, Student & Employer Economics) */}
+        {/* LAYER 5: What does it cost? (Transparent Institutional & Student Programme Pricing) */}
         <section className="space-y-6">
           <div className="space-y-2 max-w-3xl">
             <div className="text-xs font-semibold uppercase tracking-wider text-[#1E40AF]">
               Transparent Pricing
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              Clear Economics Across College, Student &amp; Hiring Employers
+              Transparent Institutional &amp; Student Programme Pricing
             </h2>
             <p className="text-sm text-slate-600">
-              Here is how the commercial model works across all three participants so you can explain it directly to your Principal and management:
+              Here is how the institutional license and student programme fees work so you can explain them directly to your Principal and management:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Column 1: College */}
             <div className="bg-white rounded-lg border-2 border-[#1E40AF] p-6 sm:p-7 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
@@ -335,39 +335,6 @@ export default function ForCollegesPage() {
               </div>
               <Button asChild variant="outline" className="w-full border-slate-300 font-semibold mt-4">
                 <Link href="/for-students">View Student Programme Details</Link>
-              </Button>
-            </div>
-
-            {/* Column 3: Visiting Employers */}
-            <div className="bg-white rounded-lg border border-slate-200/90 p-6 sm:p-7 space-y-4 flex flex-col justify-between">
-              <div className="space-y-3">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-900">
-                  3. Employer Hiring Terms
-                </span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-mono font-bold text-emerald-800">₹0 Upfront</span>
-                  <span className="text-xs text-slate-500">• Pay on Joining</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Companies pay <strong>₹0 platform subscription</strong> to post roles and interview your students, and pay a <strong>₹10,000 + 18% GST success fee only after a selected candidate joins</strong>.
-                </p>
-                <ul className="space-y-2 text-xs text-slate-600 pt-1">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                    <span>Zero upfront cost encourages more companies to interview your batch</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                    <span>₹10,000 + GST per confirmed join sustains employer account management</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0 mt-0.5" />
-                    <span>Protected by a 60-day candidate replacement guarantee</span>
-                  </li>
-                </ul>
-              </div>
-              <Button asChild variant="outline" className="w-full border-slate-300 font-semibold mt-4">
-                <Link href="/for-employers">View Employer Hiring Process</Link>
               </Button>
             </div>
           </div>
