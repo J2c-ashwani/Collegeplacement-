@@ -80,10 +80,10 @@ export default function RefundPolicyPage() {
           {/* Section 3 */}
           <section className="space-y-3 border-t border-slate-200 pt-6">
             <h2 className="text-lg font-bold text-slate-900">
-              3. Institutional Placement OS License ({INSTITUTION_COMMERCIAL_PLAN.formattedBase}/year + GST)
+              3. Institutional Partnership Plans ({INSTITUTION_COMMERCIAL_PLAN.formattedBase}/yr or {INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase}/5 yrs + GST)
             </h2>
             <p>
-              Colleges subscribing to the {INSTITUTION_COMMERCIAL_PLAN.name} ({INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) receive a 30-day onboarding milestone commitment. Under our standard Institutional MoU, the Year-1 license fee is waived or credited back when 100 or more final-year students enroll in the Interview Assurance Programme.
+              Colleges subscribing to our 1-Year Annual License ({INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or 5-Year Multi-Cohort Agreement ({INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}) receive a 30-day onboarding milestone commitment. {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
             </p>
           </section>
 

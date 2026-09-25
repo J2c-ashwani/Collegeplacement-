@@ -116,7 +116,7 @@ export default async function StudentDashboard() {
               <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-xs">
                 Active Enrolment
               </Badge>
-              <span className="text-xs text-slate-500 font-mono">Up to 3 Interviews</span>
+              <span className="text-xs text-slate-500 font-mono">3 Corporate Interviews</span>
             </div>
           </CardContent>
         </Card>
@@ -207,7 +207,7 @@ export default async function StudentDashboard() {
                   Placement Assurance Tracker
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 mt-0.5">
-                  Your programme includes up to 3 qualified interview opportunities, subject to programme terms.
+                  Your programme provides 3 verified corporate interview opportunities within 12 months of assessment completion, subject to programme terms.
                 </CardDescription>
               </div>
               <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-800 text-xs font-medium font-mono">
