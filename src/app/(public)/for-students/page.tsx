@@ -391,7 +391,7 @@ export default function ForStudentsPage() {
               Student Programme Options
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              Choose Your Programme Track: Standard (₹1,180) vs Extended (₹2,950)
+              Choose Your Programme Track: Standard Track (₹1,180) vs Extended Readiness Track (₹2,950)
             </h2>
             <p className="text-sm text-slate-600">
               Both tracks include the 9-Area Job-Readiness Assessment, a verified student profile, and <strong>3 Verified Corporate Interview Opportunities within 12 months of assessment completion</strong>.

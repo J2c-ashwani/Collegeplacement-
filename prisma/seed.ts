@@ -125,18 +125,18 @@ async function main() {
   console.log('4. Seeding student programme plans...')
   const assurancePlan = await prisma.programmePlan.upsert({
     where: { slug: 'placement-assurance' },
-    update: { price: 1000 },
+    update: { name: 'Standard Track', price: 1000 },
     create: {
-      name: 'Graduate Assessment & 3-Interview Assurance Track',
+      name: 'Standard Track',
       slug: 'placement-assurance',
-      description: '9-Dimension Employability Evaluation, Verifiable Readiness Credential, and 3 Guaranteed Employer Interviews.',
+      description: '9-Area Job-Readiness Assessment, Verified Profile & Shareable Credential, and 3 Corporate Interview Opportunities.',
       price: 1000,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Complete 9-Dimension Employability Evaluation',
+        'Complete 9-Area Job-Readiness Assessment',
         'Verifiable digital scorecard & credential (/verify/[id])',
-        'Minimum of 3 verified corporate interview opportunities within 12 months',
+        '3 verified corporate interview opportunities within 12 months of assessment completion',
         '100% Base Fee Refund Guarantee (₹1,000) if 3 interviews are not facilitated',
         'Student-controlled profile visibility'
       ],
@@ -146,19 +146,19 @@ async function main() {
 
   const assurancePlusPlan = await prisma.programmePlan.upsert({
     where: { slug: 'placement-plus-student' },
-    update: { price: 2500 },
+    update: { name: 'Extended Readiness Track', price: 2500 },
     create: {
-      name: 'Advanced Career Readiness & Priority Drive Track',
+      name: 'Extended Readiness Track',
       slug: 'placement-plus-student',
-      description: 'Everything in the ₹1,000 Assurance Track plus a second post-preparation evaluation attempt and priority pooled drive shortlisting.',
+      description: 'Everything in the Standard Track (₹1,000 + GST) plus guided preparation modules, a second assessment attempt, and priority pooled-drive consideration.',
       price: 2500,
       gstPercent: 18,
       durationMonths: 12,
       features: [
-        'Everything in the ₹1,000 Graduate Assessment & 3-Interview Assurance Track',
-        'Two assessment attempts (baseline + post-preparation evaluation)',
-        'Structured communication, analytical, and domain preparation modules',
-        'Priority shortlist routing for multi-campus pooled hiring drives',
+        'Everything in the Standard Track (₹1,000 + GST = ₹1,180)',
+        'Two assessment attempts (baseline + post-preparation evaluation, higher score kept)',
+        'Guided preparation modules across communication, analytical, and role skills',
+        'Priority shortlist consideration for multi-campus pooled hiring drives',
         '100% Base Fee Refund Guarantee (₹2,500) if 3 interviews are not facilitated'
       ],
       sortOrder: 2,

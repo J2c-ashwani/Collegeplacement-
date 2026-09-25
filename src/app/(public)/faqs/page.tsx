@@ -20,7 +20,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What are the institutional license options for an engineering, management, or degree college?',
-        a: `Colleges can choose between our 1-Year Annual License (${INSTITUTION_COMMERCIAL_PLAN.formattedBase} + ₹2,700 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or our 5-Year Multi-Cohort Agreement (${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase} + ₹10,800 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}, an effective rate of ₹12,000/year saving ₹15,000 across 5 academic batches). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
+        a: `Colleges typically start with our recommended 1-Year Annual License (${INSTITUTION_COMMERCIAL_PLAN.formattedBase} + ₹2,700 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or select our optional 5-Year Multi-Cohort Agreement (${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase} before credit + ₹10,800 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
       },
       {
         q: 'How do students from our college register without unauthorized outsiders joining our batch roster?',
@@ -53,12 +53,12 @@ const FAQ_SECTIONS = [
         a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[0]} Every eligible student is protected by our ${GOVERNANCE_MOAT_MECHANICS.interviewQuotaLabel} (minimum of 3 verified corporate interview opportunities within 12 months).`,
       },
       {
-        q: 'What is the difference between the ₹1,000 and ₹2,500 student programme tracks?',
-        a: `The ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + ₹180 GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) includes the full 9-Dimension Employability Evaluation, a verifiable LinkedIn credential, and 3 guaranteed interview opportunities. The ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + ₹450 GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}) adds a second re-evaluation attempt, structured readiness modules, and priority pooled-drive shortlist routing.`,
+        q: 'What is the difference between the Standard Track (₹1,180) and Extended Readiness Track (₹2,950)?',
+        a: `The ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + ₹180 GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) includes the full 9-Dimension Employability Evaluation, a verifiable digital credential, and 3 verified corporate interview opportunities within 12 months of assessment completion. The ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + ₹450 GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}) adds guided preparation modules, a second assessment attempt (keeping your higher score), and priority pooled-drive shortlist consideration.`,
       },
       {
         q: 'How does the 100% Base Fee Refund Guarantee work if 3 interviews are not scheduled?',
-        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[2]}`,
+        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[4]}`,
       },
     ],
   },

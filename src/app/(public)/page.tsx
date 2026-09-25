@@ -82,7 +82,7 @@ export default function HomePage() {
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
                 <div className="text-xs text-slate-600 mt-1">
-                  Placement OS &amp; NAAC/NIRF reporting (<span className="font-mono font-semibold text-slate-900">₹15,000/yr or ₹60,000/5yr</span>)
+                  Placement OS &amp; institutional reporting support (<span className="font-mono font-semibold text-slate-900">₹15,000/yr or ₹60,000/5yr</span>)
                 </div>
               </Link>
 
@@ -385,7 +385,7 @@ export default function HomePage() {
                   + 18% GST (₹17,700 / ₹70,800)
                 </div>
                 <p className="text-xs text-slate-600 pt-1">
-                  5-year MoU saves 20% (₹12,000/yr). Year-1 fee waived when 100+ students enroll.
+                  1-Year Annual recommended default; 5-Year optional MoU (₹45,000 after ₹15,000 Year-1 credit when 100+ students enroll).
                 </p>
               </div>
 
@@ -415,7 +415,7 @@ export default function HomePage() {
                   + 18% GST (₹1,180 / ₹2,950)
                 </div>
                 <p className="text-xs text-slate-600 pt-1">
-                  Up to 3 qualified corporate interviews within 12 months (subject to eligibility) or 100% base fee refund.
+                  Standard Track (₹1,180) or Extended Readiness Track (₹2,950) with 3 corporate interviews within 12 months of assessment completion.
                 </p>
               </div>
             </div>

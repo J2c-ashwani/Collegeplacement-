@@ -13,39 +13,39 @@ const COLLEGE_INCLUDED_SUMMARY = [
   'Dedicated TPO placement workspace & verified Campus Code (e.g., APX123) for student onboarding',
   'Student readiness evaluation across 9 competency areas before corporate interview scheduling',
   'Employer drive coordination, interview attendance tracking (0/3 to 3/3), and MoU record keeping',
-  'Four-stage placement reporting & CSV/PDF exports for principals, governing bodies, and NAAC/NIRF reviews',
+  'Designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows (CSV/PDF exports)',
 ] as const;
 
 const INSTITUTION_PLAN_COMPARISON = [
   {
-    feature: 'Price (incl. 18% GST)',
-    annual: '₹17,700 / year (₹15,000 + ₹2,700 GST)',
-    fiveYear: '₹70,800 / 5 years (₹60,000 + ₹10,800 GST)',
+    feature: 'Standard Institutional Fee (Before Credit)',
+    annual: '₹15,000 / yr (+ ₹2,700 GST = ₹17,700)',
+    fiveYear: '₹60,000 / 5 yrs (+ ₹10,800 GST = ₹70,800)',
+  },
+  {
+    feature: 'Net Fee After ₹15,000 Year-1 Waiver / Credit (100+ Students in Yr 1)',
+    annual: '₹0 institutional fee in Year 1 (₹15,000 waived)',
+    fiveYear: '₹45,000 after credit (+ ₹8,100 GST = ₹53,100)',
   },
   {
     feature: 'Effective Annual Rate (excl. GST)',
-    annual: '₹15,000 / academic year',
-    fiveYear: '₹12,000 / academic year (Save ₹15,000 / 20%)',
+    annual: '₹15,000 / academic year (₹0 in Year 1 with waiver)',
+    fiveYear: '₹12,000 / yr standard • ₹9,000 / yr after Year-1 credit',
   },
   {
-    feature: 'Academic Cohorts Covered',
-    annual: '1 Graduating Batch (12 Months)',
-    fiveYear: '5 Continuous Graduating Batches (60 Months)',
+    feature: 'Academic Cohorts & Roster Capacity',
+    annual: '1 Graduating Batch (12 Months • Up to 1,500 students)',
+    fiveYear: '5 Continuous Graduating Batches (60 Months • Unlimited roster)',
   },
   {
-    feature: 'Student Roster Capacity',
-    annual: 'Up to 1,500 students / batch',
-    fiveYear: 'Unlimited students across 5 batches',
+    feature: 'Institutional Documentation & Reporting Support',
+    annual: '✓ Single-batch CSV/PDF exports supporting internal NAAC/NIRF reporting workflows',
+    fiveYear: '✓ 5-year longitudinal archive supporting internal NAAC/NIRF reporting workflows',
   },
   {
-    feature: 'Four-Stage NAAC / NIRF Reporting',
-    annual: '✓ Single-batch reporting & CSV/PDF export',
-    fiveYear: '✓ Multi-year longitudinal archive & batch benchmarking',
-  },
-  {
-    feature: 'Year-1 Fee Waiver Eligibility',
-    annual: '✓ Waived when 100+ students enroll in Year 1',
-    fiveYear: '✓ Year-1 credit applied when 100+ students enroll',
+    feature: 'Recommended Buying Motion',
+    annual: '✓ Recommended for new partner institutions (Year-1 onboarding)',
+    fiveYear: 'Optional multi-cohort agreement for long-term partnerships',
   },
 ] as const;
 
@@ -104,7 +104,7 @@ export default function PricingPage() {
           </p>
         </div>
 
-        {/* 2. Published Pricing Cards: Colleges (1-Yr & 5-Yr) & Students (Standard & Extended) */}
+        {/* 2. Published Pricing Cards: Colleges (1-Yr Default & 5-Yr Optional) & Students (Standard & Extended Readiness) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Card 1: For Colleges & Universities */}
           <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between space-y-6">
@@ -120,53 +120,59 @@ export default function PricingPage() {
                   Institutional Partnership Plans
                 </h2>
                 <p className="text-xs text-slate-600">
-                  Choose a 1-year annual license or a 5-year multi-cohort agreement aligned with NAAC / NIRF accreditation cycles.
+                  Start with our <strong>1-Year Annual License</strong> (recommended for new institutions) or choose an optional 5-year multi-cohort agreement for long-term partnerships.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                {/* 1-Year Annual Plan */}
-                <div className="p-4 rounded-md border border-slate-200 bg-slate-50/70 space-y-2">
-                  <div className="flex items-center justify-between">
+                {/* 1-Year Annual Plan — Primary / Recommended for New Institutions */}
+                <div className="p-4 rounded-md border-2 border-[#1E40AF] bg-blue-50/25 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
                     <span className="text-xs font-bold text-slate-900">1-Year Annual</span>
-                    <span className="text-[11px] font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
-                      1 Batch
+                    <span className="text-[10px] font-bold text-[#1E40AF] bg-blue-100/90 border border-blue-300 px-2 py-0.5 rounded">
+                      Recommended for New Institutions
                     </span>
                   </div>
-                  <div className="font-mono text-2xl font-bold text-slate-900">
+                  <div className="font-mono text-2xl font-bold text-[#1E40AF]">
                     ₹15,000
-                    <span className="text-xs font-normal text-slate-500 block">
+                    <span className="text-xs font-normal text-slate-600 block">
                       + ₹2,700 GST (₹17,700 / yr)
                     </span>
                   </div>
+                  <p className="text-[11px] font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded">
+                    ₹0 institutional fee in Year 1 when 100+ students enroll
+                  </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Full TPO workspace, 4-stage placement reporting, and employer drive coordination for 1 academic year.
                   </p>
                 </div>
 
-                {/* 5-Year Multi-Cohort Plan */}
-                <div className="p-4 rounded-md border border-blue-200 bg-blue-50/30 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-900">5-Year Agreement</span>
-                    <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
-                      Save 20% (₹12k/yr)
+                {/* 5-Year Multi-Cohort Plan — Optional Multi-Cohort Agreement */}
+                <div className="p-4 rounded-md border border-slate-200 bg-slate-50/80 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <span className="text-xs font-bold text-slate-900">5-Year Multi-Cohort</span>
+                    <span className="text-[10px] font-semibold text-slate-700 bg-white border border-slate-300 px-2 py-0.5 rounded">
+                      Optional • Save 20%
                     </span>
                   </div>
-                  <div className="font-mono text-2xl font-bold text-[#1E40AF]">
+                  <div className="font-mono text-2xl font-bold text-slate-900">
                     ₹60,000
                     <span className="text-xs font-normal text-slate-500 block">
-                      + ₹10,800 GST (₹70,800 / 5 yrs)
+                      before credit (+ ₹10,800 GST = ₹70,800)
                     </span>
                   </div>
+                  <p className="text-[11px] font-semibold text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded">
+                    ₹45,000 after ₹15,000 Year-1 credit (+ ₹8,100 GST = ₹53,100)
+                  </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    5 continuous academic batches (effective ₹12,000/yr, saving ₹15,000) with longitudinal NAAC/NIRF archive.
+                    For long-term institutional partnerships across 5 graduating batches (effective ₹12,000/yr before credit, or ₹9,000/yr after credit).
                   </p>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-md bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
-                <strong className="font-semibold text-emerald-900">Year-1 Waiver Condition:</strong>{' '}
-                Eligible for a full Year-1 license fee waiver (₹15,000) under our standard Institutional MoU when 100 or more final-year students enroll in the 3 Corporate Interview Assurance Programme.
+                <strong className="font-semibold text-emerald-900">Year-1 Waiver / Credit Rule (₹15,000):</strong>{' '}
+                When 100+ eligible final-year students enroll in Year 1 under our Institutional MoU, the <strong>₹15,000 Year-1 institutional fee is waived/credited</strong> — the <strong>1-Year Annual License becomes ₹0</strong>, and the <strong>5-Year Agreement reduces from ₹60,000 before credit to ₹45,000 after credit</strong> (+ ₹8,100 GST = ₹53,100).
               </div>
 
               <ul className="space-y-2 text-xs text-slate-600">
@@ -230,22 +236,22 @@ export default function PricingPage() {
                   </p>
                 </div>
 
-                {/* Extended Track */}
-                <div className="p-4 rounded-md border border-blue-200 bg-blue-50/30 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-900">Extended Track</span>
-                    <span className="text-[11px] font-semibold text-[#1E40AF] bg-blue-100/80 border border-blue-200 px-2 py-0.5 rounded">
+                {/* Extended Readiness Track */}
+                <div className="p-4 rounded-md border-2 border-[#1E40AF] bg-blue-50/25 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <span className="text-xs font-bold text-slate-900">Extended Readiness Track</span>
+                    <span className="text-[10px] font-bold text-[#1E40AF] bg-blue-100/90 border border-blue-300 px-2 py-0.5 rounded">
                       + Prep &amp; Re-Test
                     </span>
                   </div>
                   <div className="font-mono text-2xl font-bold text-[#1E40AF]">
                     ₹2,500
-                    <span className="text-xs font-normal text-slate-500 block">
+                    <span className="text-xs font-normal text-slate-600 block">
                       + ₹450 GST (₹2,950 total)
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    Everything in Standard + guided preparation modules + 2nd assessment attempt + priority pooled-drive consideration.
+                    Everything in Standard Track + guided preparation modules + 2nd assessment attempt + priority pooled-drive consideration.
                   </p>
                 </div>
               </div>
@@ -270,7 +276,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* 3A. Institutional Plan Comparison Table (1-Year vs 5-Year) */}
+        {/* 3A. Institutional Plan Comparison Table (1-Year Default vs 5-Year Multi-Cohort) */}
         <section className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-8 space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
             <div>
@@ -278,11 +284,11 @@ export default function PricingPage() {
                 Institutional Partnership Options
               </div>
               <h2 className="text-xl font-bold text-slate-900 mt-0.5">
-                1-Year Annual License vs 5-Year Multi-Cohort Agreement
+                1-Year Annual License (Recommended Default) vs 5-Year Multi-Cohort Agreement
               </h2>
             </div>
             <span className="text-xs text-slate-500">
-              5-year agreement saves ₹15,000 (20%) and aligns with 5-year NAAC / NIRF cycles
+              Designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows
             </span>
           </div>
 
@@ -291,11 +297,11 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-slate-200 text-slate-500 uppercase">
                   <th className="py-3 pr-4 font-semibold">Institutional Feature</th>
-                  <th className="py-3 px-4 font-semibold text-slate-900">
-                    1-Year Annual (₹15,000 + GST)
+                  <th className="py-3 px-4 font-semibold text-[#1E40AF]">
+                    1-Year Annual — Recommended (₹15,000 + GST)
                   </th>
-                  <th className="py-3 pl-4 font-semibold text-[#1E40AF]">
-                    5-Year Agreement (₹60,000 + GST)
+                  <th className="py-3 pl-4 font-semibold text-slate-900">
+                    5-Year Multi-Cohort — Optional (₹60,000 before credit)
                   </th>
                 </tr>
               </thead>
@@ -303,10 +309,10 @@ export default function PricingPage() {
                 {INSTITUTION_PLAN_COMPARISON.map((row) => (
                   <tr key={row.feature}>
                     <td className="py-3.5 pr-4 font-semibold text-slate-900">{row.feature}</td>
-                    <td className="py-3.5 px-4 font-mono text-slate-700">{row.annual}</td>
-                    <td className="py-3.5 pl-4 font-mono font-semibold text-slate-900">
-                      {row.fiveYear}
+                    <td className="py-3.5 px-4 font-mono font-semibold text-slate-900">
+                      {row.annual}
                     </td>
+                    <td className="py-3.5 pl-4 font-mono text-slate-700">{row.fiveYear}</td>
                   </tr>
                 ))}
               </tbody>
@@ -314,7 +320,7 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* 3B. Student Track Comparison Table (Standard vs Extended) */}
+        {/* 3B. Student Track Comparison Table (Standard Track vs Extended Readiness Track) */}
         <section className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-8 space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
             <div>
@@ -322,7 +328,7 @@ export default function PricingPage() {
                 Student Track Comparison
               </div>
               <h2 className="text-xl font-bold text-slate-900 mt-0.5">
-                Standard vs Extended Student Programme
+                Standard Track vs Extended Readiness Track
               </h2>
             </div>
             <span className="text-xs text-slate-500">
@@ -339,7 +345,7 @@ export default function PricingPage() {
                     Standard Track (₹1,180 incl. GST)
                   </th>
                   <th className="py-3 pl-4 font-semibold text-[#1E40AF]">
-                    Extended Track (₹2,950 incl. GST)
+                    Extended Readiness Track (₹2,950 incl. GST)
                   </th>
                 </tr>
               </thead>

@@ -272,7 +272,7 @@ export default function ForCollegesPage() {
             <div className="bg-white rounded-lg border-2 border-[#1E40AF] p-6 sm:p-7 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-blue-50 text-[#1E40AF]">
-                  1. College License (1-Year or 5-Year MoU)
+                  1. College License (1-Year Default or Optional 5-Year MoU)
                 </span>
                 <div className="flex flex-wrap items-baseline gap-2">
                   <span className="text-3xl font-mono font-bold text-slate-900">
@@ -284,10 +284,10 @@ export default function ForCollegesPage() {
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Choose the <strong>1-Year Annual License</strong> (₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or the <strong>5-Year Multi-Cohort Agreement</strong> (₹60,000 + 18% GST = <strong>₹70,800 for 5 years</strong> — effective <strong>₹12,000/yr</strong>, saving 20% across a full 5-year NAAC/NIRF cycle).
+                  Start with the <strong>1-Year Annual License</strong> (recommended for new institutions at ₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or choose the optional <strong>5-Year Multi-Cohort Agreement</strong> (<strong>₹60,000 before credit</strong>, or <strong>₹45,000 after the ₹15,000 Year-1 credit</strong> when 100+ students enroll in Year 1), designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows.
                 </p>
                 <div className="p-3 rounded bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-medium leading-relaxed">
-                  <strong>Year-1 Waiver Condition:</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
+                  <strong>Year-1 Waiver / Credit (₹15,000):</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
                 </div>
                 <ul className="space-y-2 text-xs text-slate-600 pt-1">
                   <li className="flex items-start gap-2">
@@ -296,7 +296,7 @@ export default function ForCollegesPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#1E40AF] shrink-0 mt-0.5" />
-                    <span>4-stage placement reporting &amp; CSV/PDF management exports</span>
+                    <span>4-stage placement documentation &amp; CSV/PDF exports supporting internal NAAC/NIRF reporting workflows</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#1E40AF] shrink-0 mt-0.5" />
@@ -322,7 +322,7 @@ export default function ForCollegesPage() {
                   <span className="text-xs text-slate-500">+ 18% GST</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Paid by participating students depending on programme track (<strong>₹1,000 + GST = ₹1,180</strong> for Standard or <strong>₹2,500 + GST = ₹2,950</strong> for Extended Readiness).
+                  Paid by participating students depending on programme track (<strong>₹1,000 + GST = ₹1,180</strong> for <strong>Standard Track</strong> or <strong>₹2,500 + GST = ₹2,950</strong> for <strong>Extended Readiness Track</strong>).
                 </p>
                 <ul className="space-y-2 text-xs text-slate-600 pt-1">
                   <li className="flex items-start gap-2">
