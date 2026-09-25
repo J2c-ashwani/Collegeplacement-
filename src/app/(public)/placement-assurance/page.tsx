@@ -24,14 +24,17 @@ export default function PlacementAssurancePage() {
             How the 3-Interview Assurance Works
           </h1>
           <p className="text-base sm:text-lg text-slate-800 font-medium leading-relaxed max-w-3xl">
-            A contractually defined commitment to{' '}
+            A defined commitment to{' '}
             <strong className="font-bold text-[#1E40AF]">
               3 Verified Corporate Interview Opportunities within 12 months of assessment completion
             </strong>{' '}
-            for eligible students—not a guaranteed job offer.
+            for eligible students.
           </p>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
-            PlacementConnect makes a defined interview commitment rather than promising employment outcomes. Every student enrollment is supported by confirmed employer interview capacity in our hiring pipeline and a 100% base-fee refund guarantee, while final selection decisions always rest on candidate merit and employer evaluation.
+            Complete your readiness assessment, enter the verified interview pool, and receive confirmed, role-matched corporate interview opportunities through participating employers and institutions.
+          </p>
+          <p className="text-xs font-medium text-slate-500">
+            Programme eligibility and assurance terms apply.
           </p>
         </div>
 
@@ -152,7 +155,12 @@ export default function PlacementAssurancePage() {
             ))}
           </ul>
 
-          <div className="pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+          <div className="p-3.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed">
+            <strong className="font-semibold text-slate-900">Pre-Payment Terms Acceptance &amp; Email Record:</strong>{' '}
+            Before completing programme enrollment and payment, students review and actively accept the complete Programme Terms &amp; Conditions. A timestamped copy of the accepted terms along with the GST-compliant tax invoice is sent to the student&apos;s registered email upon payment confirmation.
+          </div>
+
+          <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-3">
               <Button asChild className="bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold">
                 <Link href="/for-students">
