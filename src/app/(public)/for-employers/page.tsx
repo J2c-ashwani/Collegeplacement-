@@ -67,7 +67,7 @@ export default function ForEmployersPage() {
             Structured Graduate Hiring: Institution-Verified Cohorts, Pre-Assessed Shortlists, and Coordinated Interviews
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
-            Replace high-volume resume screening with verified competency data. Give us your fresher role, location, and eligibility criteria—we deliver institution-verified, pre-assessed candidate shortlists across our{' '}
+            Replace high-volume resume screening with verified competency data. Give us your fresher role, location, and eligibility criteria—we deliver pre-assessed candidate shortlists (with academic eligibility and enrollment information verified through each participating institution) across our{' '}
             <strong className="font-semibold text-slate-900">9 Competency Areas</strong> and coordinate single-campus or multi-campus interview panels in one workspace.
           </p>
           <div className="flex flex-wrap items-center gap-3.5 pt-2">

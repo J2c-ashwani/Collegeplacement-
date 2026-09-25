@@ -99,7 +99,7 @@ export const EMPLOYER_COMMERCIAL_POLICY = {
   replacementGuaranteeDetail:
     'Hiring partnerships are structured based on your graduate role requirements, target degree streams, and interview coordination scope. Commercial terms are discussed directly during employer onboarding.',
   deliverables: [
-    'Institution-verified candidate pools across partner engineering, management, and degree institutions',
+    'Institution-verified candidate pools (academic eligibility and enrollment information verified through each participating institution)',
     'Pre-assessed candidate shortlists ranked by your role-specific thresholds across 9 core competency areas (0–100 scale)',
     'Institution-verified academic records (CGPA, active backlog status, graduation batch, and enrollment ID)',
     'Coordinate campus and multi-campus pooled interviews in one workspace without managing scattered spreadsheets and email threads',

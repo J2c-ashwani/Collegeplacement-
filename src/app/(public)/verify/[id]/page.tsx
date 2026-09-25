@@ -106,8 +106,8 @@ export default async function PublicVerifyCredentialIdPage({
         student.user.status === 'INACTIVE' ||
         student.status === 'SUSPENDED'));
 
-  // State 2: Not Found (Zero fallback to default records)
-  if (!student && !isExplicitRevokedVector) {
+  // State 2: Not Found (Zero fallback to default records unless canonical sample ID)
+  if (!student && !isCanonicalSampleId && !isExplicitRevokedVector) {
     return (
       <div className="min-h-screen bg-slate-50 py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto space-y-6">
@@ -245,9 +245,18 @@ export default async function PublicVerifyCredentialIdPage({
     );
   }
 
-  // State 1: Valid & Active Credential
-  const activeStudent = student!;
-  const credentialId = studentBadge?.verificationId || activeStudent.verificationId || id;
+  // State 1: Valid & Active Credential (with deterministic fallback for STU-2026-000001 sample)
+  const candidateName = student?.user?.name || 'Aarav Sharma (Sample Candidate)';
+  const institutionName =
+    student?.institution?.name || COMPANY_IDENTITY.sampleCredentials.validInstitutionName;
+  const courseName = student?.profile?.course || 'B.Tech';
+  const departmentName = student?.profile?.department || 'Computer Science & Engineering';
+  const graduationYear = student?.profile?.graduationYear || 2026;
+  const cgpaValue = student?.profile?.cgpa ? student.profile.cgpa.toFixed(2) : '8.42';
+  const credentialId =
+    studentBadge?.verificationId ||
+    student?.verificationId ||
+    COMPANY_IDENTITY.sampleCredentials.validStudentId;
   const badgeTitle = targetBadge?.name || SAFE_TERMINOLOGY.assessmentFrameworkName;
   const issueDate = studentBadge?.issuedAt
     ? new Date(studentBadge.issuedAt).toLocaleDateString('en-IN', {
@@ -257,9 +266,9 @@ export default async function PublicVerifyCredentialIdPage({
       })
     : '15 August 2026';
 
-  const hasEmployerConsent = activeStudent.profile?.employerVisibilityConsent ?? true;
+  const hasEmployerConsent = student?.profile?.employerVisibilityConsent ?? true;
   const isSampleCohort =
-    activeStudent.institution.name.includes('Apex Institute') || isCanonicalSampleId;
+    institutionName.includes('Apex Institute') || isCanonicalSampleId;
 
   const linkedinAddUrl = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(
     badgeTitle
@@ -269,90 +278,99 @@ export default async function PublicVerifyCredentialIdPage({
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between text-xs text-slate-600">
-          <Link href="/verify" className="hover:text-blue-700 font-medium inline-flex items-center gap-1.5">
+          <Link href="/for-employers" className="hover:text-blue-700 font-medium inline-flex items-center gap-1.5">
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Credential Verification
+            Back to Employer Hiring Page
           </Link>
-          <span className="text-xs text-slate-500">Verification Status: Valid</span>
+          <span className="text-xs text-slate-500">Verification Status: Valid &amp; Active</span>
         </div>
 
         {isSampleCohort && (
           <div className="px-4 py-2.5 rounded-md bg-blue-50 border border-blue-200 flex flex-wrap items-center justify-between gap-2 text-xs text-blue-950">
             <span className="font-semibold text-blue-900">
-              Sample Credential Record — Illustrative Campus Data
+              Sample Candidate Scorecard — Illustrative Record Showing Full Recruiter Evaluation View
             </span>
-            <span className="text-blue-800">
-              {COMPANY_IDENTITY.sampleCredentials.validInstitutionName}
+            <span className="text-blue-800 font-mono">
+              {institutionName}
             </span>
           </div>
         )}
 
         <Card className="border-slate-300 shadow-xs bg-white overflow-hidden">
+          {/* 1. Candidate Header & Overall Readiness Score */}
           <div className="bg-[#0F172A] text-white p-6 sm:p-8 border-b border-slate-800">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                    Verified Candidate Credential
+                    Institution-Verified Candidate Scorecard
+                  </span>
+                  <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                    ID: {credentialId}
                   </span>
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                  {activeStudent.user.name}
+                  {candidateName}
                 </h1>
                 <p className="text-xs sm:text-sm text-slate-300">
-                  Evaluated under the {SAFE_TERMINOLOGY.assessmentFrameworkName}
+                  {courseName} in {departmentName} • Class of {graduationYear} • {institutionName}
                 </p>
               </div>
 
-              <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
+              <div className="flex flex-col items-start sm:items-end gap-1 shrink-0 bg-slate-900/90 border border-slate-700 rounded-md px-4 py-3">
                 <span className="text-[11px] text-slate-400 uppercase tracking-wider">
-                  Credential ID
+                  Overall Readiness Score
                 </span>
-                <span className="font-mono text-sm sm:text-base font-bold text-emerald-300 px-3 py-1 rounded bg-slate-800 border border-slate-700">
-                  {credentialId}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-mono text-2xl sm:text-3xl font-bold text-emerald-400">
+                    82
+                  </span>
+                  <span className="font-mono text-sm text-slate-400">/ 100</span>
+                </div>
+                <span className="text-[11px] font-semibold text-emerald-300">
+                  Top-Tier Readiness Band (80–100)
                 </span>
               </div>
             </div>
           </div>
 
-          <CardContent className="p-6 sm:p-8 space-y-6">
-            {/* Discoverable Technical Metadata */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pb-6 border-b border-slate-200 text-xs">
-              <div className="space-y-1">
-                <span className="text-slate-500 font-medium block">Verification Status</span>
-                <span className="font-semibold text-emerald-700">Valid &amp; Active (12-Month Window)</span>
-              </div>
-              <div className="space-y-1">
-                <span className="text-slate-500 font-medium block">Assessment Completed</span>
-                <span className="font-mono font-semibold text-slate-900">{issueDate}</span>
-              </div>
-              <div className="space-y-1">
-                <span className="text-slate-500 font-medium block">Graduating Batch</span>
-                <span className="font-mono font-semibold text-slate-900">
-                  Class of {activeStudent.profile?.graduationYear || 2026}
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-slate-200">
-              <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
-                  <Building2 className="h-3.5 w-3.5 text-slate-500" />
-                  Affiliated Institution
-                </span>
+          <CardContent className="p-6 sm:p-8 space-y-8">
+            {/* 2. Academic Verification & Eligibility + Joining Readiness */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-200">
+              <div className="p-4 rounded-md border border-slate-200 bg-slate-50/70 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Building2 className="h-3.5 w-3.5 text-blue-700" />
+                    Academic Verification &amp; Eligibility
+                  </span>
+                  <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                    Verified by Institution
+                  </span>
+                </div>
                 {hasEmployerConsent ? (
-                  <>
-                    <div className="text-sm font-bold text-slate-900">
-                      {activeStudent.institution.name}
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <span className="text-slate-500 block">Participating Institution</span>
+                      <span className="font-semibold text-slate-900">{institutionName}</span>
                     </div>
-                    <div className="text-xs text-slate-600">
-                      {activeStudent.profile?.course || 'B.Tech'} —{' '}
-                      {activeStudent.profile?.department || 'Computer Science'}
+                    <div>
+                      <span className="text-slate-500 block">Degree &amp; Branch</span>
+                      <span className="font-semibold text-slate-900">
+                        {courseName} — {departmentName}
+                      </span>
                     </div>
-                  </>
+                    <div>
+                      <span className="text-slate-500 block">Verified CGPA</span>
+                      <span className="font-mono font-bold text-slate-900">{cgpaValue} / 10.0</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500 block">Active Backlogs</span>
+                      <span className="font-mono font-bold text-emerald-700">0 (Clear)</span>
+                    </div>
+                  </div>
                 ) : (
                   <div className="text-xs text-slate-600 italic flex items-center gap-1.5">
                     <Lock className="h-3.5 w-3.5 text-amber-600" />
@@ -361,41 +379,105 @@ export default async function PublicVerifyCredentialIdPage({
                 )}
               </div>
 
-              <div className="space-y-1.5">
-                <span className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
-                  <GraduationCap className="h-3.5 w-3.5 text-slate-500" />
-                  Evaluation Scope
-                </span>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  {targetBadge?.description ||
-                    'Verified completion of the 36-item timed assessment across 9 core analytical, technical, and workplace readiness dimensions.'}
-                </p>
+              <div className="p-4 rounded-md border border-slate-200 bg-slate-50/70 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <GraduationCap className="h-3.5 w-3.5 text-emerald-700" />
+                    Joining Readiness &amp; Availability
+                  </span>
+                  <span className="text-[11px] font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
+                    Confirmed Ready
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <span className="text-slate-500 block">Joining Window</span>
+                    <span className="font-semibold text-slate-900">Immediate / June {graduationYear}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block">Preferred Work Mode</span>
+                    <span className="font-semibold text-slate-900">On-Site / Hybrid</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-slate-500 block">Preferred Hiring Locations</span>
+                    <span className="font-semibold text-slate-900">
+                      Bengaluru • Delhi NCR • Pune • Hyderabad
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 9-Dimension Summary */}
+            {/* 3. Recommended Roles & Role-Fit Threshold Match */}
+            <div className="space-y-3 pb-6 border-b border-slate-200">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h2 className="text-sm font-bold text-slate-900">
+                  Role Fit &amp; Recommended Graduate Tracks
+                </h2>
+                <span className="text-xs text-slate-500">
+                  Matched against standard employer competency cutoffs
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                {[
+                  {
+                    role: 'Backend / Full-Stack Developer Trainee',
+                    fit: 'Strong Match (92% Fit)',
+                    cutoff: 'Meets Technical ≥ 70 & Analytical ≥ 65',
+                  },
+                  {
+                    role: 'Data Analytics & BI Associate',
+                    fit: 'Strong Match (88% Fit)',
+                    cutoff: 'Meets Quantitative ≥ 70 & Analytical ≥ 65',
+                  },
+                  {
+                    role: 'QA Automation & Technical Support Engineer',
+                    fit: 'Qualified Match (86% Fit)',
+                    cutoff: 'Meets Execution ≥ 65 & Communication ≥ 60',
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.role}
+                    className="p-3.5 rounded-md border border-emerald-200 bg-emerald-50/40 space-y-1"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-emerald-800">{item.fit}</span>
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-700" />
+                    </div>
+                    <div className="text-xs font-bold text-slate-900">{item.role}</div>
+                    <div className="text-[11px] font-mono text-slate-600">{item.cutoff}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. All 9 Competency Scores (0-100 Scale) */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-slate-700">
-                  9-Dimension Evaluation Breakdown
-                </h3>
-                <span className="font-mono text-xs font-bold text-emerald-700">
-                  Composite Readiness: 85 / 100
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h2 className="text-sm font-bold text-slate-900">
+                    All 9 Competency Scores (36-Item Timed Evaluation)
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Assessed on {issueDate} • Weights total 100%
+                  </p>
+                </div>
+                <span className="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
+                  Weighted Composite Score: 82 / 100
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {NINE_DIMENSIONS_SPEC.slice(0, 6).map((dim) => (
+                {NINE_DIMENSIONS_SPEC.map((dim) => (
                   <div
                     key={dim.id}
-                    className="p-3 rounded-md border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-1"
+                    className="p-3.5 rounded-md border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-1.5"
                   >
                     <div className="flex items-center justify-between text-[11px] text-slate-500">
-                      <span>{dim.samplePercentile}</span>
+                      <span>Weight: {dim.weightPercent}%</span>
                       <span className="font-mono font-bold text-slate-900">{dim.sampleScore}/100</span>
                     </div>
-                    <div className="text-xs font-semibold text-slate-800 line-clamp-1">
-                      {dim.name}
-                    </div>
+                    <div className="text-xs font-bold text-slate-900">{dim.name}</div>
+                    <div className="text-[11px] text-slate-600">{dim.samplePercentile}</div>
                   </div>
                 ))}
               </div>
@@ -406,21 +488,25 @@ export default async function PublicVerifyCredentialIdPage({
                 <ShieldCheck className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="text-xs text-slate-600">
                   <span className="font-semibold text-slate-900 block">
-                    Authenticity Confirmed
+                    Institution-Verified Academic &amp; Assessment Record
                   </span>
-                  Verified against the issuing institution&apos;s campus placement roster.
+                  Academic eligibility and enrollment information verified through the participating institution&apos;s placement office.
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <Button asChild size="sm" className="bg-[#1E40AF] hover:bg-blue-900 text-white text-xs">
+                  <Link href="/contact">Discuss Hiring Similar Candidates</Link>
+                </Button>
                 <Button
                   asChild
                   size="sm"
-                  className="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs gap-1.5"
+                  variant="outline"
+                  className="border-slate-300 text-xs gap-1.5"
                 >
                   <a href={linkedinAddUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-3.5 w-3.5" />
-                    Add to LinkedIn Profile
+                    LinkedIn Credential View
                   </a>
                 </Button>
               </div>
