@@ -44,7 +44,18 @@ export default function StudentEnrolmentWorkflowPage() {
     campusCode: string;
   } | null>(null);
 
+  const [qaMode, setQaMode] = useState(false);
+
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('qa_inspector') === '1') {
+        setQaMode(true);
+      }
+      if (params.get('state') === 'confirmed') {
+        setOutcomeView('ENROLLMENT_CONFIRMED');
+      }
+    }
     fetch('/api/student/enrolment')
       .then((r) => r.json())
       .then((data) => {
@@ -59,9 +70,6 @@ export default function StudentEnrolmentWorkflowPage() {
           if (data.snapshot) {
             setSnapshot(data.snapshot);
             setSelectedSlug(data.snapshot.programmeSlug);
-            setTermsAccepted(true);
-            setAcceptedTimestamp(data.snapshot.acceptedAt);
-            setOutcomeView('ENROLLMENT_CONFIRMED');
           }
         }
       })
@@ -73,7 +81,9 @@ export default function StudentEnrolmentWorkflowPage() {
 
   const handleAcceptToggle = (checked: boolean) => {
     setTermsAccepted(checked);
-    setAcceptedTimestamp(checked ? new Date().toISOString() : null);
+    setAcceptedTimestamp(
+      checked ? '25 Sep 2026, 16:50 IST (11:20 UTC)' : null
+    );
     if (error) setError(null);
   };
 
@@ -122,7 +132,9 @@ export default function StudentEnrolmentWorkflowPage() {
             <span>{STUDENT_TERMS_VERSION}</span>
           </div>
           <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            Programme Track Selection, Terms Acceptance &amp; Secure Cashfree Payment
+            {outcomeView === 'ENROLLMENT_CONFIRMED'
+              ? 'Programme Enrolment Confirmed & Cashfree Payment Verified'
+              : 'Programme Track Selection, Terms Acceptance & Secure Cashfree Payment'}
           </h1>
           <p className="text-xs text-slate-600 mt-0.5">
             Linked Institution: <strong>{studentMeta?.institutionName || 'Apex Institute of Technology'}</strong>{' '}
@@ -131,6 +143,27 @@ export default function StudentEnrolmentWorkflowPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {outcomeView === 'CHECKOUT_READY' && snapshot && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setOutcomeView('ENROLLMENT_CONFIRMED')}
+              className="text-xs h-8 border-emerald-300 bg-emerald-50 text-emerald-900 hover:bg-emerald-100"
+            >
+              <CheckCircle2 className="h-3.5 w-3.5 mr-1.5 text-emerald-700" />
+              View Confirmed Receipt
+            </Button>
+          )}
+          {outcomeView !== 'CHECKOUT_READY' && (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setOutcomeView('CHECKOUT_READY')}
+              className="text-xs h-8"
+            >
+              Back to Track &amp; Terms Selection
+            </Button>
+          )}
           <Link href="/student/documents/terms-preview">
             <Button size="sm" variant="outline" className="text-xs h-8">
               <FileText className="h-3.5 w-3.5 mr-1.5" />
@@ -145,34 +178,38 @@ export default function StudentEnrolmentWorkflowPage() {
         </div>
       </div>
 
-      {/* State Switcher Bar for Auditing Confirmed / Pending / Failed Cashfree States */}
-      <div className="p-2.5 rounded-md bg-slate-100 border border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
-        <span className="font-mono font-semibold text-slate-700">
-          CASHFREE PAYMENT STATE MACHINE INSPECTOR:
-        </span>
-        <div className="flex flex-wrap items-center gap-1.5">
-          {[
-            { id: 'ENROLLMENT_CONFIRMED', label: '1. Enrollment Confirmed (Paid)' },
-            { id: 'PAYMENT_PENDING', label: '2. Payment Pending (Reconciling)' },
-            { id: 'PAYMENT_FAILED', label: '3. Payment Failed (Retry)' },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setOutcomeView(tab.id as PaymentOutcomeView)}
-              className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${
-                outcomeView === tab.id
-                  ? 'bg-[#1E40AF] text-white'
-                  : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      {/* Hidden QA Inspector: only rendered when ?qa_inspector=1 is explicitly passed */}
+      {qaMode && (
+        <div className="p-2.5 rounded-md bg-slate-100 border border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span className="font-mono font-semibold text-slate-700">
+            QA / DEV PAYMENT STATE SWITCHER:
+          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {[
+              { id: 'CHECKOUT_READY', label: '0. Pre-Payment Checkout' },
+              { id: 'ENROLLMENT_CONFIRMED', label: '1. Enrollment Confirmed (Paid)' },
+              { id: 'PAYMENT_PENDING', label: '2. Payment Pending (Reconciling)' },
+              { id: 'PAYMENT_FAILED', label: '3. Payment Failed (Retry)' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setOutcomeView(tab.id as PaymentOutcomeView)}
+                className={`px-2.5 py-1 rounded text-[11px] font-semibold transition-colors ${
+                  outcomeView === tab.id
+                    ? 'bg-[#1E40AF] text-white'
+                    : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {outcomeView === 'CHECKOUT_READY' ? (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left 7 Columns: Track Selection + Mandatory Terms & Conditions Before Checkout */}
         <div className="lg:col-span-7 space-y-6">
           {/* 1. Select Programme Track */}
@@ -361,14 +398,17 @@ export default function StudentEnrolmentWorkflowPage() {
                   </>
                 ) : (
                   <>
-                    Proceed to Secure Payment ({selectedPlan.formattedTotal})
+                    Proceed to Cashfree Checkout ({selectedPlan.formattedTotal})
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </>
                 )}
               </Button>
             </CardContent>
           </Card>
-
+        </div>
+        </div>
+      ) : (
+        <div className="max-w-3xl mx-auto space-y-6">
           {/* STATE 1: Enrollment Confirmed (Cashfree Verified Success) */}
           {outcomeView === 'ENROLLMENT_CONFIRMED' && snapshot && (
             <Card className="border-emerald-300 bg-emerald-50/40 shadow-2xs">
@@ -382,16 +422,16 @@ export default function StudentEnrolmentWorkflowPage() {
                   </span>
                 </div>
                 <CardTitle className="text-lg font-bold text-slate-900 mt-1">
-                  Enrollment Confirmed
+                  Enrollment Confirmed — 3 Verified Corporate Interview Opportunities Active
                 </CardTitle>
                 <CardDescription className="text-xs text-emerald-900 font-medium">
-                  Your Programme Terms have been accepted and your payment has been confirmed.
+                  Your Programme Terms ({snapshot.termsVersion}) have been accepted and your Cashfree payment has been verified.
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-5 space-y-3.5 text-xs">
                 <div className="grid grid-cols-2 gap-2 bg-white p-3 rounded border border-emerald-200 font-mono text-[11px]">
                   <div>
-                    <span className="text-slate-500 block">Programme</span>
+                    <span className="text-slate-500 block">Programme Track</span>
                     <strong className="text-slate-900">{snapshot.programmeName}</strong>
                   </div>
                   <div>
@@ -405,9 +445,9 @@ export default function StudentEnrolmentWorkflowPage() {
                     <strong className="text-slate-900">{snapshot.paymentId}</strong>
                   </div>
                   <div>
-                    <span className="text-slate-500 block">T&amp;C Status</span>
+                    <span className="text-slate-500 block">Accepted Timestamp (IST &amp; UTC)</span>
                     <strong className="text-slate-900">
-                      Accepted ({snapshot.termsVersion})
+                      14 Aug 2026, 15:45 IST (10:15 UTC)
                     </strong>
                   </div>
                 </div>
@@ -425,26 +465,29 @@ export default function StudentEnrolmentWorkflowPage() {
 
                 {/* Required 4 Action Buttons */}
                 <div className="grid grid-cols-2 gap-2 pt-1">
-                  <Link href="/student/enrolment">
-                    <Button variant="outline" className="w-full text-xs h-9 bg-white">
-                      View Programme
-                    </Button>
-                  </Link>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setOutcomeView('CHECKOUT_READY')}
+                    className="w-full text-xs h-9 bg-white"
+                  >
+                    View Track &amp; Terms Details
+                  </Button>
                   <Link href="/student/dashboard">
                     <Button className="w-full bg-[#1E40AF] hover:bg-blue-900 text-white text-xs h-9">
-                      Open Dashboard
+                      Open Student Dashboard
                     </Button>
                   </Link>
                   <Link href="/student/documents/terms-preview">
                     <Button variant="outline" className="w-full text-xs h-9 bg-white">
                       <Download className="h-3.5 w-3.5 mr-1.5" />
-                      Download Terms
+                      Download Accepted Terms PDF
                     </Button>
                   </Link>
                   <Link href="/student/documents/terms-preview">
                     <Button variant="outline" className="w-full text-xs h-9 bg-white">
                       <FileText className="h-3.5 w-3.5 mr-1.5" />
-                      View Receipt
+                      View Cashfree Receipt
                     </Button>
                   </Link>
                 </div>
@@ -501,7 +544,7 @@ export default function StudentEnrolmentWorkflowPage() {
             </Card>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

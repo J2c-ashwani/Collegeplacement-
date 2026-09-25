@@ -21,6 +21,8 @@ import {
   INSTITUTION_MOU_VERSION,
   INSTITUTIONAL_MOU_CLAUSES_SUMMARY,
   InstitutionalOnboardingSubmission,
+  MOU_LIFECYCLE_STAGES,
+  formatDualTimestamp,
 } from '@/config/legal-documents';
 
 export default function InstitutionOnboardingMouWorkflowPage() {
@@ -123,7 +125,7 @@ export default function InstitutionOnboardingMouWorkflowPage() {
       }
       setSubmission(data.submission);
       setStatusMessage(
-        `Institutional Payment Confirmed via Cashfree (${data.submission.cashfreePaymentId}). Application status is now "PENDING INSTITUTIONAL REVIEW" — final MoU PDF will be generated automatically upon Super Admin approval.`
+        `Institutional Payment Confirmed via Cashfree (${data.submission.cashfreePaymentId}). Application status is now "STAGE 2: PENDING ADMIN REVIEW" — upon Super Admin verification, your MoU transitions to "Stage 4: MoU — Ready for Signature" and then "Stage 6: Signed / Executed MoU".`
       );
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error submitting onboarding form');
@@ -138,7 +140,7 @@ export default function InstitutionOnboardingMouWorkflowPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono font-semibold text-blue-800">
-            <span>INSTITUTIONAL PARTNERSHIP, CASHFREE CHECKOUT &amp; MOU WORKFLOW</span>
+            <span>INSTITUTIONAL PARTNERSHIP, CASHFREE CHECKOUT &amp; 7-STAGE MOU WORKFLOW</span>
             <span>&bull;</span>
             <span>{INSTITUTION_MOU_VERSION}</span>
           </div>
@@ -146,14 +148,14 @@ export default function InstitutionOnboardingMouWorkflowPage() {
             College Partnership Plan, Cashfree Payment &amp; Institutional MoU Onboarding
           </h1>
           <p className="text-xs text-slate-600 mt-0.5">
-            Select your partnership plan, accept the institutional terms, complete payment via Cashfree Checkout, and submit your institutional signatory records for Super Admin approval and automatic MoU generation.
+            Select your partnership plan, accept the institutional terms, complete payment via Cashfree Checkout, and submit your institutional signatory records for Super Admin verification, MoU Generation (Ready for Signature), and Signed Execution.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/institution/mous/preview">
             <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-900 text-white text-xs h-8">
               <FileText className="h-3.5 w-3.5 mr-1.5" />
-              Preview / Download Executed MoU PDF
+              Preview MoU PDF (Ready for Signature / Executed)
             </Button>
           </Link>
           <Link href="/institution/mous">
@@ -161,6 +163,41 @@ export default function InstitutionOnboardingMouWorkflowPage() {
               MoU Registry
             </Button>
           </Link>
+        </div>
+      </div>
+
+      {/* 7-Stage Institutional MoU Lifecycle Bar (P1 #12) */}
+      <div className="p-3.5 rounded-md border border-slate-200 bg-white space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-[11px]">
+          <span className="font-mono font-bold uppercase tracking-wider text-slate-700">
+            7-Stage Institutional MoU Lifecycle (Separate &ldquo;MoU — Ready for Signature&rdquo; vs. &ldquo;Signed / Executed MoU&rdquo;)
+          </span>
+          <Badge className="bg-blue-50 text-blue-800 border-blue-200 text-[10px] font-mono">
+            {submission?.reviewStatus === 'APPROVED'
+              ? 'STAGE 4: MOU GENERATED (READY FOR SIGNATURE) → STAGE 6: SIGNED / EXECUTED'
+              : 'STAGE 2: PENDING ADMIN REVIEW'}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-7 gap-1.5">
+          {MOU_LIFECYCLE_STAGES.map((stage) => {
+            const currentStep = submission?.reviewStatus === 'APPROVED' ? 6 : 2;
+            const isDone = stage.step <= currentStep;
+            return (
+              <div
+                key={stage.code}
+                className={`p-1.5 rounded border text-[10px] ${
+                  isDone
+                    ? 'border-emerald-200 bg-emerald-50/70 text-emerald-950 font-semibold'
+                    : 'border-slate-200 bg-slate-50 text-slate-500'
+                }`}
+              >
+                <div className="font-mono text-[9px] uppercase">
+                  Stage {stage.step} {isDone ? '✓' : ''}
+                </div>
+                <div className="truncate">{stage.label}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -189,7 +226,7 @@ export default function InstitutionOnboardingMouWorkflowPage() {
                     : 'bg-amber-700 text-white text-[10px]'
                 }
               >
-                APPLICATION STATUS: {submission.reviewStatus}
+                LIFECYCLE STATUS: {submission.reviewStatus === 'APPROVED' ? 'STAGE 4: MOU — READY FOR SIGNATURE' : 'STAGE 2: PENDING ADMIN REVIEW'}
               </Badge>
               {submission.generatedMou && (
                 <Badge variant="outline" className="font-mono text-[10px] border-emerald-400 bg-white text-emerald-900">
@@ -199,17 +236,17 @@ export default function InstitutionOnboardingMouWorkflowPage() {
             </div>
             <p className="text-xs leading-relaxed">
               {submission.reviewStatus === 'APPROVED' && submission.generatedMou
-                ? `Super Admin Approved — Institutional MoU (${submission.generatedMou.mouReference}) automatically generated (${submission.generatedMou.startDate} to ${submission.generatedMou.endDate}) and emailed ("PlacementConnect Institutional Partnership — MOU Ready") to ${submission.tpoEmail}.`
+                ? `Super Admin Approved on ${formatDualTimestamp(submission.generatedMou.generatedAt)} — Institutional MoU (${submission.generatedMou.mouReference}) generated in state "MoU — Ready for Signature" (${submission.generatedMou.startDate} to ${submission.generatedMou.endDate}) and dispatched ("PlacementConnect Institutional Partnership — MOU Ready") to ${submission.tpoEmail} for counter-execution.`
                 : submission.reviewStatus === 'RETURNED_FOR_CORRECTION'
                 ? `Action Required — Returned by Super Admin for Correction: "${submission.correctionNotes}"`
-                : `Institutional Payment Confirmed for ${submission.selectedPlanName} (₹${submission.totalPayableInr.toLocaleString('en-IN')}). Note: Your MoU is NOT yet approved — it will be generated automatically after Super Admin reviews your institutional information and supporting documents.`}
+                : `Institutional Payment Confirmed for ${submission.selectedPlanName} (₹${submission.totalPayableInr.toLocaleString('en-IN')}). Note: Your MoU is currently in Stage 2 (Pending Admin Review) — it will transition to Stage 4 ("MoU — Ready for Signature") after Super Admin verifies your institutional records.`}
             </p>
           </div>
           {submission.generatedMou && (
             <Link href="/institution/mous/preview" className="shrink-0">
               <Button size="sm" className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />
-                Download Final MoU PDF
+                Inspect MoU PDF
               </Button>
             </Link>
           )}

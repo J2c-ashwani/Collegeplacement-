@@ -143,36 +143,72 @@ export default async function InstitutionOverviewPage() {
         {
           id: 'stu-apex-2026-01',
           enrollmentNumber: 'APX2026CS042',
-          department: 'Computer Science & Engineering',
+          department: 'B.Tech Computer Science & Engineering',
           cgpa: 8.64,
-          status: 'PLACED',
+          status: 'INTERVIEWING',
+          completedInterviews: 1,
+          scheduledInterviews: 1,
+          matchingInterviews: 1,
           user: { name: 'Aarav Sharma', email: 'student1@apex.edu.in' },
-          profile: { headline: 'Full-Stack Software Engineer' },
-          programmes: [{ programmePlan: { name: 'Standard Track' } }],
-          opportunities: [
-            {
-              status: 'SELECTED',
-              job: { title: 'Associate Software Engineer' },
-              employer: { name: 'NexaTech Enterprise Solutions' },
-            },
-          ],
+          profile: { branch: 'B.Tech CSE' },
+          programmes: [{ programmePlan: { name: 'Standard Track' }, assuranceTarget: 3 }],
+          placementSummary: 'Round 2 Scheduled: FinCore Digital (28 Sep IST)',
         },
         {
           id: 'stu-apex-2026-02',
           enrollmentNumber: 'APX2026IT019',
-          department: 'Information Technology',
-          cgpa: 8.42,
-          status: 'ACTIVE',
+          department: 'B.Tech Information Technology',
+          cgpa: 8.82,
+          status: 'PLACED',
+          completedInterviews: 3,
+          scheduledInterviews: 0,
+          matchingInterviews: 0,
           user: { name: 'Ananya Nair', email: 'student2@apex.edu.in' },
-          profile: { headline: 'Data & Analytics Specialist' },
-          programmes: [{ programmePlan: { name: 'Extended Readiness Track' } }],
-          opportunities: [
-            {
-              status: 'INTERVIEW_SCHEDULED',
-              job: { title: 'Graduate Product Analyst' },
-              employer: { name: 'FinCore Digital Systems' },
-            },
-          ],
+          profile: { branch: 'B.Tech IT' },
+          programmes: [{ programmePlan: { name: 'Extended Readiness Track' }, assuranceTarget: 3 }],
+          placementSummary: 'Placed — NexaTech Enterprise (₹8.2 LPA)',
+        },
+        {
+          id: 'stu-apex-2026-03',
+          enrollmentNumber: 'APX2026CS088',
+          department: 'B.Tech Computer Science & Engineering',
+          cgpa: 8.45,
+          status: 'PLACED',
+          completedInterviews: 2,
+          scheduledInterviews: 0,
+          matchingInterviews: 0,
+          user: { name: 'Rohan Kulkarni', email: 'rohan.k@apex.edu.in' },
+          profile: { branch: 'B.Tech CSE' },
+          programmes: [{ programmePlan: { name: 'Standard Track' }, assuranceTarget: 3 }],
+          placementSummary: 'Placed — CloudScale India (₹7.4 LPA)',
+        },
+        {
+          id: 'stu-apex-2026-04',
+          enrollmentNumber: 'APX2026EC031',
+          department: 'B.Tech Electronics & Communication',
+          cgpa: 8.18,
+          status: 'OFFER_EXTENDED',
+          completedInterviews: 2,
+          scheduledInterviews: 1,
+          matchingInterviews: 0,
+          user: { name: 'Meera Krishnan', email: 'meera.k@apex.edu.in' },
+          profile: { branch: 'B.Tech ECE' },
+          programmes: [{ programmePlan: { name: 'Extended Readiness Track' }, assuranceTarget: 3 }],
+          placementSummary: 'Offer Extended — FinCore Digital (₹6.8 LPA)',
+        },
+        {
+          id: 'stu-apex-2026-05',
+          enrollmentNumber: 'APX2026CS114',
+          department: 'B.Tech Computer Science & Engineering',
+          cgpa: 7.94,
+          status: 'INTERVIEWING',
+          completedInterviews: 1,
+          scheduledInterviews: 1,
+          matchingInterviews: 1,
+          user: { name: 'Siddharth Verma', email: 'siddharth.v@apex.edu.in' },
+          profile: { branch: 'B.Tech CSE' },
+          programmes: [{ programmePlan: { name: 'Standard Track' }, assuranceTarget: 3 }],
+          placementSummary: 'Round 2 Scheduled: QuantGrid Systems (29 Sep IST)',
         },
       ],
     }
@@ -180,14 +216,14 @@ export default async function InstitutionOverviewPage() {
 
   // Denominator: from InstitutionRoster or estimatedStudentCount
   const activeRoster = institution.rosters[0]
-  const totalExpectedCohort = activeRoster?.totalExpectedStudents || institution.estimatedStudentCount || 500
+  const totalExpectedCohort = activeRoster?.totalExpectedStudents || institution.estimatedStudentCount || 510
 
   let registeredCount = 510
   let paidCount = 440
   let assessmentCompletedCount = 412
   let placedCount = 384
-  let totalInterviews = 1280
-  let totalOffers = 406
+  let totalInterviews = 1002
+  let totalOffers = 402
   let ctcAggregates: any = { _avg: { ctc: 680000 }, _max: { ctc: 1450000 } }
   let activeEmployers: any[] = [{ employerId: 'e1' }, { employerId: 'e2' }, { employerId: 'e3' }, { employerId: 'e4' }, { employerId: 'e5' }, { employerId: 'e6' }, { employerId: 'e7' }, { employerId: 'e8' }]
 
@@ -248,11 +284,16 @@ export default async function InstitutionOverviewPage() {
   const displayAssessedCount = isSampleApexCohort ? 412 : assessmentCompletedCount
   const displayPlacedCount = isSampleApexCohort ? 384 : placedCount
   if (isSampleApexCohort) {
-    totalInterviews = 1280
-    totalOffers = 406
+    totalInterviews = 1002
+    totalOffers = 402
   }
+  const targetAssuranceInterviews = displayAssessedCount * 3 // 412 * 3 = 1,236 target interviews
+  const interviewCompletionPct =
+    targetAssuranceInterviews > 0
+      ? ((totalInterviews / targetAssuranceInterviews) * 100).toFixed(1)
+      : '0.0'
 
-  const formatCtc = (val: any) => val ? `₹${(Number(val) / 100000).toFixed(1)} LPA` : '—'
+  const formatCtc = (val: any) => (val ? `₹${(Number(val) / 100000).toFixed(1)} LPA` : '—')
   const averageCtcDisplay = formatCtc(isSampleApexCohort ? 680000 : ctcAggregates._avg.ctc)
   const maxCtcDisplay = formatCtc(isSampleApexCohort ? 1450000 : ctcAggregates._max.ctc)
   const activeEmployersCount = isSampleApexCohort
@@ -262,9 +303,8 @@ export default async function InstitutionOverviewPage() {
       : '—'
 
   const notRegisteredCount = Math.max(totalExpectedCohort - displayRegisteredCount, 0)
-  const interviewReadyCount = displayAssessedCount
-  
-  // 4-Way Sample-Size Explicit Placement Rates
+
+  // Operational Placement Rates
   const cohortRate = totalExpectedCohort > 0 ? ((displayPlacedCount / totalExpectedCohort) * 100).toFixed(1) : '0'
   const registeredRate = displayRegisteredCount > 0 ? ((displayPlacedCount / displayRegisteredCount) * 100).toFixed(1) : '0'
   const paidRate = displayPaidCount > 0 ? ((displayPlacedCount / displayPaidCount) * 100).toFixed(1) : '0'
@@ -286,17 +326,17 @@ export default async function InstitutionOverviewPage() {
         statusChips={[
           {
             label: 'Partnership Plan',
-            value: institution.memberships[0]?.plan.name || 'Placement Partner',
+            value: institution.memberships[0]?.plan.name || '1-Year Annual License (₹15,000 + GST)',
             variant: 'neutral',
           },
           {
-            label: 'Batch Code',
+            label: 'Campus Code',
             value: institution.registrationCode,
             variant: 'neutral',
           },
           {
-            label: 'Cohort Placement Rate',
-            value: `${cohortRate}%`,
+            label: 'Full Batch Placement Rate',
+            value: `${cohortRate}% (${displayPlacedCount}/${totalExpectedCohort})`,
             variant: Number(cohortRate) >= 50 ? 'success' : 'neutral',
           },
         ]}
@@ -304,7 +344,7 @@ export default async function InstitutionOverviewPage() {
           <div className="flex items-center gap-2">
             <Link href="/institution/onboarding">
               <Button size="sm" variant="outline" className="text-xs h-8">
-                Partnership Plan & MoU
+                Partnership Plan &amp; MoU
               </Button>
             </Link>
             <Link href="/institution/registration">
@@ -328,7 +368,7 @@ export default async function InstitutionOverviewPage() {
             <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500">
               Student Registration Gateway
             </span>
-            <span className="text-xs text-slate-400">•</span>
+            <span className="text-xs text-slate-400">&bull;</span>
             <span className="text-xs text-emerald-700 font-medium">Active Campaign</span>
           </div>
           <p className="text-xs text-slate-600">
@@ -357,69 +397,97 @@ export default async function InstitutionOverviewPage() {
       {/* Primary KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          title="Total Expected Batch"
+          title="Full Graduating Batch"
           value={totalExpectedCohort.toString()}
-          description="Total cohort denominator"
+          description="Approved 2026 graduating roster"
           icon={Users}
         />
         <StatCard
-          title="Students Registered"
+          title="Registered Students"
           value={displayRegisteredCount.toString()}
-          description={`${((displayRegisteredCount / totalExpectedCohort) * 100).toFixed(0)}% registration rate`}
+          description={`${((displayRegisteredCount / totalExpectedCohort) * 100).toFixed(0)}% of graduating batch`}
           icon={GraduationCap}
         />
         <StatCard
-          title="Paid Enrolments"
+          title="Programme Enrolments"
           value={displayPaidCount.toString()}
-          description={`${displayRegisteredCount > 0 ? ((displayPaidCount / displayRegisteredCount) * 100).toFixed(0) : 0}% of registered students`}
+          description={`${displayRegisteredCount > 0 ? ((displayPaidCount / displayRegisteredCount) * 100).toFixed(1) : 0}% of registered students`}
           icon={CheckCircle2}
         />
         <StatCard
           title="Confirmed Placements"
           value={displayPlacedCount.toString()}
-          description={`${displayPlacedCount} placed / ${totalExpectedCohort} cohort (${cohortRate}%)`}
+          description={`${displayPlacedCount} placed of ${totalExpectedCohort} batch (${cohortRate}%)`}
           icon={Award}
         />
       </div>
 
-      {/* 4-Way Placement Rate Breakdown (Sample-Size Explicit) */}
+      {/* Operational Placement Reporting Summary */}
       <Card className="border-slate-200 bg-slate-50/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <Award className="h-4 w-4 text-indigo-600" />
-            Placement Evidence &amp; Institutional Reporting Framework (4-Denominator Ledger)
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Differentiates placement outcomes across full graduating batch (D1), registered users (D2), programme enrolments (D3), and assessed candidate pools (D4).
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <Award className="h-4 w-4 text-indigo-600" />
+                Placement Reporting Summary
+              </CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                Clear placement percentages across your full graduating batch, registered students, programme enrolments, and assessed candidates.
+              </CardDescription>
+            </div>
+            <details className="text-xs text-slate-600">
+              <summary className="cursor-pointer font-medium text-blue-800 hover:underline select-none">
+                How this is calculated
+              </summary>
+              <div className="mt-2 p-3 rounded bg-white border border-slate-200 text-[11px] text-slate-600 max-w-md shadow-xs">
+                PlacementConnect reports confirmed placements against four transparent denominators so NAAC/NBA committees and principals see exact cohort coverage without inflated percentages: (1) Full Graduating Batch ({totalExpectedCohort}), (2) Registered Students ({displayRegisteredCount}), (3) Programme Enrolments ({displayPaidCount}), and (4) Assessed &amp; Eligible Students ({displayAssessedCount}).
+              </div>
+            </details>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white p-3 rounded-lg border shadow-xs">
-              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">D1: Cohort Placement Rate</span>
+            <div className="bg-white p-3.5 rounded-lg border shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block">
+                Full Graduating Batch
+              </span>
               <div className="text-xl font-bold text-slate-900 mt-1">{cohortRate}%</div>
-              <span className="text-[11px] text-slate-500">{displayPlacedCount} placed of {totalExpectedCohort} total batch</span>
+              <span className="text-[11px] text-slate-500">
+                {displayPlacedCount} placed of {totalExpectedCohort} total batch
+              </span>
             </div>
-            <div className="bg-white p-3 rounded-lg border shadow-xs">
-              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">D2: Registered Placement Rate</span>
+            <div className="bg-white p-3.5 rounded-lg border shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block">
+                Registered Students
+              </span>
               <div className="text-xl font-bold text-slate-900 mt-1">{registeredRate}%</div>
-              <span className="text-[11px] text-slate-500">{displayPlacedCount} placed of {displayRegisteredCount} registered</span>
+              <span className="text-[11px] text-slate-500">
+                {displayPlacedCount} placed of {displayRegisteredCount} registered
+              </span>
             </div>
-            <div className="bg-white p-3 rounded-lg border shadow-xs">
-              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">D3: Programme Enrolled Rate</span>
+            <div className="bg-white p-3.5 rounded-lg border shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block">
+                Programme Enrolments
+              </span>
               <div className="text-xl font-bold text-indigo-600 mt-1">{paidRate}%</div>
-              <span className="text-[11px] text-slate-500">{displayPlacedCount} placed of {displayPaidCount} enrolled students</span>
+              <span className="text-[11px] text-slate-500">
+                {displayPlacedCount} placed of {displayPaidCount} enrolled students
+              </span>
             </div>
-            <div className="bg-white p-3 rounded-lg border shadow-xs">
-              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">D4: Assessed &amp; Eligible Rate</span>
+            <div className="bg-white p-3.5 rounded-lg border shadow-xs">
+              <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block">
+                Assessed &amp; Eligible Students
+              </span>
               <div className="text-xl font-bold text-emerald-600 mt-1">{assessedRate}%</div>
-              <span className="text-[11px] text-slate-500">{displayPlacedCount} placed of {displayAssessedCount} assessed</span>
+              <span className="text-[11px] text-slate-500">
+                {displayPlacedCount} placed of {displayAssessedCount} assessed
+              </span>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Second Row: The Funnel & The Not Registered Alert */}
+      {/* Second Row: The Funnel & Cohort Participation */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Placement Funnel Card */}
         <Card className="lg:col-span-2">
@@ -428,7 +496,7 @@ export default async function InstitutionOverviewPage() {
               <div>
                 <CardTitle className="text-base font-semibold">Placement Assurance Funnel</CardTitle>
                 <CardDescription className="text-xs">
-                  Real-time pipeline from batch cohort to confirmed hires
+                  Operational progression from full graduating batch to completed assurance interviews and confirmed placements
                 </CardDescription>
               </div>
               <Badge variant="outline" className="text-xs">
@@ -437,24 +505,56 @@ export default async function InstitutionOverviewPage() {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Funnel Progress Bars */}
+            {/* Funnel Progress Bars with Explicit Numerator / Denominator Math */}
             <div className="space-y-3">
               {[
-                { label: 'Expected Cohort Denominator (D1)', count: totalExpectedCohort, pct: 100, color: 'bg-slate-300' },
-                { label: 'Students Registered (D2)', count: displayRegisteredCount, pct: Math.round((displayRegisteredCount / totalExpectedCohort) * 100), color: 'bg-indigo-400' },
-                { label: 'Programme Enrolled (D3)', count: displayPaidCount, pct: Math.round((displayPaidCount / totalExpectedCohort) * 100), color: 'bg-indigo-600' },
-                { label: 'Assessment Completed (D4)', count: displayAssessedCount, pct: Math.round((displayAssessedCount / totalExpectedCohort) * 100), color: 'bg-blue-600' },
-                { label: 'Interview Ready Pool', count: interviewReadyCount, pct: Math.round((interviewReadyCount / totalExpectedCohort) * 100), color: 'bg-cyan-600' },
-                { label: 'Interviews Delivered (3N Track)', count: isSampleApexCohort ? 1140 : totalInterviews, pct: Math.min(100, Math.round(((isSampleApexCohort ? 412 : totalInterviews) / totalExpectedCohort) * 100)), color: 'bg-amber-500' },
-                { label: 'Offers Received', count: isSampleApexCohort ? 402 : totalOffers, pct: Math.round(((isSampleApexCohort ? 402 : totalOffers) / totalExpectedCohort) * 100), color: 'bg-emerald-500' },
-                { label: 'Confirmed Placed & Verified', count: displayPlacedCount, pct: Math.round((displayPlacedCount / totalExpectedCohort) * 100), color: 'bg-emerald-600' },
+                {
+                  label: 'Full Graduating Batch',
+                  detail: `${totalExpectedCohort} of ${totalExpectedCohort} batch (100.0%)`,
+                  pct: 100,
+                  color: 'bg-slate-400',
+                },
+                {
+                  label: 'Registered Students',
+                  detail: `${displayRegisteredCount} of ${totalExpectedCohort} batch (${((displayRegisteredCount / totalExpectedCohort) * 100).toFixed(1)}%)`,
+                  pct: Math.round((displayRegisteredCount / totalExpectedCohort) * 100),
+                  color: 'bg-indigo-500',
+                },
+                {
+                  label: 'Programme Enrolments',
+                  detail: `${displayPaidCount} of ${totalExpectedCohort} batch (${((displayPaidCount / totalExpectedCohort) * 100).toFixed(1)}%)`,
+                  pct: Math.round((displayPaidCount / totalExpectedCohort) * 100),
+                  color: 'bg-indigo-600',
+                },
+                {
+                  label: 'Assessed & Eligible Students',
+                  detail: `${displayAssessedCount} of ${displayPaidCount} enrolled (${((displayAssessedCount / displayPaidCount) * 100).toFixed(1)}%)`,
+                  pct: Math.round((displayAssessedCount / displayPaidCount) * 100),
+                  color: 'bg-blue-600',
+                },
+                {
+                  label: `Assurance Interviews Completed (Target: 3 × ${displayAssessedCount} = ${targetAssuranceInterviews.toLocaleString('en-IN')})`,
+                  detail: `${totalInterviews.toLocaleString('en-IN')} of ${targetAssuranceInterviews.toLocaleString('en-IN')} target interviews (${interviewCompletionPct}%)`,
+                  pct: Math.min(100, Math.round((totalInterviews / targetAssuranceInterviews) * 100)),
+                  color: 'bg-amber-500',
+                },
+                {
+                  label: 'Offers Extended',
+                  detail: `${totalOffers} offers across ${displayAssessedCount} assessed students (${((totalOffers / displayAssessedCount) * 100).toFixed(1)}%)`,
+                  pct: Math.min(100, Math.round((totalOffers / displayAssessedCount) * 100)),
+                  color: 'bg-emerald-500',
+                },
+                {
+                  label: 'Confirmed Placements',
+                  detail: `${displayPlacedCount} of ${displayAssessedCount} assessed (${assessedRate}% assessed • ${cohortRate}% full batch)`,
+                  pct: Math.round((displayPlacedCount / displayAssessedCount) * 100),
+                  color: 'bg-emerald-600',
+                },
               ].map((stage) => (
                 <div key={stage.label} className="space-y-1">
-                  <div className="flex justify-between text-xs">
+                  <div className="flex flex-wrap justify-between gap-2 text-xs">
                     <span className="font-medium text-slate-700">{stage.label}</span>
-                    <span className="text-slate-500 font-mono">
-                      {stage.count} ({stage.pct}%)
-                    </span>
+                    <span className="text-slate-600 font-mono text-[11px]">{stage.detail}</span>
                   </div>
                   <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div
@@ -468,7 +568,7 @@ export default async function InstitutionOverviewPage() {
           </CardContent>
         </Card>
 
-        {/* Not-Registered Roster Callout */}
+        {/* Not-Registered Roster Callout & Hiring Statistics */}
         <div className="space-y-6">
           <Card className="border-amber-200 bg-amber-50/50">
             <CardHeader className="pb-3">
@@ -510,9 +610,9 @@ export default async function InstitutionOverviewPage() {
                 <span className="font-bold text-slate-900">{activeEmployersCount}</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-slate-600">Interview Delivery Rate:</span>
-                <span className="font-bold text-indigo-600">
-                  {paidCount > 0 ? `${((totalInterviews / (paidCount * 3)) * 100).toFixed(0)}%` : '0%'}
+                <span className="text-slate-600">Assurance Interviews Completed:</span>
+                <span className="font-bold text-indigo-600 font-mono">
+                  {totalInterviews.toLocaleString('en-IN')} / {targetAssuranceInterviews.toLocaleString('en-IN')} ({interviewCompletionPct}%)
                 </span>
               </div>
             </CardContent>
@@ -520,18 +620,18 @@ export default async function InstitutionOverviewPage() {
         </div>
       </div>
 
-      {/* Enrolled Students Table with Real Statuses */}
+      {/* Enrolled Students Table with Canonical Cross-Dashboard Statuses */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <CardTitle className="text-base font-semibold">Recent Student Enrolments</CardTitle>
               <CardDescription className="text-xs">
-                Real-time tracking of assessment, interview opportunities, and placement confirmations
+                Synchronized with the canonical 3-Interview Assurance lifecycle (Completed vs. Scheduled vs. Being Matched)
               </CardDescription>
             </div>
             <Badge variant="secondary" className="text-xs font-mono">
-              {institution.students.length} of {registeredCount} shown
+              Showing {institution.students.length} recent of {displayRegisteredCount} registered students
             </Badge>
           </div>
         </CardHeader>
@@ -541,17 +641,26 @@ export default async function InstitutionOverviewPage() {
               <thead className="text-slate-500 bg-slate-50 border-b uppercase tracking-wider">
                 <tr>
                   <th className="py-2.5 px-3">Student Name</th>
-                  <th className="py-2.5 px-3">Branch & Roll</th>
-                  <th className="py-2.5 px-3">Programme</th>
-                  <th className="py-2.5 px-3">Opportunities (Assurance)</th>
-                  <th className="py-2.5 px-3">Status</th>
-                  <th className="py-2.5 px-3">Placement</th>
+                  <th className="py-2.5 px-3">Branch &amp; Roll</th>
+                  <th className="py-2.5 px-3">Programme Track</th>
+                  <th className="py-2.5 px-3">Interview Assurance (Target: 3)</th>
+                  <th className="py-2.5 px-3">Candidate Status</th>
+                  <th className="py-2.5 px-3">Current Round / Outcome</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {institution.students.map((stu: any) => {
-                  const prog = stu.programmes[0]
-                  const oppCount = stu.opportunities.length
+                  const prog = stu.programmes?.[0]
+                  const completed =
+                    typeof stu.completedInterviews === 'number'
+                      ? stu.completedInterviews
+                      : (stu.opportunities || []).filter((o: any) => o.status === 'COMPLETED' || o.status === 'SELECTED').length
+                  const scheduled =
+                    typeof stu.scheduledInterviews === 'number'
+                      ? stu.scheduledInterviews
+                      : (stu.opportunities || []).filter((o: any) => o.status === 'SCHEDULED' || o.status === 'INTERVIEW_SCHEDULED').length
+                  const matching = Math.max(0, 3 - completed - scheduled)
+
                   return (
                     <tr key={stu.id} className="hover:bg-slate-50/50">
                       <td className="py-3 px-3">
@@ -559,20 +668,20 @@ export default async function InstitutionOverviewPage() {
                         <div className="text-[11px] text-slate-500">{stu.user.email}</div>
                       </td>
                       <td className="py-3 px-3">
-                        <div>{stu.profile?.branch || 'Engineering'}</div>
-                        <div className="font-mono text-[11px] text-slate-400">{stu.enrollmentNumber}</div>
+                        <div>{stu.profile?.branch || stu.department || 'Engineering'}</div>
+                        <div className="font-mono text-[11px] text-slate-500">{stu.enrollmentNumber}</div>
                       </td>
                       <td className="py-3 px-3">
                         <Badge variant="outline" className="text-[11px]">
-                          {prog?.programmePlan.name || 'Placement Assurance'}
+                          {prog?.programmePlan?.name || 'Standard Track'}
                         </Badge>
                       </td>
                       <td className="py-3 px-3">
-                        <div className="font-medium text-slate-700">
-                          {oppCount} / {prog?.assuranceTarget || 3} Delivered
+                        <div className="font-semibold text-slate-800 font-mono">
+                          {completed} of 3 Completed
                         </div>
-                        <div className="text-[11px] text-slate-400">
-                          {prog?.opportunitiesRemaining || 3} remaining
+                        <div className="text-[11px] text-slate-500">
+                          {scheduled} Scheduled &bull; {matching} Being Matched
                         </div>
                       </td>
                       <td className="py-3 px-3">
@@ -580,22 +689,20 @@ export default async function InstitutionOverviewPage() {
                           className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
                             stu.status === 'PLACED'
                               ? 'bg-emerald-100 text-emerald-800'
-                              : stu.status === 'ACTIVE'
-                              ? 'bg-blue-100 text-blue-800'
-                              : 'bg-amber-100 text-amber-800'
+                              : stu.status === 'OFFER_EXTENDED'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-amber-100 text-amber-800'
                           }`}
                         >
-                          {stu.status}
+                          {stu.status === 'PLACED'
+                            ? 'PLACED'
+                            : stu.status === 'OFFER_EXTENDED'
+                              ? 'OFFER EXTENDED'
+                              : `INTERVIEWING (${completed}/3 COMPLETED)`}
                         </span>
                       </td>
-                      <td className="py-3 px-3 font-semibold text-slate-900">
-                        {stu.status === 'PLACED' ? (
-                          <span className="text-emerald-700 flex items-center gap-1">
-                            <CheckCircle2 className="h-3.5 w-3.5" /> Placed (₹5.5L)
-                          </span>
-                        ) : (
-                          <span className="text-slate-400">In Pipeline</span>
-                        )}
+                      <td className="py-3 px-3 font-medium text-slate-800">
+                        {stu.placementSummary || (stu.status === 'PLACED' ? 'Placed — Partner Employer' : 'Active Assurance Pipeline')}
                       </td>
                     </tr>
                   )

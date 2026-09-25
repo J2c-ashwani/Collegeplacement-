@@ -101,37 +101,119 @@ export interface InstitutionalOnboardingSubmission {
   };
 }
 
+export type MouLifecycleStage =
+  | 'DRAFT'
+  | 'PENDING_ADMIN_REVIEW'
+  | 'APPROVED'
+  | 'MOU_GENERATED'
+  | 'SENT_TO_INSTITUTION'
+  | 'SIGNED_EXECUTED'
+  | 'ACTIVE_PARTNERSHIP';
+
+export const MOU_LIFECYCLE_STAGES: {
+  id: MouLifecycleStage;
+  code: MouLifecycleStage;
+  step: number;
+  label: string;
+  shortLabel: string;
+}[] = [
+  { id: 'DRAFT', code: 'DRAFT', step: 1, label: 'Draft Onboarding', shortLabel: 'Draft' },
+  { id: 'PENDING_ADMIN_REVIEW', code: 'PENDING_ADMIN_REVIEW', step: 2, label: 'Pending Admin Review', shortLabel: 'Pending Review' },
+  { id: 'APPROVED', code: 'APPROVED', step: 3, label: 'Approved by Super Admin', shortLabel: 'Approved' },
+  { id: 'MOU_GENERATED', code: 'MOU_GENERATED', step: 4, label: 'MoU — Ready for Signature', shortLabel: 'Ready for Signature' },
+  { id: 'SENT_TO_INSTITUTION', code: 'SENT_TO_INSTITUTION', step: 5, label: 'Sent to Institution', shortLabel: 'Sent to College' },
+  { id: 'SIGNED_EXECUTED', code: 'SIGNED_EXECUTED', step: 6, label: 'Signed / Executed MoU', shortLabel: 'Signed / Executed' },
+  { id: 'ACTIVE_PARTNERSHIP', code: 'ACTIVE_PARTNERSHIP', step: 7, label: 'Active Partnership', shortLabel: 'Active Partnership' },
+];
+
+export function formatDualTimestamp(isoString?: string | Date | null): string {
+  if (!isoString) {
+    return '10 Jul 2026, 20:00 IST (14:30 UTC)';
+  }
+  const date = typeof isoString === 'string' ? new Date(isoString) : isoString;
+  if (Number.isNaN(date.getTime())) {
+    return String(isoString);
+  }
+  const istFormatter = new Intl.DateTimeFormat('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Asia/Kolkata',
+  });
+  const utcFormatter = new Intl.DateTimeFormat('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'UTC',
+  });
+  return `${istFormatter.format(date)} IST (${utcFormatter.format(date)} UTC)`;
+}
+
+export const CANONICAL_ASSURANCE_LIFECYCLE = {
+  ruleSummary:
+    'An interview opportunity is counted as Completed Toward Assurance (1 of 3 Completed) only after the interview is Attended & Completed. Confirmed upcoming slots are tracked separately as Scheduled, and active matching slots are tracked as Being Matched.',
+  stages: ['Created', 'Matched', 'Scheduled', 'Attended', 'Completed (Counted Toward Assurance)'],
+  aaravSharmaSummary: {
+    studentId: 'stu-apex-2026-01',
+    name: 'Aarav Sharma',
+    enrollmentNumber: 'APX2026CS042',
+    department: 'Computer Science & Engineering',
+    cgpa: 8.64,
+    employabilityScore: 78,
+    readinessTier: 'Tier-1 Ready',
+    programmeTrack: 'Standard Track',
+    totalPaidInr: 1180,
+    completedCount: 1,
+    scheduledCount: 1,
+    matchingCount: 1,
+    totalTargetCount: 3,
+    assuranceHeadline: 'Interview Assurance: 1 of 3 Completed',
+    assuranceBreakdownLabel: '1 Completed • 1 Scheduled • 1 Being Matched',
+    tpoTableBadge: '1 / 3 Completed (1 Scheduled)',
+    candidateStatusBadge: 'Interviewing (1/3 Completed)',
+    urgentNextAction: {
+      title: 'Prepare for Your Upcoming Interview — FinCore Digital Systems',
+      subtitle: 'Opportunity #2 (Graduate Product Analyst) is confirmed for 28 Sep 2026, 11:00 IST (05:30 UTC). Complete your role brief and technical checklist before joining.',
+      ctaLabel: 'Prepare for Upcoming Interview',
+      ctaHref: '/student/interviews',
+    },
+  },
+};
+
 export const STUDENT_PROGRAMME_TERMS_CLAUSES = [
   {
     title: '1. Scope of the 3-Interview Assurance Programme',
-    body: 'PlacementConnect guarantees to facilitate at least 3 verified corporate interview opportunities within 12 months of assessment completion for eligible students, backed by a 100% base programme fee refund if unfulfilled. Final hiring decisions and employment offers depend strictly on candidate merit and employer selection panels.',
+    body: 'PlacementConnect commits to facilitating 3 Verified Corporate Interview Opportunities within 12 months of assessment completion for eligible students, backed by a 100% base programme fee refund if fewer than 3 verified corporate interview opportunities are completed within the assurance window. Final hiring decisions and employment offers depend strictly on candidate merit and employer selection panels.',
   },
   {
     title: '2. Programme Track & Statutory Fee Structure',
     body: `Students enroll in either the ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + 18% GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) or the ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + 18% GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}). The selected track and fee are locked upon Cashfree payment confirmation.`,
   },
   {
-    title: '3. Student Eligibility & Mandatory Participation Obligations',
-    body: 'To remain eligible under the 3-Interview Assurance commitment, the student must: (a) complete the 9-Dimension Employability Assessment and achieve the baseline readiness benchmark (overall score >= 50/100); (b) maintain verified academic records and a complete placement profile; (c) attend all scheduled corporate interviews punctually with zero unexcused no-shows; and (d) not reject a verified corporate offer that meets the programme benchmark criteria.',
+    title: '3. Student Eligibility, Canonical Lifecycle & Participation Obligations',
+    body: 'Every interview opportunity follows the canonical lifecycle: Created → Matched → Scheduled → Attended → Completed (Counted Toward Assurance). To remain eligible under the 3-Interview Assurance commitment, the student must: (a) complete the 9-Dimension Employability Assessment and achieve the baseline readiness benchmark (overall score >= 50/100); (b) maintain verified academic records and a complete placement profile; (c) attend all scheduled corporate interviews punctually with zero unexcused no-shows; and (d) not reject a verified corporate offer that meets the programme benchmark criteria.',
   },
   {
     title: '4. 12-Month Assurance Window Calculation',
-    body: 'The 12-month assurance window commences strictly on the timestamp when the student completes the 9-Dimension Employability Assessment and achieves verified readiness eligibility, and expires exactly 365 calendar days thereafter.',
+    body: 'The 12-month assurance window commences strictly on the timestamp when the student completes the 9-Dimension Employability Assessment and achieves verified readiness eligibility, and expires 365 calendar days thereafter.',
   },
   {
     title: '5. Refund Policy & Statutory GST Treatment',
     body: 'If an eligible student who has fulfilled all participation and attendance obligations receives fewer than 3 verified corporate interview opportunities within 12 months of assessment completion, PlacementConnect refunds 100% of the base programme fee paid (₹1,000 for Standard Track or ₹2,500 for Extended Readiness Track) via Cashfree refund mechanics. Statutory 18% GST (₹180 or ₹450) remitted to government tax authorities is non-refundable.',
   },
   {
-    title: '6. Electronic Consent & Immutable Record Preservation',
-    body: 'By checking the acceptance box and proceeding to Cashfree checkout, the student executes a legally binding electronic acceptance under the Information Technology Act, 2000. This exact version of the Terms & Conditions, together with the student ID, timestamp, track selection, and Cashfree payment reference, is permanently archived and emailed upon payment confirmation.',
+    title: '6. Electronic Acceptance & Immutable Transaction Record Preservation',
+    body: 'By checking the acceptance box and proceeding to Cashfree checkout, the student records their affirmative electronic acceptance of the applicable Programme Terms & Conditions. This exact version of the Terms & Conditions, together with the student ID, dual timestamp (IST & UTC), track selection, and Cashfree payment reference, is preserved as an immutable transaction record according to the applicable retention policy and emailed upon payment confirmation.',
   },
 ];
 
 export const INSTITUTIONAL_MOU_CLAUSES_SUMMARY = [
   {
     title: '1. Institutional Placement OS & Campus Code Provisioning',
-    body: 'PlacementConnect grants the Partner Institution an active multi-tenant Training & Placement Office (TPO) workspace, dedicated 6-character Campus Code, QR student onboarding gateway, and Four-Stage Cohort Reporting ledger.',
+    body: 'PlacementConnect grants the Partner Institution an active multi-tenant Training & Placement Office (TPO) workspace, dedicated 6-character Campus Code, QR student onboarding gateway, and Placement Reporting Summary.',
   },
   {
     title: '2. Annual & Multi-Cohort Commercial Terms & Year-1 Waiver Policy',

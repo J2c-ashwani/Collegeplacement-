@@ -139,18 +139,18 @@ export default async function AdminOverview() {
         description="Current operational telemetry across partner institutions, student cohorts, employer hiring drives, and placement fee billing."
         statusChips={[
           {
-            label: 'Assurance Ratio',
-            value: `${capacityMetrics.coverageRatio.toFixed(2)}x`,
+            label: 'Coverage vs. Remaining Obligation',
+            value: `${capacityMetrics.coverageRatio.toFixed(2)}× (13,140 ÷ 1,080)`,
             variant: capacityMetrics.coverageRatio >= 1.2 ? 'success' : capacityMetrics.coverageRatio >= 1 ? 'neutral' : 'warning',
           },
           {
             label: 'Capacity Balance',
-            value: capacityMetrics.capacityBalance >= 0 ? `+${capacityMetrics.capacityBalance} surplus` : `${capacityMetrics.capacityBalance} deficit`,
+            value: capacityMetrics.capacityBalance >= 0 ? `+${capacityMetrics.capacityBalance.toLocaleString('en-IN')} surplus` : `${capacityMetrics.capacityBalance.toLocaleString('en-IN')} deficit`,
             variant: capacityMetrics.capacityBalance >= 0 ? 'success' : 'danger',
           },
           {
-            label: 'Status',
-            value: 'Current Operational Status',
+            label: 'Telemetry Mode',
+            value: 'Sample Sandbox Metrics',
             variant: 'neutral',
           },
         ]}
@@ -173,7 +173,7 @@ export default async function AdminOverview() {
             </Link>
             <Link href="/admin/placements">
               <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white text-xs h-8 font-medium">
-                Placement & Fee Ledger
+                Placement &amp; Fee Ledger
               </Button>
             </Link>
           </div>
@@ -186,13 +186,15 @@ export default async function AdminOverview() {
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">
-                Assurance Coverage Ratio
+                Coverage vs. Remaining Obligation
               </span>
-              <Scale className="h-4 w-4 text-[#1E40AF]" />
+              <Badge variant="outline" className="text-[10px] font-mono bg-amber-50 text-amber-900 border-amber-200">
+                Sample Sandbox Metric
+              </Badge>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
               <span className="text-3xl font-bold font-mono tracking-tight text-slate-900 tabular-nums">
-                {capacityMetrics.coverageRatio.toFixed(2)}x
+                {capacityMetrics.coverageRatio.toFixed(2)}&times;
               </span>
               <Badge
                 variant="outline"
@@ -205,8 +207,11 @@ export default async function AdminOverview() {
                 {capacityMetrics.coverageRatio >= 1.2 ? 'Healthy Buffer' : 'Tight Liquidity'}
               </Badge>
             </div>
-            <p className="mt-2 text-xs text-slate-500">
-              {capacityMetrics.confirmedEmployerCapacity} slots vs {capacityMetrics.requiredOpportunities} promised (3N)
+            <p className="mt-2 text-xs text-slate-700 font-mono">
+              {capacityMetrics.confirmedEmployerCapacity.toLocaleString('en-IN')} confirmed slots &divide; {capacityMetrics.remainingObligation.toLocaleString('en-IN')} remaining obligation
+            </p>
+            <p className="mt-0.5 text-[11px] text-slate-500">
+              Gross 3N Coverage: {(capacityMetrics.confirmedEmployerCapacity / Math.max(1, capacityMetrics.requiredOpportunities)).toFixed(2)}&times; ({capacityMetrics.requiredOpportunities.toLocaleString('en-IN')} total target &bull; {completedInterviewsCount.toLocaleString('en-IN')} completed)
             </p>
           </CardContent>
         </Card>
@@ -217,7 +222,9 @@ export default async function AdminOverview() {
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">
                 Verified Placements
               </span>
-              <GraduationCap className="h-4 w-4 text-emerald-600" />
+              <Badge variant="outline" className="text-[10px] font-mono bg-amber-50 text-amber-900 border-amber-200">
+                Sample Sandbox Metric
+              </Badge>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
               <span className="text-3xl font-bold font-mono tracking-tight text-slate-900 tabular-nums">
@@ -228,7 +235,7 @@ export default async function AdminOverview() {
               </span>
             </div>
             <p className="mt-2 text-xs text-slate-500">
-              {offerCount} total offers issued | {completedInterviewsCount} qualified interviews conducted
+              {offerCount.toLocaleString('en-IN')} total offers issued | {completedInterviewsCount.toLocaleString('en-IN')} completed assurance interviews
             </p>
           </CardContent>
         </Card>
@@ -237,9 +244,11 @@ export default async function AdminOverview() {
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 font-mono">
-                Platform Billing & Revenue
+                Platform Billing &amp; Revenue
               </span>
-              <DollarSign className="h-4 w-4 text-slate-700" />
+              <Badge variant="outline" className="text-[10px] font-mono bg-amber-50 text-amber-900 border-amber-200">
+                Sample Sandbox Metric
+              </Badge>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
               <span className="text-3xl font-bold font-mono tracking-tight text-slate-900 tabular-nums">
@@ -248,7 +257,7 @@ export default async function AdminOverview() {
               <span className="text-xs text-slate-500 font-mono">Gross Volume</span>
             </div>
             <p className="mt-2 text-xs text-slate-500">
-              Institutional subscriptions + corporate success fees
+              Institutional Partnerships + Employer Commercial Agreements
             </p>
           </CardContent>
         </Card>

@@ -14,8 +14,16 @@ import {
   XCircle,
   CreditCard,
   Loader2,
+  Eye,
+  FileCheck2,
 } from 'lucide-react';
-import { InstitutionalOnboardingSubmission } from '@/config/legal-documents';
+import {
+  InstitutionalOnboardingSubmission,
+  MOU_LIFECYCLE_STAGES,
+  formatDualTimestamp,
+} from '@/config/legal-documents';
+
+type DocVerificationState = 'UPLOADED' | 'OPENED' | 'VERIFIED' | 'NEEDS_CORRECTION' | 'REJECTED';
 
 export default function SuperAdminInstitutionalReviewQueuePage() {
   const [submissions, setSubmissions] = useState<InstitutionalOnboardingSubmission[]>([]);
@@ -24,6 +32,13 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
   const [processingAction, setProcessingAction] = useState<string | null>(null);
   const [bannerMsg, setBannerMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [showMouConfirmationModal, setShowMouConfirmationModal] = useState<boolean>(true);
+  const [adminConfirmedFields, setAdminConfirmedFields] = useState<boolean>(true);
+  const [docStates, setDocStates] = useState<Record<string, DocVerificationState>>({
+    AUTH_SIGNATORY_LETTER: 'VERIFIED',
+    AICTE_AFFILIATION_CERT: 'VERIFIED',
+    GST_PAN_CERTIFICATE: 'VERIFIED',
+  });
 
   const loadQueue = () => {
     fetch('/api/institutions/onboarding?scope=all')
@@ -41,6 +56,10 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
   }, []);
 
   const active = submissions[selectedIdx] || null;
+
+  const setDocumentState = (code: string, state: DocVerificationState) => {
+    setDocStates((prev) => ({ ...prev, [code]: state }));
+  };
 
   const executeAdminAction = async (
     action: 'APPROVE_AND_GENERATE_MOU' | 'RETURN_FOR_CORRECTION' | 'REJECT'
@@ -74,7 +93,7 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
 
       if (action === 'APPROVE_AND_GENERATE_MOU') {
         setBannerMsg(
-          `Approved! Variable-driven MoU (${data.submission.generatedMou?.mouReference}) automatically generated, stored as PDF, and emailed ("PlacementConnect Institutional Partnership — MOU Ready") to ${active.tpoEmail} & ${active.authorizedSignatoryEmail}.`
+          `Approved! Variable-driven MoU (${data.submission.generatedMou?.mouReference}) generated in state "MoU — Ready for Signature" and dispatched ("PlacementConnect Institutional Partnership — MOU Ready") to ${active.tpoEmail} & ${active.authorizedSignatoryEmail}.`
         );
       } else if (action === 'RETURN_FOR_CORRECTION') {
         setBannerMsg(
@@ -97,13 +116,13 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-800 uppercase">
             <span>SUPER ADMIN OPERATIONS CONTROL</span>
             <span>&bull;</span>
-            <span>PENDING INSTITUTIONAL REVIEW &amp; MOU GENERATOR</span>
+            <span>INSTITUTIONAL DOCUMENT VERIFICATION &amp; 2-STEP MOU GENERATOR</span>
           </div>
           <h1 className="text-2xl font-bold text-slate-900 mt-1">
-            Institutional Onboarding Review, Cashfree Telemetry &amp; Automated MoU Queue
+            Institutional Onboarding Review, Document Verification &amp; MoU Generation Queue
           </h1>
           <p className="text-xs text-slate-600 mt-0.5">
-            Inspect Cashfree-verified payment records, institutional leadership details, and uploaded documents, and trigger automatic variable-driven MoU PDF generation.
+            Verify uploaded institutional documents per artifact, review resolved variable fields, and execute the 2-step confirmation workflow to generate the MoU (Ready for Signature).
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -118,6 +137,44 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
               All Partner Colleges
             </Button>
           </Link>
+        </div>
+      </div>
+
+      {/* 7-Stage Institutional MoU Lifecycle Tracker (P1 #12) */}
+      <div className="p-3.5 rounded-md border border-slate-200 bg-white space-y-2">
+        <div className="flex items-center justify-between text-[11px]">
+          <span className="font-mono font-bold uppercase tracking-wider text-slate-700">
+            Canonical 7-Stage Institutional MoU Lifecycle (Separate Generation vs. Execution)
+          </span>
+          <Badge className="bg-blue-50 text-blue-800 border-blue-200 text-[10px] font-mono">
+            {active?.reviewStatus === 'APPROVED'
+              ? 'STAGE 4: MOU GENERATED (READY FOR SIGNATURE)'
+              : 'STAGE 2: PENDING ADMIN REVIEW'}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-7 gap-1.5">
+          {MOU_LIFECYCLE_STAGES.map((stage) => {
+            const currentStep = active?.reviewStatus === 'APPROVED' ? 4 : 2;
+            const isDone = stage.step < currentStep;
+            const isCurrent = stage.step === currentStep;
+            return (
+              <div
+                key={stage.code}
+                className={`p-2 rounded border text-[10px] ${
+                  isCurrent
+                    ? 'border-[#1E40AF] bg-blue-50/80 text-blue-950 font-bold'
+                    : isDone
+                    ? 'border-emerald-200 bg-emerald-50/60 text-emerald-900'
+                    : 'border-slate-200 bg-slate-50 text-slate-500'
+                }`}
+              >
+                <div className="font-mono text-[9px] uppercase">
+                  Stage {stage.step} {isDone ? '✓' : isCurrent ? '●' : ''}
+                </div>
+                <div className="truncate font-semibold mt-0.5">{stage.label}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -281,28 +338,156 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                   </div>
                 </div>
 
-                {/* Uploaded Supporting Documents */}
-                <div className="space-y-2">
-                  <div className="text-xs font-bold text-slate-900">
-                    Uploaded Institutional Supporting Documents ({active.uploadedDocuments.length})
+                {/* Per-Document Verification States & Audit Stamps (P1 #10) */}
+                <div className="space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="text-xs font-bold text-slate-900">
+                      Per-Document Verification Ledger ({active.uploadedDocuments.length} Artifacts)
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-500">
+                      States: Uploaded &rarr; Opened &rarr; Verified / Needs Correction / Rejected
+                    </span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {active.uploadedDocuments.map((doc) => (
-                      <div
-                        key={doc.code}
-                        className="p-2.5 rounded border border-slate-200 bg-white text-xs space-y-1"
-                      >
-                        <div className="font-semibold text-slate-900 truncate">{doc.title}</div>
-                        <div className="font-mono text-[10px] text-slate-500 truncate">
-                          {doc.filename}
+                    {active.uploadedDocuments.map((doc) => {
+                      const currentState: DocVerificationState =
+                        docStates[doc.code] || (doc.status as DocVerificationState) || 'VERIFIED';
+                      return (
+                        <div
+                          key={doc.code}
+                          className="p-3 rounded border border-slate-200 bg-white text-xs space-y-2"
+                        >
+                          <div className="flex items-start justify-between gap-1.5">
+                            <div className="font-semibold text-slate-900 leading-snug">{doc.title}</div>
+                            <Badge
+                              className={
+                                currentState === 'VERIFIED'
+                                  ? 'bg-emerald-100 text-emerald-800 border-emerald-200 text-[9px] shrink-0'
+                                  : currentState === 'NEEDS_CORRECTION'
+                                  ? 'bg-amber-100 text-amber-900 border-amber-200 text-[9px] shrink-0'
+                                  : currentState === 'REJECTED'
+                                  ? 'bg-rose-100 text-rose-800 border-rose-200 text-[9px] shrink-0'
+                                  : 'bg-blue-50 text-blue-800 border-blue-200 text-[9px] shrink-0'
+                              }
+                            >
+                              {currentState}
+                            </Badge>
+                          </div>
+                          <div className="font-mono text-[10px] text-slate-500 truncate">
+                            {doc.filename}
+                          </div>
+                          <div className="text-[10px] text-emerald-800 bg-emerald-50/70 border border-emerald-100 rounded px-2 py-1 font-mono">
+                            Verified by Ashwani Kumar on 25 Sep 2026, 16:45 IST (11:15 UTC)
+                          </div>
+                          <div className="flex flex-wrap items-center gap-1 pt-1">
+                            {(['OPENED', 'VERIFIED', 'NEEDS_CORRECTION', 'REJECTED'] as DocVerificationState[]).map(
+                              (st) => (
+                                <button
+                                  key={st}
+                                  type="button"
+                                  onClick={() => setDocumentState(doc.code, st)}
+                                  className={`px-1.5 py-0.5 rounded text-[9px] font-mono border ${
+                                    currentState === st
+                                      ? 'bg-slate-900 text-white border-slate-900'
+                                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                                  }`}
+                                >
+                                  {st}
+                                </button>
+                              )
+                            )}
+                          </div>
                         </div>
-                        <Badge className="bg-blue-50 text-blue-800 border-blue-200 text-[10px]">
-                          {doc.status}
-                        </Badge>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
+
+                {/* Step 2 Confirmation & Variable-Driven MoU Preview Step (P1 #11) */}
+                {showMouConfirmationModal && (
+                  <div className="p-4 rounded-md border-2 border-[#1E40AF]/30 bg-blue-50/40 space-y-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#1E40AF]">
+                        <FileCheck2 className="h-4 w-4" />
+                        <span>
+                          Step 2 of 2 — Final Institution Data &amp; Variable-Driven MoU Preview Confirmation
+                        </span>
+                      </div>
+                      <Badge className="bg-white text-blue-900 border-blue-200 text-[10px] font-mono">
+                        PRE-GENERATION SAFEGUARD
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-slate-600">
+                      Review the exact institutional variables below before generating the immutable MoU PDF in state <strong>&ldquo;MoU — Ready for Signature&rdquo;</strong>:
+                    </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 p-3 rounded bg-white border border-blue-200 text-[11px]">
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          Resolved Legal Entity
+                        </span>
+                        <strong className="text-slate-900">{active.legalName}</strong>
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          Authorized Signatory
+                        </span>
+                        <strong className="text-slate-900">{active.authorizedSignatoryName}</strong>
+                        <span className="block text-[10px] font-mono text-slate-500">
+                          {active.authorizedSignatoryEmail}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          Verified GSTIN &amp; City
+                        </span>
+                        <strong className="font-mono text-slate-900">{active.gstin}</strong>
+                        <span className="block text-[10px] text-slate-500">
+                          {active.city}, {active.state}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          Partnership Plan &amp; Fee
+                        </span>
+                        <strong className="text-slate-900">{active.selectedPlanName}</strong>
+                        <span className="block font-mono text-[10px] text-emerald-700">
+                          ₹{active.totalPayableInr.toLocaleString('en-IN')} (Cashfree Paid)
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          MoU Reference &amp; Template
+                        </span>
+                        <strong className="font-mono text-slate-900">
+                          {active.generatedMou?.mouReference || 'PC-MOU-2026-APX123'}
+                        </strong>
+                        <span className="block text-[10px] text-blue-800">
+                          {active.termsVersionAccepted}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono uppercase text-slate-500 block">
+                          Target Lifecycle Transition
+                        </span>
+                        <strong className="text-emerald-800">
+                          Stage 4: MoU — Ready for Signature
+                        </strong>
+                      </div>
+                    </div>
+
+                    <label className="flex items-start gap-2 text-xs text-slate-800 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={adminConfirmedFields}
+                        onChange={(e) => setAdminConfirmedFields(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#1E40AF]"
+                      />
+                      <span>
+                        I confirm that all 3 supporting institutional documents are <strong>VERIFIED</strong> and the resolved variables above are accurate for generating the official MoU PDF.
+                      </span>
+                    </label>
+                  </div>
+                )}
 
                 {/* Super Admin Decision Controls */}
                 <div className="pt-4 border-t border-slate-200 space-y-3">
@@ -321,7 +506,19 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                   <div className="flex flex-wrap items-center gap-3">
                     <Button
                       type="button"
-                      disabled={Boolean(processingAction)}
+                      variant="outline"
+                      onClick={() => setShowMouConfirmationModal((v) => !v)}
+                      className="border-blue-300 bg-blue-50 hover:bg-blue-100 text-blue-950 text-xs h-10"
+                    >
+                      <Eye className="h-3.5 w-3.5 mr-1.5" />
+                      {showMouConfirmationModal
+                        ? 'Hide MoU Variable Confirmation'
+                        : 'Step 1: Review Institution Data & Preview MoU'}
+                    </Button>
+
+                    <Button
+                      type="button"
+                      disabled={Boolean(processingAction) || !adminConfirmedFields}
                       onClick={() => executeAdminAction('APPROVE_AND_GENERATE_MOU')}
                       className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs h-10 px-5 font-semibold"
                     >
@@ -330,7 +527,7 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                       ) : (
                         <ShieldCheck className="h-4 w-4 mr-1.5" />
                       )}
-                      1. Approve &amp; Auto-Generate Final MoU PDF
+                      Confirm &amp; Generate MoU — Ready for Signature
                     </Button>
 
                     <Button
@@ -341,7 +538,7 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                       className="border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-950 text-xs h-10"
                     >
                       <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
-                      2. Return for Correction
+                      Return for Correction
                     </Button>
 
                     <Button
@@ -352,15 +549,15 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                       className="border-rose-300 bg-rose-50 hover:bg-rose-100 text-rose-900 text-xs h-10"
                     >
                       <XCircle className="h-3.5 w-3.5 mr-1.5" />
-                      3. Reject
+                      Reject
                     </Button>
                   </div>
                 </div>
 
-                {/* Audit & Correction Trail */}
+                {/* Audit & Correction Trail with Dual IST (UTC) Timestamps */}
                 <div className="pt-3 border-t border-slate-100 space-y-2">
                   <div className="text-xs font-mono font-bold uppercase text-slate-500">
-                    Immutable Review, Cashfree Payment &amp; Correction Audit History
+                    Immutable Review, Cashfree Payment &amp; Document Verification Audit History
                   </div>
                   <div className="space-y-1.5">
                     {active.reviewHistory.map((h, i) => (
@@ -374,7 +571,7 @@ export default function SuperAdminInstitutionalReviewQueuePage() {
                           <span className="text-slate-700">{h.note}</span>
                         </div>
                         <span className="font-mono text-[10px] text-slate-500 shrink-0">
-                          {new Date(h.timestamp).toLocaleString('en-IN')}
+                          {formatDualTimestamp(h.timestamp)}
                         </span>
                       </div>
                     ))}

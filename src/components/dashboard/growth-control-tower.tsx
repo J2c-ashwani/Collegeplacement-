@@ -115,13 +115,35 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
 
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-2xs col-span-2 md:col-span-1">
               <div className="flex items-center justify-between text-slate-500 text-xs font-medium mb-1">
-                <span>Coverage Buffer</span>
+                <span>Remaining Coverage</span>
                 <Gauge className="h-3.5 w-3.5 text-violet-600" />
               </div>
-              <div className="text-2xl font-bold text-slate-900">{metrics.coverageRatio}x</div>
-              <p className="text-[11px] text-slate-500 mt-1">Target: &ge; 1.20x buffer</p>
+              <div className="text-2xl font-bold text-slate-900">{metrics.coverageRatio}&times;</div>
+              <p className="text-[11px] text-slate-500 mt-1">
+                {metrics.confirmedEmployerCapacity.toLocaleString('en-IN')} &divide; {metrics.remainingObligation.toLocaleString('en-IN')} remaining
+              </p>
             </div>
           </div>
+
+          <details className="mt-4 text-xs text-slate-600 bg-white border border-slate-200 rounded-md p-3">
+            <summary className="cursor-pointer font-semibold text-slate-800 select-none">
+              View Formula Derivation &amp; Secondary Sandbox Telemetry
+            </summary>
+            <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100 font-mono text-[11px]">
+              <div>
+                <span className="text-slate-500 block">REMAINING OBLIGATION FORMULA</span>
+                <strong>{metrics.requiredOpportunities.toLocaleString('en-IN')} (3N) &minus; {(metrics.requiredOpportunities - metrics.remainingObligation).toLocaleString('en-IN')} (Completed) = {metrics.remainingObligation.toLocaleString('en-IN')}</strong>
+              </div>
+              <div>
+                <span className="text-slate-500 block">REMAINING COVERAGE RATIO</span>
+                <strong>{metrics.confirmedEmployerCapacity.toLocaleString('en-IN')} &divide; {metrics.remainingObligation.toLocaleString('en-IN')} = {metrics.coverageRatio}&times;</strong>
+              </div>
+              <div>
+                <span className="text-slate-500 block">GROSS 3N COVERAGE RATIO</span>
+                <strong>{metrics.confirmedEmployerCapacity.toLocaleString('en-IN')} &divide; {metrics.requiredOpportunities.toLocaleString('en-IN')} = {(metrics.confirmedEmployerCapacity / Math.max(1, metrics.requiredOpportunities)).toFixed(2)}&times;</strong>
+              </div>
+            </div>
+          </details>
         </CardContent>
       </Card>
 
@@ -159,7 +181,7 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
                 <span className="font-bold text-slate-900">{metrics.activeStudents.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between px-6 py-2.5 bg-slate-50/30">
-                <span className="text-slate-600 font-sans text-xs sm:text-sm">Assurance Opportunities Required ($3N$)</span>
+                <span className="text-slate-600 font-sans text-xs sm:text-sm">Assurance Opportunities Required (3N)</span>
                 <span className="font-bold text-indigo-700">{metrics.requiredOpportunities.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between px-6 py-2.5 hover:bg-slate-50/50">

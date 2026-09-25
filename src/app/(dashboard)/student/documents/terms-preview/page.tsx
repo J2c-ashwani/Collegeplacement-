@@ -9,6 +9,7 @@ import { ShieldCheck, FileCheck2, ArrowLeft, Printer } from 'lucide-react';
 import {
   buildAcceptedStudentTermsSnapshot,
   AcceptedStudentTermsSnapshot,
+  formatDualTimestamp,
 } from '@/config/legal-documents';
 import { COMPANY_IDENTITY } from '@/config/company-identity';
 
@@ -54,11 +55,13 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
       acceptedAt:
         activeProgramme?.studentObligationsAccepted?.toISOString() ||
         '2026-08-14T10:15:30.000Z',
-      orderId: existingOrder?.id || 'ORD-STU-2026-88412',
-      paymentId: existingOrder?.payment?.gatewayPaymentId || 'pay_upi_2026_992014',
+      orderId: existingOrder?.id || 'cf_ord_stu_2026_88412',
+      paymentId: existingOrder?.payment?.gatewayPaymentId || 'cf_pay_stu_99104421',
       invoiceNumber: existingOrder?.invoice?.invoiceNumber || 'PC-INV-STU-88412',
     });
   }
+
+  const formattedAcceptedAt = formatDualTimestamp(snapshot.acceptedAt);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -72,7 +75,7 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
         </Link>
         <div className="flex items-center gap-2">
           <Badge className="bg-emerald-50 text-emerald-800 border-emerald-200 text-xs font-mono">
-            IMMUTABLE HISTORICAL RECORD ({snapshot.termsVersion})
+            IMMUTABLE TRANSACTION RECORD ({snapshot.termsVersion})
           </Badge>
         </div>
       </div>
@@ -83,13 +86,13 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
           <div className="space-y-1">
             <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#1E40AF]">
               <ShieldCheck className="h-4 w-4" />
-              PlacementConnect Legal &amp; Compliance Archive
+              PlacementConnect Legal &amp; Compliance Record
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
-              Executed Student Programme Terms &amp; Conditions Record
+              Accepted Student Programme Terms &amp; Conditions Record
             </h1>
             <p className="text-xs text-slate-600">
-              Issued by {COMPANY_IDENTITY.legalEntityName} &bull; Preserved Exact Pre-Payment Version
+              Issued by {COMPANY_IDENTITY.legalEntityName} &bull; Preserved as an immutable transaction record according to the applicable retention policy
             </p>
           </div>
           <div className="text-left sm:text-right font-mono text-xs space-y-0.5 bg-slate-50 p-3 rounded border border-slate-200">
@@ -103,12 +106,12 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
             </div>
             <div>
               <span className="text-slate-500">Accepted At:</span>{' '}
-              <strong className="text-emerald-700">{snapshot.acceptedAt}</strong>
+              <strong className="text-emerald-700">{formattedAcceptedAt}</strong>
             </div>
           </div>
         </div>
 
-        {/* Electronic Execution Metadata Table */}
+        {/* Electronic Acceptance Metadata Table */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded bg-slate-50 border border-slate-200 text-xs">
           <div>
             <span className="text-slate-500 block text-[11px]">Student Full Name</span>
@@ -130,7 +133,7 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
             </span>
           </div>
           <div>
-            <span className="text-slate-500 block text-[11px]">Payment &amp; Invoice Ref</span>
+            <span className="text-slate-500 block text-[11px]">Cashfree Order &amp; Invoice Ref</span>
             <strong className="font-mono text-slate-900">{snapshot.invoiceNumber}</strong>
             <span className="block font-mono text-[11px] text-slate-500">
               Order: {snapshot.orderId}
@@ -141,7 +144,7 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
         {/* Exact Clauses Accepted Before Payment */}
         <div className="space-y-4 pt-2">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-1.5">
-            Exact Clauses Accepted Prior to Payment Authorization
+            Exact Programme Clauses Accepted Prior to Cashfree Payment Authorization (3 Verified Corporate Interview Opportunities)
           </h2>
           {snapshot.clauses.map((clause) => (
             <div key={clause.title} className="space-y-1">
@@ -151,20 +154,20 @@ export default async function StudentAcceptedTermsDocumentPreviewPage() {
           ))}
         </div>
 
-        {/* Cryptographic Audit Stamp */}
+        {/* Retention & Audit Stamp */}
         <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[11px] text-slate-600">
           <div className="flex items-center gap-2">
             <FileCheck2 className="h-4 w-4 text-emerald-700 shrink-0" />
             <span>
-              <strong>Electronic Acceptance Verified:</strong> Student ID{' '}
+              <strong>Electronic Acceptance Record:</strong> Student ID{' '}
               <code className="font-mono">{snapshot.studentId}</code> accepted{' '}
-              <code className="font-mono">{snapshot.termsVersion}</code> at{' '}
-              <code className="font-mono">{snapshot.acceptedAt}</code> prior to Payment ID{' '}
-              <code className="font-mono">{snapshot.paymentId}</code>.
+              <code className="font-mono">{snapshot.termsVersion}</code> on{' '}
+              <code className="font-mono">{formattedAcceptedAt}</code> linked to Cashfree Payment ID{' '}
+              <code className="font-mono">{snapshot.paymentId}</code>. Preserved as an immutable transaction record according to the applicable retention policy.
             </span>
           </div>
           <span className="font-mono text-slate-500 shrink-0">
-            Status: ACCEPTED &amp; ARCHIVED
+            Status: PRESERVED RECORD
           </span>
         </div>
       </div>
