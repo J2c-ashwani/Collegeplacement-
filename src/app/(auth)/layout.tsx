@@ -24,11 +24,24 @@ export default function AuthLayout({
         </div>
         <div>
           <span className="font-bold text-xl text-slate-900 tracking-tight block leading-tight">PlacementConnect</span>
-          <span className="font-mono text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">Institutional Access Gateway</span>
+          <span className="text-[11px] font-medium text-slate-500 block">Verified Campus Placement &amp; Hiring Platform</span>
         </div>
       </Link>
       <div className="w-full max-w-md">
         {children}
+      </div>
+      <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
+        <Link href="/privacy" className="hover:text-slate-800 hover:underline transition-colors">
+          Privacy
+        </Link>
+        <span className="text-slate-300">&middot;</span>
+        <Link href="/terms" className="hover:text-slate-800 hover:underline transition-colors">
+          Terms
+        </Link>
+        <span className="text-slate-300">&middot;</span>
+        <Link href="/security" className="hover:text-slate-800 hover:underline transition-colors">
+          Security
+        </Link>
       </div>
     </div>
   )

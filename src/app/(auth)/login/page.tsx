@@ -59,9 +59,9 @@ export default function LoginPage() {
   return (
     <Card className="w-full border border-slate-200 shadow-2xs rounded-md bg-white">
       <CardHeader className="space-y-1 pb-4">
-        <CardTitle className="text-xl font-bold text-center text-slate-900 tracking-tight">Sign In to Platform</CardTitle>
+        <CardTitle className="text-xl font-bold text-center text-slate-900 tracking-tight">Sign in to PlacementConnect</CardTitle>
         <CardDescription className="text-center text-xs text-slate-500">
-          Enter your authorized credentials to access your workspace
+          Access your PlacementConnect workspace.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -73,7 +73,7 @@ export default function LoginPage() {
           )}
           <div className="space-y-1.5">
             <Label htmlFor="email" className="text-xs font-semibold text-slate-700">Email Address</Label>
-            <Input id="email" name="email" type="email" placeholder="name@institution.edu.in" required disabled={isLoading} className="text-xs h-9 rounded-sm" />
+            <Input id="email" name="email" type="email" placeholder="Enter your registered email address" required disabled={isLoading} className="text-xs h-9 rounded-sm" />
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
@@ -92,9 +92,9 @@ export default function LoginPage() {
       </CardContent>
       <CardFooter className="flex flex-col items-center pt-2 pb-6">
         <p className="text-xs text-slate-500">
-          Don&apos;t have an account?{" "}
+          New to PlacementConnect?{" "}
           <Link href="/register" className="text-[#1E40AF] hover:underline font-semibold">
-            Institutional Registration
+            Create an account
           </Link>
         </p>
       </CardFooter>
