@@ -270,6 +270,12 @@ export default async function PublicVerifyCredentialIdPage({
   const isSampleCohort =
     institutionName.includes('Apex Institute') || isCanonicalSampleId;
 
+  const weightedCompositeExact = NINE_DIMENSIONS_SPEC.reduce(
+    (acc, dim) => acc + (dim.sampleScore * dim.weightPercent) / 100,
+    0
+  ).toFixed(2);
+  const weightedCompositeRounded = Math.round(Number(weightedCompositeExact));
+
   const linkedinAddUrl = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(
     badgeTitle
   )}&organizationName=PlacementConnect&issueYear=2026&certUrl=${encodeURIComponent(
@@ -284,7 +290,11 @@ export default async function PublicVerifyCredentialIdPage({
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to Employer Hiring Page
           </Link>
-          <span className="text-xs text-slate-500">Verification Status: Valid &amp; Active</span>
+          <span className="text-xs font-medium text-slate-500">
+            {isSampleCohort
+              ? 'Sample Record — Verification Flow Preview'
+              : 'Verification Status: Valid & Active'}
+          </span>
         </div>
 
         {isSampleCohort && (
@@ -326,18 +336,44 @@ export default async function PublicVerifyCredentialIdPage({
                 </span>
                 <div className="flex items-baseline gap-1.5">
                   <span className="font-mono text-2xl sm:text-3xl font-bold text-emerald-400">
-                    82
+                    {weightedCompositeRounded}
                   </span>
-                  <span className="font-mono text-sm text-slate-400">/ 100</span>
+                  <span className="font-mono text-sm text-slate-400">
+                    / 100 ({weightedCompositeExact})
+                  </span>
                 </div>
                 <span className="text-[11px] font-semibold text-emerald-300">
-                  Top-Tier Readiness Band (80–100)
+                  PlacementConnect Readiness Band: Top Tier (80–100)
                 </span>
               </div>
             </div>
           </div>
 
           <CardContent className="p-6 sm:p-8 space-y-8">
+            {/* Compact Recruiter Decision Summary Strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-3.5 rounded-md border border-slate-200 bg-slate-50 text-xs">
+              <div>
+                <span className="text-[11px] text-slate-500 block">Role Fit</span>
+                <span className="font-bold text-emerald-800">Strong (Meets Cutoffs)</span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-500 block">Academic Eligibility</span>
+                <span className="font-bold text-slate-900">Passed ({cgpaValue} • 0 Backlogs)</span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-500 block">Location Fit</span>
+                <span className="font-bold text-slate-900">Compatible (4 Hubs)</span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-500 block">Joining Status</span>
+                <span className="font-bold text-slate-900">Ready (June {graduationYear})</span>
+              </div>
+              <div className="col-span-2 sm:col-span-1">
+                <span className="text-[11px] text-slate-500 block">Recruiter Action</span>
+                <span className="font-bold text-[#1E40AF]">Move to Recruiter Review</span>
+              </div>
+            </div>
+
             {/* 2. Academic Verification & Eligibility + Joining Readiness */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-200">
               <div className="p-4 rounded-md border border-slate-200 bg-slate-50/70 space-y-3">
@@ -459,27 +495,34 @@ export default async function PublicVerifyCredentialIdPage({
                     All 9 Competency Scores (36-Item Timed Evaluation)
                   </h2>
                   <p className="text-xs text-slate-500">
-                    Assessed on {issueDate} • Weights total 100%
+                    Assessed on {issueDate} • Component weights total 100% and sum to exactly {weightedCompositeExact} / 100.00
                   </p>
                 </div>
                 <span className="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded">
-                  Weighted Composite Score: 82 / 100
+                  Weighted Composite Score: {weightedCompositeRounded} / 100 ({weightedCompositeExact})
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {NINE_DIMENSIONS_SPEC.map((dim) => (
-                  <div
-                    key={dim.id}
-                    className="p-3.5 rounded-md border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-1.5"
-                  >
-                    <div className="flex items-center justify-between text-[11px] text-slate-500">
-                      <span>Weight: {dim.weightPercent}%</span>
-                      <span className="font-mono font-bold text-slate-900">{dim.sampleScore}/100</span>
+                {NINE_DIMENSIONS_SPEC.map((dim) => {
+                  const pts = ((dim.sampleScore * dim.weightPercent) / 100).toFixed(2);
+                  return (
+                    <div
+                      key={dim.id}
+                      className="p-3.5 rounded-md border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-1.5"
+                    >
+                      <div className="flex items-center justify-between text-[11px] text-slate-500">
+                        <span>Weight: {dim.weightPercent}%</span>
+                        <span className="font-mono font-bold text-slate-900">
+                          {dim.sampleScore}/100
+                        </span>
+                      </div>
+                      <div className="text-xs font-bold text-slate-900">{dim.name}</div>
+                      <div className="text-[11px] font-mono text-slate-600">
+                        Weighted contribution: {pts} / {dim.weightPercent.toFixed(2)} pts
+                      </div>
                     </div>
-                    <div className="text-xs font-bold text-slate-900">{dim.name}</div>
-                    <div className="text-[11px] text-slate-600">{dim.samplePercentile}</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
