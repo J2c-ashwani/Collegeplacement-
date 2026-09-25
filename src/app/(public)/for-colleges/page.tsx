@@ -272,14 +272,20 @@ export default function ForCollegesPage() {
             <div className="bg-white rounded-lg border-2 border-[#1E40AF] p-6 sm:p-7 space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold bg-blue-50 text-[#1E40AF]">
-                  1. College License
+                  1. College License (1-Year or 5-Year MoU)
                 </span>
-                <div className="flex items-baseline gap-2">
+                <div className="flex flex-wrap items-baseline gap-2">
                   <span className="text-3xl font-mono font-bold text-slate-900">
-                    {INSTITUTION_COMMERCIAL_PLAN.formattedBase}
+                    ₹15,000<span className="text-sm font-normal text-slate-500">/yr</span>
                   </span>
-                  <span className="text-xs text-slate-500">/ year + 18% GST (₹17,700)</span>
+                  <span className="text-sm font-semibold text-slate-400">or</span>
+                  <span className="text-2xl font-mono font-bold text-[#1E40AF]">
+                    ₹60,000<span className="text-xs font-normal text-slate-500"> / 5 yrs</span>
+                  </span>
                 </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Choose the <strong>1-Year Annual License</strong> (₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or the <strong>5-Year Multi-Cohort Agreement</strong> (₹60,000 + 18% GST = <strong>₹70,800 for 5 years</strong> — effective <strong>₹12,000/yr</strong>, saving 20% across a full 5-year NAAC/NIRF cycle).
+                </p>
                 <div className="p-3 rounded bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-medium leading-relaxed">
                   <strong>Year-1 Waiver Condition:</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
                 </div>

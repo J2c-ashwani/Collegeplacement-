@@ -82,7 +82,7 @@ export default function HomePage() {
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
                 <div className="text-xs text-slate-600 mt-1">
-                  Placement OS &amp; NAAC/NIRF reporting (<span className="font-mono font-semibold text-slate-900">₹15,000/yr</span>)
+                  Placement OS &amp; NAAC/NIRF reporting (<span className="font-mono font-semibold text-slate-900">₹15,000/yr or ₹60,000/5yr</span>)
                 </div>
               </Link>
 
@@ -378,14 +378,14 @@ export default function HomePage() {
                 <div className="text-xs font-semibold text-blue-900">
                   Colleges &amp; TPOs
                 </div>
-                <div className="text-2xl font-mono font-bold text-slate-900">
-                  {INSTITUTION_COMMERCIAL_PLAN.formattedBase}
+                <div className="text-xl font-mono font-bold text-slate-900">
+                  ₹15,000/yr <span className="text-xs font-normal text-slate-500">or</span> ₹60,000/5yr
                 </div>
                 <div className="text-xs font-mono text-slate-500">
-                  + {INSTITUTION_COMMERCIAL_PLAN.formattedGst} / year
+                  + 18% GST (₹17,700 / ₹70,800)
                 </div>
                 <p className="text-xs text-slate-600 pt-1">
-                  Waived in Year 1 when 100+ students enroll in the Interview Assurance track.
+                  5-year MoU saves 20% (₹12,000/yr). Year-1 fee waived when 100+ students enroll.
                 </p>
               </div>
 

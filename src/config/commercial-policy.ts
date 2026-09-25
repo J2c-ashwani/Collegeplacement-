@@ -20,10 +20,17 @@ export const INSTITUTION_COMMERCIAL_PLAN = {
   baseFeeInr: 15000,
   gstAmountInr: 2700,
   totalPayableInr: 17700,
+  fiveYearBaseInr: 60000,
+  fiveYearGstInr: 10800,
+  fiveYearTotalInr: 70800,
+  fiveYearEffectiveAnnualInr: 12000,
   billingCycle: 'per year / campus',
   formattedBase: '₹15,000',
   formattedGst: '₹2,700 (18% GST)',
   formattedTotal: '₹17,700 / year (incl. GST)',
+  formattedFiveYearBase: '₹60,000',
+  formattedFiveYearGst: '₹10,800 (18% GST)',
+  formattedFiveYearTotal: '₹70,800 / 5 years (incl. GST)',
   pilotWaiverNote:
     'Eligible for a full Year-1 license fee waiver under our standard Institutional MoU when 100 or more final-year students enroll in the Interview Assurance Programme.',
   deliverables: [
@@ -34,6 +41,41 @@ export const INSTITUTION_COMMERCIAL_PLAN = {
     'Department-level TPO access controls and complete operational activity logs',
   ],
 } as const;
+
+export const INSTITUTION_COMMERCIAL_PLANS = [
+  {
+    id: 'INSTITUTION_CORE_ANNUAL',
+    slug: 'placement',
+    name: '1-Year Annual License',
+    badge: '1 Academic Year',
+    durationYears: 1,
+    baseFeeInr: 15000,
+    gstAmountInr: 2700,
+    totalPayableInr: 17700,
+    formattedBase: '₹15,000',
+    formattedGst: '+ ₹2,700 GST',
+    formattedTotal: '₹17,700 incl. GST',
+    effectiveAnnualText: '₹15,000 / year + GST',
+    summary:
+      'Complete campus placement workspace, student readiness evaluation, employer drive coordination, and 4-stage cohort reporting for 1 academic year (up to 1,500 students).',
+  },
+  {
+    id: 'INSTITUTION_MULTI_COHORT_5YR',
+    slug: 'placement-5yr',
+    name: '5-Year Multi-Cohort Agreement',
+    badge: 'Save 20% (₹12,000/yr)',
+    durationYears: 5,
+    baseFeeInr: 60000,
+    gstAmountInr: 10800,
+    totalPayableInr: 70800,
+    formattedBase: '₹60,000',
+    formattedGst: '+ ₹10,800 GST',
+    formattedTotal: '₹70,800 incl. GST',
+    effectiveAnnualText: 'Effective ₹12,000 / year (Save ₹15,000 over 5 years)',
+    summary:
+      '5 continuous academic years covering 5 graduating batches, unlimited student registrations, multi-batch benchmarking, and longitudinal NAAC/NIRF archive.',
+  },
+] as const;
 
 export const STUDENT_PROGRAMME_PLANS = [
   {

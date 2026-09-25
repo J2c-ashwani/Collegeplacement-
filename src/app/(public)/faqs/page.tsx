@@ -19,8 +19,8 @@ const FAQ_SECTIONS = [
         a: `Under our ${SAFE_TERMINOLOGY.institutionalGovernanceName}, every graduating cohort is tracked across four clear denominators simultaneously: (1) Total Graduating Batch, (2) Registered for Placement, (3) Enrolled in Interview Assurance, and (4) Assessed & Eligible Candidates. TPOs and Principals can export structured CSV and PDF reports showing exact numerator and denominator figures.`,
       },
       {
-        q: 'What is the annual license fee for an engineering, management, or degree college?',
-        a: `The ${INSTITUTION_COMMERCIAL_PLAN.name} is priced at ${INSTITUTION_COMMERCIAL_PLAN.formattedBase} per year + ${INSTITUTION_COMMERCIAL_PLAN.formattedGst} (${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
+        q: 'What are the institutional license options for an engineering, management, or degree college?',
+        a: `Colleges can choose between our 1-Year Annual License (${INSTITUTION_COMMERCIAL_PLAN.formattedBase} + ₹2,700 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or our 5-Year Multi-Cohort Agreement (${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase} + ₹10,800 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}, an effective rate of ₹12,000/year saving ₹15,000 across 5 academic batches). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
       },
       {
         q: 'How do students from our college register without unauthorized outsiders joining our batch roster?',

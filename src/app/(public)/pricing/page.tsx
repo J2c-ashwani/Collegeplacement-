@@ -8,13 +8,45 @@ import {
   ReceiptText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { INSTITUTION_COMMERCIAL_PLAN } from '@/config/commercial-policy';
 
 const COLLEGE_INCLUDED_SUMMARY = [
   'Dedicated TPO placement workspace & verified Campus Code (e.g., APX123) for student onboarding',
   'Student readiness evaluation across 9 competency areas before corporate interview scheduling',
   'Employer drive coordination, interview attendance tracking (0/3 to 3/3), and MoU record keeping',
   'Four-stage placement reporting & CSV/PDF exports for principals, governing bodies, and NAAC/NIRF reviews',
+] as const;
+
+const INSTITUTION_PLAN_COMPARISON = [
+  {
+    feature: 'Price (incl. 18% GST)',
+    annual: '₹17,700 / year (₹15,000 + ₹2,700 GST)',
+    fiveYear: '₹70,800 / 5 years (₹60,000 + ₹10,800 GST)',
+  },
+  {
+    feature: 'Effective Annual Rate (excl. GST)',
+    annual: '₹15,000 / academic year',
+    fiveYear: '₹12,000 / academic year (Save ₹15,000 / 20%)',
+  },
+  {
+    feature: 'Academic Cohorts Covered',
+    annual: '1 Graduating Batch (12 Months)',
+    fiveYear: '5 Continuous Graduating Batches (60 Months)',
+  },
+  {
+    feature: 'Student Roster Capacity',
+    annual: 'Up to 1,500 students / batch',
+    fiveYear: 'Unlimited students across 5 batches',
+  },
+  {
+    feature: 'Four-Stage NAAC / NIRF Reporting',
+    annual: '✓ Single-batch reporting & CSV/PDF export',
+    fiveYear: '✓ Multi-year longitudinal archive & batch benchmarking',
+  },
+  {
+    feature: 'Year-1 Fee Waiver Eligibility',
+    annual: '✓ Waived when 100+ students enroll in Year 1',
+    fiveYear: '✓ Year-1 credit applied when 100+ students enroll',
+  },
 ] as const;
 
 const STUDENT_TRACK_COMPARISON = [
@@ -72,7 +104,7 @@ export default function PricingPage() {
           </p>
         </div>
 
-        {/* 2. Published Pricing Cards: Colleges & Students */}
+        {/* 2. Published Pricing Cards: Colleges (1-Yr & 5-Yr) & Students (Standard & Extended) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Card 1: For Colleges & Universities */}
           <div className="bg-white rounded-md border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between space-y-6">
@@ -85,34 +117,59 @@ export default function PricingPage() {
               </div>
               <div className="space-y-1">
                 <h2 className="text-2xl font-bold text-slate-900">
-                  Institutional Partnership License
+                  Institutional Partnership Plans
                 </h2>
                 <p className="text-xs text-slate-600">
-                  Annual campus placement workspace, student readiness evaluation, and institutional reporting.
+                  Choose a 1-year annual license or a 5-year multi-cohort agreement aligned with NAAC / NIRF accreditation cycles.
                 </p>
               </div>
 
-              <div className="pt-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl sm:text-4xl font-mono font-bold text-slate-900">
-                    {INSTITUTION_COMMERCIAL_PLAN.formattedBase}
-                  </span>
-                  <span className="text-sm text-slate-500">/ year + 18% GST</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                {/* 1-Year Annual Plan */}
+                <div className="p-4 rounded-md border border-slate-200 bg-slate-50/70 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-900">1-Year Annual</span>
+                    <span className="text-[11px] font-semibold text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
+                      1 Batch
+                    </span>
+                  </div>
+                  <div className="font-mono text-2xl font-bold text-slate-900">
+                    ₹15,000
+                    <span className="text-xs font-normal text-slate-500 block">
+                      + ₹2,700 GST (₹17,700 / yr)
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Full TPO workspace, 4-stage placement reporting, and employer drive coordination for 1 academic year.
+                  </p>
                 </div>
-                <div className="text-xs font-mono text-slate-600 mt-1">
-                  Total incl. GST:{' '}
-                  <strong className="text-slate-900">
-                    {INSTITUTION_COMMERCIAL_PLAN.formattedTotal}
-                  </strong>
+
+                {/* 5-Year Multi-Cohort Plan */}
+                <div className="p-4 rounded-md border border-blue-200 bg-blue-50/30 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-900">5-Year Agreement</span>
+                    <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                      Save 20% (₹12k/yr)
+                    </span>
+                  </div>
+                  <div className="font-mono text-2xl font-bold text-[#1E40AF]">
+                    ₹60,000
+                    <span className="text-xs font-normal text-slate-500 block">
+                      + ₹10,800 GST (₹70,800 / 5 yrs)
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    5 continuous academic batches (effective ₹12,000/yr, saving ₹15,000) with longitudinal NAAC/NIRF archive.
+                  </p>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-md bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
                 <strong className="font-semibold text-emerald-900">Year-1 Waiver Condition:</strong>{' '}
-                Eligible for a full Year-1 license fee waiver under our standard Institutional MoU when 100 or more final-year students enroll in the 3 Corporate Interview Assurance Programme.
+                Eligible for a full Year-1 license fee waiver (₹15,000) under our standard Institutional MoU when 100 or more final-year students enroll in the 3 Corporate Interview Assurance Programme.
               </div>
 
-              <ul className="space-y-2.5 text-xs text-slate-600 pt-1">
+              <ul className="space-y-2 text-xs text-slate-600">
                 {COLLEGE_INCLUDED_SUMMARY.map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
                     <CheckCircle2 className="h-4 w-4 text-[#1E40AF] shrink-0 mt-0.5" />
@@ -163,9 +220,9 @@ export default function PricingPage() {
                     </span>
                   </div>
                   <div className="font-mono text-2xl font-bold text-slate-900">
-                    ₹1,180
+                    ₹1,000
                     <span className="text-xs font-normal text-slate-500 block">
-                      ₹1,000 + ₹180 GST
+                      + ₹180 GST (₹1,180 total)
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -182,9 +239,9 @@ export default function PricingPage() {
                     </span>
                   </div>
                   <div className="font-mono text-2xl font-bold text-[#1E40AF]">
-                    ₹2,950
+                    ₹2,500
                     <span className="text-xs font-normal text-slate-500 block">
-                      ₹2,500 + ₹450 GST
+                      + ₹450 GST (₹2,950 total)
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -213,12 +270,56 @@ export default function PricingPage() {
           </div>
         </div>
 
-        {/* 3. Student Track Comparison Table (Standard vs Extended) */}
+        {/* 3A. Institutional Plan Comparison Table (1-Year vs 5-Year) */}
         <section className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-8 space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
             <div>
               <div className="text-xs font-semibold uppercase tracking-wider text-[#1E40AF]">
-                Side-by-Side Comparison
+                Institutional Partnership Options
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 mt-0.5">
+                1-Year Annual License vs 5-Year Multi-Cohort Agreement
+              </h2>
+            </div>
+            <span className="text-xs text-slate-500">
+              5-year agreement saves ₹15,000 (20%) and aligns with 5-year NAAC / NIRF cycles
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="border-b border-slate-200 text-slate-500 uppercase">
+                  <th className="py-3 pr-4 font-semibold">Institutional Feature</th>
+                  <th className="py-3 px-4 font-semibold text-slate-900">
+                    1-Year Annual (₹15,000 + GST)
+                  </th>
+                  <th className="py-3 pl-4 font-semibold text-[#1E40AF]">
+                    5-Year Agreement (₹60,000 + GST)
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200/80">
+                {INSTITUTION_PLAN_COMPARISON.map((row) => (
+                  <tr key={row.feature}>
+                    <td className="py-3.5 pr-4 font-semibold text-slate-900">{row.feature}</td>
+                    <td className="py-3.5 px-4 font-mono text-slate-700">{row.annual}</td>
+                    <td className="py-3.5 pl-4 font-mono font-semibold text-slate-900">
+                      {row.fiveYear}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 3B. Student Track Comparison Table (Standard vs Extended) */}
+        <section className="bg-white rounded-md border border-slate-200/90 p-6 sm:p-8 space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-4">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-[#1E40AF]">
+                Student Track Comparison
               </div>
               <h2 className="text-xl font-bold text-slate-900 mt-0.5">
                 Standard vs Extended Student Programme
