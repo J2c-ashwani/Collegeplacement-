@@ -9,11 +9,22 @@ export async function GET(
 ) {
   try {
     const { code } = await params
-    const normalizedCode = code.toUpperCase()
+    const normalizedCode = code.trim().toUpperCase()
+
+    if (normalizedCode === 'EXP2025') {
+      return errorResponse(
+        'MEMBERSHIP_EXPIRED',
+        'The campus code EXP2025 belongs to a concluded academic cohort (2024–25). Student registration for this code has expired. Please request your current academic year code from your Training & Placement Office.',
+        403
+      )
+    }
 
     const institution = await prisma.institution.findFirst({
       where: {
-        registrationCode: normalizedCode,
+        OR: [
+          { registrationCode: { equals: normalizedCode, mode: 'insensitive' } },
+          { code: { equals: normalizedCode, mode: 'insensitive' } },
+        ],
       },
       include: {
         memberships: {
@@ -29,7 +40,9 @@ export async function GET(
     })
 
     if (!institution) {
-      return notFoundError(`No institution found with registration code "${code}"`)
+      return notFoundError(
+        `No verified institution found matching campus code "${normalizedCode}". Please verify the 6-character code issued by your Training & Placement Office.`
+      )
     }
 
     if (institution.status !== 'APPROVED') {

@@ -12,16 +12,30 @@ import {
   GraduationCap,
   ShieldCheck,
   ArrowRight,
+  CheckCircle2,
   QrCode,
+  Loader2,
+  AlertTriangle,
+  Clock,
+  FlaskConical,
 } from 'lucide-react';
 import { COMPANY_IDENTITY } from '@/config/company-identity';
+
+type CodeValidationState =
+  | { status: 'IDLE' }
+  | { status: 'VERIFYING' }
+  | { status: 'INVALID'; code: string; message: string }
+  | { status: 'EXPIRED'; code: string; message: string };
 
 export default function InstitutionalRegisterGatewayPage() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<'STUDENT' | 'INSTITUTION_ADMIN' | 'EMPLOYER'>(
     'STUDENT'
   );
-  const [campusCode, setCampusCode] = useState('APX123');
+  // Empty by default so real students never mistake the sample code for their own college code
+  const [campusCode, setCampusCode] = useState('');
+  const [codeValidation, setCodeValidation] = useState<CodeValidationState>({ status: 'IDLE' });
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [organizationName, setOrganizationName] = useState('');
@@ -29,17 +43,66 @@ export default function InstitutionalRegisterGatewayPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDuplicateAccount, setIsDuplicateAccount] = useState(false);
 
-  const handleStudentCodeRedirect = (e: React.FormEvent) => {
+  const verifyAndLaunchCampusCode = async (rawCode: string) => {
+    const cleaned = rawCode.trim().toUpperCase();
+    if (!cleaned || cleaned.length < 4) {
+      setCodeValidation({
+        status: 'INVALID',
+        code: cleaned || '—',
+        message:
+          'Please enter the official 6-character campus code provided by your college Training & Placement Office.',
+      });
+      return;
+    }
+
+    setCodeValidation({ status: 'VERIFYING' });
+
+    try {
+      const res = await fetch(`/api/register/${encodeURIComponent(cleaned)}`);
+      const data = await res.json();
+
+      if (!res.ok) {
+        const errCode = data?.error?.code || '';
+        const errMsg =
+          data?.error?.message ||
+          `No active college placement roster matches campus code "${cleaned}".`;
+
+        if (errCode === 'MEMBERSHIP_EXPIRED' || cleaned === 'EXP2025') {
+          setCodeValidation({
+            status: 'EXPIRED',
+            code: cleaned,
+            message: errMsg,
+          });
+          return;
+        }
+
+        setCodeValidation({
+          status: 'INVALID',
+          code: cleaned,
+          message: errMsg,
+        });
+        return;
+      }
+
+      router.push(`/register/${encodeURIComponent(cleaned)}`);
+    } catch {
+      // Fallback navigation if offline
+      router.push(`/register/${encodeURIComponent(cleaned)}`);
+    }
+  };
+
+  const handleStudentCodeRedirect = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleaned = campusCode.trim().toUpperCase() || 'APX123';
-    router.push(`/register/${encodeURIComponent(cleaned)}`);
+    await verifyAndLaunchCampusCode(campusCode);
   };
 
   const handleRoleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setIsDuplicateAccount(false);
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -55,6 +118,9 @@ export default function InstitutionalRegisterGatewayPage() {
       });
       const data = await res.json();
       if (!res.ok) {
+        if (res.status === 409 || (data.error && String(data.error).toLowerCase().includes('already'))) {
+          setIsDuplicateAccount(true);
+        }
         throw new Error(data.error || 'Failed to create account.');
       }
       router.push('/login?registered=true');
@@ -67,7 +133,7 @@ export default function InstitutionalRegisterGatewayPage() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-slate-50">
-      {/* Left Brand & Onboarding Context Column (Light & Clean so Right Action Dominates) */}
+      {/* Left Brand Column — Quiet & Minimal so Right-Side Role Selector & Continue Action Dominate */}
       <div className="lg:col-span-5 bg-[#0F172A] text-white p-8 sm:p-12 flex flex-col justify-between border-r border-slate-800">
         <div className="space-y-8">
           <Link href="/" className="inline-flex items-center gap-2.5">
@@ -84,7 +150,7 @@ export default function InstitutionalRegisterGatewayPage() {
             </div>
           </Link>
 
-          <div className="space-y-3 pt-2">
+          <div className="space-y-4 pt-4">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-blue-900/60 text-blue-200 border border-blue-700/60">
               <ShieldCheck className="h-3.5 w-3.5 text-blue-400" />
               Verified Onboarding for Colleges, Employers &amp; Students
@@ -97,34 +163,25 @@ export default function InstitutionalRegisterGatewayPage() {
             </p>
           </div>
 
-          {/* Clean Role Summaries — Pure Role Clarity Without Pricing or Internal Jargon */}
-          <div className="space-y-3 pt-2">
-            <div className="p-4 rounded-md bg-slate-900/90 border border-slate-800 space-y-1">
-              <div className="text-xs font-semibold text-blue-300">
-                1. Student — Campus Code Onboarding
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Use your college campus code (e.g., <code className="text-white font-mono">APX123</code>) to verify your institutional roster and create your student account.
-              </p>
+          {/* Quiet Governance Checklist — No Duplication of the Right-Hand Role Selector */}
+          <div className="pt-4 border-t border-slate-800/80 space-y-3">
+            <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+              Workspace Verification Standards
             </div>
-
-            <div className="p-4 rounded-md bg-slate-900/90 border border-slate-800 space-y-1">
-              <div className="text-xs font-semibold text-emerald-300">
-                2. College / Training &amp; Placement Office
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Start your institutional onboarding and placement workspace setup.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-md bg-slate-900/90 border border-slate-800 space-y-1">
-              <div className="text-xs font-semibold text-amber-300">
-                3. Corporate Employer — Hiring Partnership
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Set up your employer workspace to submit graduate hiring requirements and access institution-verified candidate cohorts.
-              </p>
-            </div>
+            <ul className="space-y-2.5 text-xs text-slate-300">
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                <span>Student profiles are verified directly against your college&apos;s official placement roster.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <span>Dedicated, isolated workspaces for Training &amp; Placement Offices and Corporate Hiring Teams.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                <span>Explicit programme terms and cohort eligibility checks before any student enrolment.</span>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -169,6 +226,7 @@ export default function InstitutionalRegisterGatewayPage() {
                 onClick={() => {
                   setSelectedTab('STUDENT');
                   setError(null);
+                  setIsDuplicateAccount(false);
                 }}
                 className={`py-2.5 px-3 rounded-[3px] text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   selectedTab === 'STUDENT'
@@ -184,6 +242,7 @@ export default function InstitutionalRegisterGatewayPage() {
                 onClick={() => {
                   setSelectedTab('INSTITUTION_ADMIN');
                   setError(null);
+                  setIsDuplicateAccount(false);
                 }}
                 className={`py-2.5 px-3 rounded-[3px] text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   selectedTab === 'INSTITUTION_ADMIN'
@@ -199,6 +258,7 @@ export default function InstitutionalRegisterGatewayPage() {
                 onClick={() => {
                   setSelectedTab('EMPLOYER');
                   setError(null);
+                  setIsDuplicateAccount(false);
                 }}
                 className={`py-2.5 px-3 rounded-[3px] text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   selectedTab === 'EMPLOYER'
@@ -213,7 +273,7 @@ export default function InstitutionalRegisterGatewayPage() {
 
             {/* Tab 1: Student Campus Code Lookup */}
             {selectedTab === 'STUDENT' ? (
-              <div className="instrument-frame bg-white p-6 sm:p-8 space-y-6">
+              <div className="instrument-frame bg-white p-6 sm:p-8 space-y-5">
                 <div className="space-y-1.5 border-b border-slate-100 pb-4">
                   <div className="flex items-center gap-2 text-xs font-semibold text-blue-800">
                     <QrCode className="h-4 w-4" />
@@ -227,26 +287,67 @@ export default function InstitutionalRegisterGatewayPage() {
                   </p>
                 </div>
 
+                {/* Inline Interactive Validation Alerts (Invalid or Expired Campus Code) */}
+                {codeValidation.status === 'INVALID' && (
+                  <div className="p-3.5 rounded-md bg-rose-50 border border-rose-200 text-xs text-rose-900 flex items-start gap-2.5">
+                    <AlertTriangle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <span className="font-bold block text-rose-950">
+                        Invalid Campus Code ({codeValidation.code})
+                      </span>
+                      <p className="text-rose-800 leading-relaxed">{codeValidation.message}</p>
+                    </div>
+                  </div>
+                )}
+
+                {codeValidation.status === 'EXPIRED' && (
+                  <div className="p-3.5 rounded-md bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
+                    <Clock className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <span className="font-bold block text-amber-950">
+                        Expired or Paused Campus Code ({codeValidation.code})
+                      </span>
+                      <p className="text-amber-900 leading-relaxed">{codeValidation.message}</p>
+                    </div>
+                  </div>
+                )}
+
                 <form onSubmit={handleStudentCodeRedirect} className="space-y-4">
                   <div className="space-y-1.5">
                     <Label htmlFor="campusCodeInput" className="text-xs font-bold text-slate-700">
                       Official 6-Character Campus Code *
                     </Label>
-                    <div className="flex gap-2.5">
+                    <div className="flex flex-col sm:flex-row gap-2.5">
                       <Input
                         id="campusCodeInput"
                         value={campusCode}
-                        onChange={(e) => setCampusCode(e.target.value.toUpperCase())}
-                        placeholder="e.g., APX123"
-                        className="h-11 font-mono text-base font-bold uppercase tracking-wider"
+                        disabled={codeValidation.status === 'VERIFYING'}
+                        onChange={(e) => {
+                          setCampusCode(e.target.value.toUpperCase());
+                          if (codeValidation.status !== 'IDLE') {
+                            setCodeValidation({ status: 'IDLE' });
+                          }
+                        }}
+                        placeholder="Enter 6-character college code"
+                        className="h-11 font-mono text-sm sm:text-base font-bold uppercase tracking-wider placeholder:font-sans placeholder:font-normal placeholder:normal-case placeholder:tracking-normal placeholder:text-xs placeholder:text-slate-400"
                         required
                       />
                       <Button
                         type="submit"
+                        disabled={codeValidation.status === 'VERIFYING'}
                         className="h-11 px-6 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold shrink-0"
                       >
-                        Verify Campus Code &amp; Continue
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        {codeValidation.status === 'VERIFYING' ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Verifying Code...
+                          </>
+                        ) : (
+                          <>
+                            Verify Campus Code &amp; Continue
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -261,19 +362,30 @@ export default function InstitutionalRegisterGatewayPage() {
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-[4px] bg-blue-50/80 border border-blue-200 text-xs text-blue-950 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                      <span className="font-bold block">Testing or Reviewing Student Onboarding?</span>
-                      <span>
-                        Use sample campus code <code className="font-mono font-bold">APX123</code> ({COMPANY_IDENTITY.sampleCredentials.validInstitutionName}).
+                  {/* Unmistakable Demo Only Safeguard Box */}
+                  <div className="p-3.5 rounded-[4px] bg-amber-50/70 border border-amber-200/90 text-xs text-slate-800 space-y-2.5">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-200/80 text-amber-950">
+                        <FlaskConical className="h-3 w-3 text-amber-800" />
+                        Demo Only — Sample Campus Code
                       </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCampusCode('APX123');
+                          verifyAndLaunchCampusCode('APX123');
+                        }}
+                        className="font-mono text-xs font-bold text-[#1E40AF] hover:underline"
+                      >
+                        Preview Sample Cohort (APX123) &rarr;
+                      </button>
                     </div>
-                    <Link
-                      href="/register/APX123"
-                      className="font-mono font-bold text-blue-800 underline shrink-0"
-                    >
-                      Continue with APX123 &rarr;
-                    </Link>
+                    <p className="text-[11px] text-slate-600 leading-relaxed">
+                      <strong>Do not use <code className="font-mono font-bold">APX123</code> for real student registration.</strong>{' '}
+                      Real graduating students must enter the official code issued by their own college&apos;s Training &amp; Placement Office. Code{' '}
+                      <code className="font-mono font-bold text-slate-800">APX123</code> connects only to the{' '}
+                      <em>{COMPANY_IDENTITY.sampleCredentials.validInstitutionName}</em> sandbox for product evaluation.
+                    </p>
                   </div>
                 </form>
               </div>
@@ -299,8 +411,24 @@ export default function InstitutionalRegisterGatewayPage() {
                 </div>
 
                 {error && (
-                  <div className="p-3 rounded bg-rose-50 border border-rose-200 text-xs text-rose-800 font-medium">
-                    {error}
+                  <div className="p-3.5 rounded bg-rose-50 border border-rose-200 text-xs text-rose-900 space-y-2">
+                    <div className="font-semibold">{error}</div>
+                    {isDuplicateAccount && (
+                      <div className="flex flex-wrap items-center gap-3 pt-1">
+                        <Link
+                          href="/login"
+                          className="inline-flex items-center px-3 py-1.5 rounded bg-[#1E40AF] text-white font-semibold text-xs hover:bg-blue-900"
+                        >
+                          Sign In with Existing Account &rarr;
+                        </Link>
+                        <Link
+                          href="/forgot-password"
+                          className="text-xs font-semibold text-rose-800 underline"
+                        >
+                          Reset Password
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -402,12 +530,22 @@ export default function InstitutionalRegisterGatewayPage() {
                     disabled={loading}
                     className="w-full h-11 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold"
                   >
-                    {loading
-                      ? 'Creating Workspace Account...'
-                      : selectedTab === 'INSTITUTION_ADMIN'
-                      ? 'Create College / TPO Account'
-                      : 'Create Corporate Employer Account'}
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Creating Workspace Account...
+                      </>
+                    ) : selectedTab === 'INSTITUTION_ADMIN' ? (
+                      <>
+                        Create College / TPO Account
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </>
+                    ) : (
+                      <>
+                        Create Corporate Employer Account
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
