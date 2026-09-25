@@ -10,7 +10,7 @@ export default async function EmployerLayout({
 }) {
   const session = await auth()
 
-  if (!session?.user || session.user.role !== 'EMPLOYER') {
+  if (!session?.user || (session.user.role !== 'EMPLOYER' && session.user.role !== 'EMPLOYER_HR')) {
     redirect('/login')
   }
 

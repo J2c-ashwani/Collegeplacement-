@@ -7,6 +7,7 @@
 export const COMPANY_IDENTITY = {
   brandName: 'PlacementConnect',
   legalUnitName: 'PlacementConnect Institutional Systems (India Operations Desk)',
+  legalEntityName: 'PlacementConnect Institutional Systems (India Operations Desk)',
   founderName: 'Ashwani Kumar',
   founderRole: 'Founder & Product Lead',
   tagline: 'Institutional Campus Placement & Verified Fresher Hiring Infrastructure',

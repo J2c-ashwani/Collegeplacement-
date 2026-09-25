@@ -51,8 +51,8 @@ export default async function StudentDashboard() {
   const programme = student?.programmes[0]
   const latestAssessment = student?.assessments[0]
   const assessmentResult = latestAssessment?.result
-  const opportunities = student?.opportunities || []
-  const badges = student?.badges || []
+  const opportunities: any[] = student?.opportunities || []
+  const badges: any[] = student?.badges || []
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -83,6 +83,12 @@ export default async function StudentDashboard() {
         ]}
         actions={
           <div className="flex items-center gap-2.5">
+            <Link href="/student/enrolment">
+              <Button size="sm" variant="outline" className="text-xs h-8">
+                <FileCheck2 className="mr-1.5 h-3.5 w-3.5 text-slate-600" />
+                Enrolment & T&C Record
+              </Button>
+            </Link>
             <Link href="/student/assessment">
               <Button size="sm" className="bg-[#1E40AF] hover:bg-blue-800 text-white text-xs h-8 font-medium">
                 <ClipboardCheck className="mr-1.5 h-3.5 w-3.5 text-blue-200" />

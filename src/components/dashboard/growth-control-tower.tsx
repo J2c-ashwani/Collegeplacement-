@@ -75,7 +75,7 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-2xs">
               <div className="flex items-center justify-between text-slate-500 text-xs font-medium mb-1">
-                <span>Active Assurance ($N$)</span>
+                <span>Active Assurance (N)</span>
                 <Users className="h-3.5 w-3.5 text-indigo-600" />
               </div>
               <div className="text-2xl font-bold text-slate-900">{metrics.activeStudents}</div>
@@ -84,7 +84,7 @@ export function GrowthControlTower({ metrics }: GrowthControlTowerProps) {
 
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-2xs">
               <div className="flex items-center justify-between text-slate-500 text-xs font-medium mb-1">
-                <span>Required Opps ($3N$)</span>
+                <span>Required Opps (3N)</span>
                 <Scale className="h-3.5 w-3.5 text-indigo-600" />
               </div>
               <div className="text-2xl font-bold text-slate-900">{metrics.requiredOpportunities}</div>

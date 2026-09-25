@@ -80,23 +80,28 @@ export async function POST(req: NextRequest) {
 
     const receipt = `rcpt_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`
 
-    // 3. Create Gateway Order
-    let gatewayOrderId = `order_${Date.now()}`
+    // 3. Create Cashfree Order & Payment Session
+    let gatewayOrderId = `cf_ord_${Date.now()}`
+    let paymentSessionId = `session_cf_${Date.now()}`
     try {
       const gateway = getPaymentGateway()
       const gatewayOrder = await gateway.createOrder({
         amount: totalAmount,
         currency: 'INR',
         receipt,
+        customerId: session.user.id,
+        customerName: session.user.name || 'PlacementConnect Account',
+        customerEmail: session.user.email || 'user@placementconnect.in',
         notes: {
           orderType,
           userId: session.user.id,
           entityId: entityId || '',
         },
       })
-      gatewayOrderId = gatewayOrder.id
+      gatewayOrderId = gatewayOrder.cfOrderId || gatewayOrder.id
+      paymentSessionId = gatewayOrder.paymentSessionId
     } catch (gwErr) {
-      console.warn('[Payment Sandbox Mode] Razorpay call failed, using sandbox order ID:', gwErr)
+      console.warn('[Cashfree Sandbox Mode] Using local Cashfree sandbox order session:', gwErr)
     }
 
     // 4. Record Order in database
@@ -112,16 +117,18 @@ export async function POST(req: NextRequest) {
         status: 'CREATED',
         gatewayOrderId,
         couponId,
-        notes: { description, receipt, planId },
+        notes: { description, receipt, planId, gateway: 'CASHFREE', paymentSessionId },
       },
     })
 
     return successResponse({
       orderId: order.id,
+      gateway: 'CASHFREE',
       gatewayOrderId,
+      paymentSessionId,
       amount: totalAmount,
       currency: 'INR',
-      keyId: getPublicKey() || 'rzp_test_sandbox',
+      environment: getPublicKey() || 'SANDBOX',
       description,
     })
   } catch (error) {

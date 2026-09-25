@@ -78,7 +78,7 @@ model Payment {
   currency         String         @default("INR")
   status           PaymentStatus  @default(CREATED)
   method           String?
-  gateway          String         @default("razorpay")
+  gateway          String         @default("cashfree")
   paidAt           DateTime?
   gatewayResponse  Json?
   createdAt        DateTime       @default(now())
