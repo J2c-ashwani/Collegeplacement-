@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "PlacementConnect — Institutional Placement & Verified Fresher Hiring Infrastructure",
   description:
-    "Multi-tenant institutional placement operating system combining 4-denominator cohort accounting, the 9-Dimension Employability Assessment Framework, and a 1.20x liquidity-backed 3N interview assurance engine.",
+    "PlacementConnect connects colleges, graduating students, and corporate employers through structured placement operations, readiness assessment, and verified hiring workflows.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

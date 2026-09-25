@@ -7,11 +7,15 @@
 export const COMPANY_IDENTITY = {
   brandName: 'PlacementConnect',
   legalUnitName: 'PlacementConnect Institutional Systems (India Operations Desk)',
+  founderName: 'Ashwani Kumar',
+  founderRole: 'Founder & Product Lead',
   tagline: 'Institutional Campus Placement & Verified Fresher Hiring Infrastructure',
   operatingModelDisclosure:
-    'PlacementConnect is an institutional placement and verified fresher hiring platform that helps colleges manage student placement operations, employer interviews, readiness assessment, and placement reporting in one workspace.',
+    'PlacementConnect connects colleges, graduating students, and corporate employers through structured placement operations, readiness assessment, and verified hiring workflows.',
+  currentStageDisclosure:
+    'We are currently building our founding institutional and employer network in India, working directly with engineering, management, and degree colleges and corporate graduate hiring teams.',
   pilotTransparencyNote:
-    'Public previews use illustrative sample data (such as Apex Institute of Technology and TechCorp Solutions) to demonstrate placement reporting, student evaluation, and interview-capacity management.',
+    'Public previews on this website use clearly labeled illustrative sample records (such as Apex Institute of Technology and Aarav Sharma — STU-2026-000001) so prospective institutions, students, and recruiters can inspect our exact scorecards and workflows.',
   governanceEffectiveDate: '1 August 2026',
   lastReviewedDate: '15 September 2026',
   jurisdiction: 'New Delhi / National Capital Region (NCR), India',
@@ -29,7 +33,7 @@ export const COMPANY_IDENTITY = {
     studentSupport: {
       label: 'Student Programme, Assessment & Assurance Desk',
       email: 'support@placementconnect.com',
-      sla: '24-Hour Ticket Resolution • Assessment & 3N Quota Support',
+      sla: '24-Hour Ticket Resolution • Assessment & 3-Interview Assurance Support',
     },
     billingAndRefunds: {
       label: 'Commercial Billing, GST Invoicing & Assurance Refund Desk',
