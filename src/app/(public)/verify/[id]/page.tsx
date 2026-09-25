@@ -366,7 +366,7 @@ export default async function PublicVerifyCredentialIdPage({
               </div>
               <div>
                 <span className="text-[11px] text-slate-500 block">Joining Status</span>
-                <span className="font-bold text-slate-900">Ready (June {graduationYear})</span>
+                <span className="font-bold text-slate-900">Ready (Sample — Immediate)</span>
               </div>
               <div className="col-span-2 sm:col-span-1">
                 <span className="text-[11px] text-slate-500 block">Recruiter Action</span>
@@ -428,7 +428,7 @@ export default async function PublicVerifyCredentialIdPage({
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-slate-500 block">Joining Window</span>
-                    <span className="font-semibold text-slate-900">Immediate / June {graduationYear}</span>
+                    <span className="font-semibold text-slate-900">Sample — Immediate</span>
                   </div>
                   <div>
                     <span className="text-slate-500 block">Preferred Work Mode</span>
