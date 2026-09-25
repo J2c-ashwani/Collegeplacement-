@@ -6,6 +6,7 @@ import { resolveStudent } from '@/lib/auth-utils';
 import { STUDENT_PROGRAMME_PLANS } from '@/config/commercial-policy';
 import {
   STUDENT_TERMS_VERSION,
+  CANONICAL_PAYMENT_STATE_MACHINE,
   buildAcceptedStudentTermsSnapshot,
   AcceptedStudentTermsSnapshot,
 } from '@/config/legal-documents';
@@ -123,6 +124,7 @@ export async function GET(req: NextRequest) {
       hasActiveEnrolment: true,
       programmeStatus: activeProgramme?.status || latestStudentProgrammeStatus,
       enrolmentState: 'ENROLLMENT_CONFIRMED',
+      paymentStateMachine: CANONICAL_PAYMENT_STATE_MACHINE,
       termsVersion: activeProgramme?.programmeTermsVersion || STUDENT_TERMS_VERSION,
       clausesCount: snapshot?.clauses?.length || 6,
       clausesSummary:
@@ -419,6 +421,7 @@ export async function POST(req: NextRequest) {
       success: true,
       enrolmentState: 'ENROLLMENT_CONFIRMED',
       enrolmentConfirmed: true,
+      paymentStateMachine: CANONICAL_PAYMENT_STATE_MACHINE,
       emailDecoupledFromEnrolment: true,
       emailDeliveryStatus,
       emailErrorDetail,

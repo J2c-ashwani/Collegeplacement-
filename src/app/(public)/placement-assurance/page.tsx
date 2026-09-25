@@ -13,7 +13,7 @@ import {
 
 export default function PlacementAssurancePage() {
   return (
-    <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-slate-900">
+    <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-slate-900 overflow-x-hidden">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* 1. Hero: How the 3-Interview Assurance Works */}
         <div className="space-y-4 border-b border-slate-200 pb-10">

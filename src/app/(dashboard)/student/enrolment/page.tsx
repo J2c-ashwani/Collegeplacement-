@@ -142,7 +142,7 @@ export default function StudentEnrolmentWorkflowPage() {
             <code className="font-mono font-semibold">{studentMeta?.enrollmentNumber || 'APX2026CS042'}</code>
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {outcomeView === 'CHECKOUT_READY' && snapshot && (
             <Button
               size="sm"
@@ -452,14 +452,19 @@ export default function StudentEnrolmentWorkflowPage() {
                   </div>
                 </div>
 
-                {/* Confirmation Email Preview */}
-                <div className="bg-white p-3 rounded border border-emerald-200 space-y-1 text-[11px]">
-                  <div className="flex items-center gap-1.5 font-bold text-emerald-900">
-                    <MailCheck className="h-3.5 w-3.5 text-emerald-700" />
-                    Automated Email Sent — Subject: PlacementConnect Programme Enrollment Confirmed
+                {/* Canonical Bifurcated State Machine & Downstream Side-Effect Status */}
+                <div className="bg-white p-3 rounded border border-emerald-200 space-y-1.5 text-[11px]">
+                  <div className="flex flex-wrap items-center justify-between gap-1 font-bold text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <MailCheck className="h-3.5 w-3.5 text-emerald-700" />
+                      Primary State Machine: PAYMENT_VERIFIED &rarr; ENROLLMENT_CONFIRMED (Atomic)
+                    </span>
+                    <span className="font-mono text-[10px] bg-emerald-100 text-emerald-900 px-1.5 py-0.5 rounded">
+                      EMAIL DECOUPLED
+                    </span>
                   </div>
                   <p className="text-slate-600">
-                    Recipient: <strong>{snapshot.studentEmail}</strong> &bull; Includes Accepted Terms &amp; Conditions PDF (<code className="font-mono">{snapshot.documentReference}</code>) &amp; Tax Receipt (<code className="font-mono">{snapshot.invoiceNumber}</code>).
+                    Independent Downstream Side-Effects Triggered: <strong>1. T&amp;C Snapshot Generated</strong> (<code className="font-mono">{snapshot.documentReference}</code>) &bull; <strong>2. Receipt/Invoice Generated</strong> (<code className="font-mono">{snapshot.invoiceNumber}</code>) &bull; <strong>3. Email Queued &rarr; Sent / Retry</strong> to <strong>{snapshot.studentEmail}</strong>.
                   </p>
                 </div>
 

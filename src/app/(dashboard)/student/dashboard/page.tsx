@@ -95,7 +95,7 @@ export default async function StudentDashboard() {
           },
         ]}
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Link href="/student/documents/terms-preview">
               <Button size="sm" variant="outline" className="text-xs h-8">
                 <FileCheck2 className="mr-1.5 h-3.5 w-3.5 text-slate-600" />

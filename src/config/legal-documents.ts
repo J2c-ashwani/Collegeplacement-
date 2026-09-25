@@ -7,6 +7,42 @@ import { COMPANY_IDENTITY } from './company-identity';
 export const STUDENT_TERMS_VERSION = 'PC-STU-TC-2026.09-v4.1';
 export const INSTITUTION_MOU_VERSION = 'PC-INST-MOU-2026.09-v4.1';
 
+/**
+ * Canonical Bifurcated Payment & Enrolment State Machine
+ * Primary transactional activation (PAYMENT_VERIFIED -> ENROLLMENT_CONFIRMED) commits
+ * immediately and atomically. Document generation, invoice generation, and email
+ * dispatch are independent downstream side effects that never block or revert activation.
+ */
+export const CANONICAL_PAYMENT_STATE_MACHINE = {
+  primaryActivationPath: [
+    'TRACK_SELECTED',
+    'TERMS_ACCEPTED',
+    'CASHFREE_ORDER_CREATED',
+    'PAYMENT_VERIFIED',
+    'ENROLLMENT_CONFIRMED',
+  ] as const,
+  independentDownstreamSideEffects: [
+    {
+      branch: 'TC_SNAPSHOT_GENERATED',
+      description: 'Immutable 6-Clause Accepted T&C Document + SHA-256 Checksum',
+      blocksEnrollmentConfirmation: false,
+    },
+    {
+      branch: 'RECEIPT_INVOICE_GENERATED',
+      description: 'Statutory GST Tax Invoice (PC-INV-STU-*)',
+      blocksEnrollmentConfirmation: false,
+    },
+    {
+      branch: 'EMAIL_QUEUED_TO_SENT_OR_RETRY',
+      states: ['EMAIL_QUEUED', 'EMAIL_SENT', 'EMAIL_RETRY_QUEUED'],
+      description: 'Asynchronous SMTP Dispatch with Automatic Retry Queue',
+      blocksEnrollmentConfirmation: false,
+    },
+  ] as const,
+  architecturalRule:
+    'PAYMENT_VERIFIED -> ENROLLMENT_CONFIRMED (atomic primary transition); independently triggers TC_SNAPSHOT_GENERATED, RECEIPT_INVOICE_GENERATED, and EMAIL_QUEUED -> EMAIL_SENT / EMAIL_RETRY_QUEUED.',
+};
+
 export interface AcceptedStudentTermsSnapshot {
   documentReference: string;
   termsVersion: string;
