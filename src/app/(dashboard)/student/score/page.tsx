@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 
 import { resolveStudent } from '@/lib/auth-utils'
+import { buildCandidate9DimensionBreakdown } from '@/config/employability-dimensions'
 
 export default async function ScorecardPage() {
   const session = await auth()
@@ -35,20 +36,15 @@ export default async function ScorecardPage() {
   }
 
   const result = student?.assessments?.[0]?.result as any
+  const canonicalBreakdown = buildCandidate9DimensionBreakdown()
 
-  const dimensions = [
-    { name: '1. Technical Readiness & Engineering Core', score: result?.technicalReadiness ?? 85, desc: 'Foundational programming, data structures, systems architecture, and debugging' },
-    { name: '2. Analytical Problem Solving & Logic', score: result?.problemSolving ?? 88, desc: 'Algorithmic decomposition, quantitative reasoning, and structured root-cause analysis' },
-    { name: '3. Situational & Business Communication', score: result?.communication ?? 86, desc: 'Articulation clarity, stakeholder correspondence, and structured technical explanation' },
-    { name: '4. Work Ethics & Professional Integrity', score: result?.workEthics ?? 90, desc: 'Accountability, ownership, compliance discipline, and workplace reliability' },
-    { name: '5. Learning Agility & Adaptability', score: result?.learningAgility ?? 82, desc: 'Speed of mastering unfamiliar frameworks, tools, and evolving requirements' },
-    { name: '6. Team Collaboration & Peer Alignment', score: result?.teamOrientation ?? 84, desc: 'Cross-functional teamwork, code review etiquette, and constructive conflict resolution' },
-    { name: '7. Professional Behaviour & Workplace Decorum', score: result?.professionalBehaviour ?? 86, desc: 'Punctuality, corporate readiness, and structured follow-through' },
-    { name: '8. Interview Poise & Articulation', score: result?.interviewReadiness ?? 85, desc: 'Behavioral structured responses (STAR method) and live technical walkthrough confidence' },
-    { name: '9. Domain & Role Application Readiness', score: 83, desc: 'Practical application of academic specialization to production engineering workflows' },
-  ]
+  const dimensions = canonicalBreakdown.dimensions.map((d) => ({
+    name: `${d.index}. ${d.label} (Weight: ${d.weightPercent}% → ${d.weightedPoints.toFixed(1)} pts)`,
+    score: d.score,
+    desc: d.description,
+  }))
 
-  const overallScore = result?.overallScore ? Math.round(result.overallScore) : 84
+  const overallScore = result?.overallScore ? Math.round(result.overallScore) : Math.round(canonicalBreakdown.weightedCompositeScore)
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
