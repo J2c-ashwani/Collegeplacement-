@@ -20,12 +20,13 @@ export const INSTITUTION_COMMERCIAL_PLAN = {
   baseFeeInr: 15000,
   gstAmountInr: 2700,
   totalPayableInr: 17700,
+  fiveYearStandardRateInr: 75000,
   fiveYearBaseInr: 60000,
   fiveYearGstInr: 10800,
   fiveYearTotalInr: 70800,
-  fiveYearAfterCreditBaseInr: 45000,
-  fiveYearAfterCreditGstInr: 8100,
-  fiveYearAfterCreditTotalInr: 53100,
+  upgradeDuringYearOneRemainingBaseInr: 45000,
+  upgradeDuringYearOneRemainingGstInr: 8100,
+  upgradeDuringYearOneRemainingTotalInr: 53100,
   fiveYearEffectiveAnnualInr: 12000,
   billingCycle: 'per year / campus',
   formattedBase: '₹15,000',
@@ -34,10 +35,8 @@ export const INSTITUTION_COMMERCIAL_PLAN = {
   formattedFiveYearBase: '₹60,000',
   formattedFiveYearGst: '₹10,800 (18% GST)',
   formattedFiveYearTotal: '₹70,800 / 5 years (incl. GST)',
-  formattedFiveYearAfterCreditBase: '₹45,000',
-  formattedFiveYearAfterCreditTotal: '₹53,100 / 5 years (incl. GST)',
   pilotWaiverNote:
-    'If 100+ eligible final-year students enroll in Year 1 under the Institutional MoU, the ₹15,000 Year-1 institutional fee is waived/credited: 1-Year Annual License becomes ₹0 institutional fee, and the 5-Year Agreement is reduced from ₹60,000 before credit to ₹45,000 after credit (+ ₹8,100 GST = ₹53,100).',
+    '1-Year Annual License (₹15,000/yr) qualifies for a full Year-1 fee waiver when 100+ final-year students enroll. The 5-Year Agreement (₹60,000 instead of ₹75,000) already includes 1 full year (₹15,000) waived upfront. Colleges on a 1-Year plan with 100+ enrolled students can pay ₹45,000 (+ GST) during Year 1 to extend for 4 additional years (1 current + 4 extended = 5 years), or pay ₹60,000 (+ GST) after Year 1 for a fresh 5-year term.',
   deliverables: [
     'Four-level cohort placement reporting (Total Graduating Batch, Registered for Placement, Enrolled in Programme, and Assessed & Eligible)',
     'Structured CSV and PDF placement summaries designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows',
@@ -60,7 +59,7 @@ export const INSTITUTION_COMMERCIAL_PLANS = [
     formattedBase: '₹15,000',
     formattedGst: '+ ₹2,700 GST',
     formattedTotal: '₹17,700 incl. GST',
-    effectiveAnnualText: '₹15,000 / year + GST (₹0 in Year 1 with 100+ students)',
+    effectiveAnnualText: '₹15,000 / year + GST (Year-1 fee waived with 100+ students)',
     summary:
       'Recommended initial partnership for colleges: complete TPO workspace, student readiness evaluation, employer drive coordination, and 4-stage cohort reporting for 1 academic year (up to 1,500 students).',
   },
@@ -68,7 +67,7 @@ export const INSTITUTION_COMMERCIAL_PLANS = [
     id: 'INSTITUTION_MULTI_COHORT_5YR',
     slug: 'placement-5yr',
     name: '5-Year Multi-Cohort Agreement',
-    badge: 'Optional Multi-Cohort • Save 20%',
+    badge: '1 Year Free Built-In (₹75k → ₹60k)',
     durationYears: 5,
     baseFeeInr: 60000,
     gstAmountInr: 10800,
@@ -76,9 +75,9 @@ export const INSTITUTION_COMMERCIAL_PLANS = [
     formattedBase: '₹60,000',
     formattedGst: '+ ₹10,800 GST',
     formattedTotal: '₹70,800 incl. GST',
-    effectiveAnnualText: '₹60,000 before credit → ₹45,000 after ₹15,000 Year-1 credit',
+    effectiveAnnualText: '5 Years for the Price of 4 (₹15,000 already waived off ₹75,000)',
     summary:
-      'Optional multi-cohort agreement for long-term institutional partnerships: 5 continuous graduating batches, unlimited student registrations, and multi-year documentation designed to support internal NAAC/NIRF reporting workflows.',
+      'Optional 5-year agreement (₹15,000 × 5 yrs = ₹75,000, offered at ₹60,000 with 1 year already waived). Or start with 1 Year and pay ₹45,000 remaining during Year 1 (after 100+ students) to extend for 4 more years (1 + 4 = 5 yrs).',
   },
 ] as const;
 

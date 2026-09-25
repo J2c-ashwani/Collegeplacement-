@@ -18,19 +18,24 @@ const COLLEGE_INCLUDED_SUMMARY = [
 
 const INSTITUTION_PLAN_COMPARISON = [
   {
-    feature: 'Standard Institutional Fee (Before Credit)',
+    feature: 'Institutional License Fee',
     annual: '₹15,000 / yr (+ ₹2,700 GST = ₹17,700)',
     fiveYear: '₹60,000 / 5 yrs (+ ₹10,800 GST = ₹70,800)',
   },
   {
-    feature: 'Net Fee After ₹15,000 Year-1 Waiver / Credit (100+ Students in Yr 1)',
-    annual: '₹0 institutional fee in Year 1 (₹15,000 waived)',
-    fiveYear: '₹45,000 after credit (+ ₹8,100 GST = ₹53,100)',
+    feature: 'How the 1-Year (₹15,000) Waiver Applies',
+    annual: 'Year-1 fee waived (₹0) when 100+ students enroll in Year 1',
+    fiveYear: '1 year (₹15,000) already waived upfront off ₹75,000 (5 yrs for price of 4)',
+  },
+  {
+    feature: 'Upgrade Path from 1-Year to 5-Year Membership',
+    annual: 'Start with 1-Year License (₹0 in Yr 1 with 100+ students)',
+    fiveYear: 'Pay ₹45,000 remaining during Yr 1 (1 current + 4 extended yrs) OR ₹60,000 after Yr 1 for 5 new yrs',
   },
   {
     feature: 'Effective Annual Rate (excl. GST)',
     annual: '₹15,000 / academic year (₹0 in Year 1 with waiver)',
-    fiveYear: '₹12,000 / yr standard • ₹9,000 / yr after Year-1 credit',
+    fiveYear: '₹12,000 / academic year across 5 cohorts (Save ₹15,000 / 20%)',
   },
   {
     feature: 'Academic Cohorts & Roster Capacity',
@@ -41,11 +46,6 @@ const INSTITUTION_PLAN_COMPARISON = [
     feature: 'Institutional Documentation & Reporting Support',
     annual: '✓ Single-batch CSV/PDF exports supporting internal NAAC/NIRF reporting workflows',
     fiveYear: '✓ 5-year longitudinal archive supporting internal NAAC/NIRF reporting workflows',
-  },
-  {
-    feature: 'Recommended Buying Motion',
-    annual: '✓ Recommended for new partner institutions (Year-1 onboarding)',
-    fiveYear: 'Optional multi-cohort agreement for long-term partnerships',
   },
 ] as const;
 
@@ -120,7 +120,7 @@ export default function PricingPage() {
                   Institutional Partnership Plans
                 </h2>
                 <p className="text-xs text-slate-600">
-                  Start with our <strong>1-Year Annual License</strong> (recommended for new institutions) or choose an optional 5-year multi-cohort agreement for long-term partnerships.
+                  Start with our <strong>1-Year Annual License</strong> (recommended for new institutions) or choose our optional <strong>5-Year Multi-Cohort Agreement</strong> (5 years for the price of 4).
                 </p>
               </div>
 
@@ -140,39 +140,39 @@ export default function PricingPage() {
                     </span>
                   </div>
                   <p className="text-[11px] font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded">
-                    ₹0 institutional fee in Year 1 when 100+ students enroll
+                    ₹0 Year-1 fee when 100+ students enroll
                   </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Full TPO workspace, 4-stage placement reporting, and employer drive coordination for 1 academic year.
                   </p>
                 </div>
 
-                {/* 5-Year Multi-Cohort Plan — Optional Multi-Cohort Agreement */}
+                {/* 5-Year Multi-Cohort Plan — 1 Year Already Waived (₹75k -> ₹60k) */}
                 <div className="p-4 rounded-md border border-slate-200 bg-slate-50/80 space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-1">
                     <span className="text-xs font-bold text-slate-900">5-Year Multi-Cohort</span>
                     <span className="text-[10px] font-semibold text-slate-700 bg-white border border-slate-300 px-2 py-0.5 rounded">
-                      Optional • Save 20%
+                      1 Yr Waived (₹75k → ₹60k)
                     </span>
                   </div>
                   <div className="font-mono text-2xl font-bold text-slate-900">
                     ₹60,000
                     <span className="text-xs font-normal text-slate-500 block">
-                      before credit (+ ₹10,800 GST = ₹70,800)
+                      + ₹10,800 GST (₹70,800 / 5 yrs)
                     </span>
                   </div>
                   <p className="text-[11px] font-semibold text-slate-800 bg-white border border-slate-200 px-2 py-1 rounded">
-                    ₹45,000 after ₹15,000 Year-1 credit (+ ₹8,100 GST = ₹53,100)
+                    Pay ₹45k remaining during Yr 1 to extend (1 + 4 yrs)
                   </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    For long-term institutional partnerships across 5 graduating batches (effective ₹12,000/yr before credit, or ₹9,000/yr after credit).
+                    5 years at ₹15k/yr = ₹75,000; offered at ₹60,000 with 1 full year (₹15,000) already waived upfront (effective ₹12,000/yr).
                   </p>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-md bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
-                <strong className="font-semibold text-emerald-900">Year-1 Waiver / Credit Rule (₹15,000):</strong>{' '}
-                When 100+ eligible final-year students enroll in Year 1 under our Institutional MoU, the <strong>₹15,000 Year-1 institutional fee is waived/credited</strong> — the <strong>1-Year Annual License becomes ₹0</strong>, and the <strong>5-Year Agreement reduces from ₹60,000 before credit to ₹45,000 after credit</strong> (+ ₹8,100 GST = ₹53,100).
+                <strong className="font-semibold text-emerald-900">Year-1 Waiver &amp; 5-Year Extension Rule:</strong>{' '}
+                The <strong>1-Year License (₹15,000)</strong> is waived in full when 100+ final-year students enroll in Year 1. The <strong>5-Year Agreement (₹60,000 instead of ₹75,000)</strong> already includes 1 year (₹15,000) waived upfront. If a 1-Year partner college with 100+ enrolled students wishes to upgrade, they can pay the <strong>remaining ₹45,000 (+ GST) during Year 1</strong> to extend for 4 additional years (<strong>1 current + 4 extended = 5 years</strong>), or pay <strong>₹60,000 (+ GST) after Year 1</strong> to secure a fresh 5-year membership.
               </div>
 
               <ul className="space-y-2 text-xs text-slate-600">
@@ -301,7 +301,7 @@ export default function PricingPage() {
                     1-Year Annual — Recommended (₹15,000 + GST)
                   </th>
                   <th className="py-3 pl-4 font-semibold text-slate-900">
-                    5-Year Multi-Cohort — Optional (₹60,000 before credit)
+                    5-Year Multi-Cohort — 1 Yr Waived (₹60,000 + GST)
                   </th>
                 </tr>
               </thead>

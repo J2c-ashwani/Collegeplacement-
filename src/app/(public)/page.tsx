@@ -385,7 +385,7 @@ export default function HomePage() {
                   + 18% GST (₹17,700 / ₹70,800)
                 </div>
                 <p className="text-xs text-slate-600 pt-1">
-                  1-Year Annual recommended default; 5-Year optional MoU (₹45,000 after ₹15,000 Year-1 credit when 100+ students enroll).
+                  1-Year Annual (₹0 in Yr 1 with 100+ students); 5-Year Agreement at ₹60k (1 yr waived off ₹75k), or pay ₹45k remaining during Yr 1 to extend (1+4 yrs).
                 </p>
               </div>
 

@@ -20,7 +20,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What are the institutional license options for an engineering, management, or degree college?',
-        a: `Colleges typically start with our recommended 1-Year Annual License (${INSTITUTION_COMMERCIAL_PLAN.formattedBase} + ₹2,700 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or select our optional 5-Year Multi-Cohort Agreement (${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase} before credit + ₹10,800 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
+        a: `Colleges typically start with our recommended 1-Year Annual License (${INSTITUTION_COMMERCIAL_PLAN.formattedBase} + ₹2,700 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or select our optional 5-Year Multi-Cohort Agreement (${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase} + ₹10,800 GST = ${INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal} — 5 years for the price of 4, with ₹15,000 already waived off ₹75,000). ${INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}`,
       },
       {
         q: 'How do students from our college register without unauthorized outsiders joining our batch roster?',

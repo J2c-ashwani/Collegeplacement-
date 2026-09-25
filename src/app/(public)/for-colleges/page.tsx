@@ -284,10 +284,10 @@ export default function ForCollegesPage() {
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Start with the <strong>1-Year Annual License</strong> (recommended for new institutions at ₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or choose the optional <strong>5-Year Multi-Cohort Agreement</strong> (<strong>₹60,000 before credit</strong>, or <strong>₹45,000 after the ₹15,000 Year-1 credit</strong> when 100+ students enroll in Year 1), designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows.
+                  Start with the <strong>1-Year Annual License</strong> (recommended for new institutions at ₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or choose the optional <strong>5-Year Multi-Cohort Agreement</strong> (<strong>₹60,000 + 18% GST = ₹70,800</strong> — 5 years at ₹15,000/yr = ₹75,000, with <strong>1 full year / ₹15,000 already waived upfront</strong>).
                 </p>
                 <div className="p-3 rounded bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-medium leading-relaxed">
-                  <strong>Year-1 Waiver / Credit (₹15,000):</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
+                  <strong>Year-1 Waiver &amp; 5-Year Extension Rule:</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
                 </div>
                 <ul className="space-y-2 text-xs text-slate-600 pt-1">
                   <li className="flex items-start gap-2">
