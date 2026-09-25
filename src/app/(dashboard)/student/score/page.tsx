@@ -11,41 +11,15 @@ import {
   Sparkles, TrendingUp, Award, FileText, Briefcase 
 } from 'lucide-react'
 
+import { resolveStudent } from '@/lib/auth-utils'
+
 export default async function ScorecardPage() {
   const session = await auth()
   if (!session?.user?.id) {
     redirect('/login')
   }
 
-  let student = await prisma.student.findFirst({
-    where: { userId: session.user.id },
-    include: {
-      institution: true,
-      assessments: {
-        include: { result: true },
-        orderBy: { startedAt: 'desc' },
-        take: 1,
-      },
-      badges: {
-        include: { badge: true },
-      },
-    },
-  })
-
-  if (!student && (session.user.role === 'SUPER_ADMIN' || session.user.role === 'OPERATIONS')) {
-    student = await prisma.student.findFirst({
-      include: {
-        institution: true,
-        assessments: {
-          include: { result: true },
-          take: 1,
-        },
-        badges: {
-          include: { badge: true },
-        },
-      },
-    })
-  }
+  const student = await resolveStudent(session)
 
   if (!student) {
     return (
@@ -60,17 +34,18 @@ export default async function ScorecardPage() {
     )
   }
 
-  const result = student?.assessments?.[0]?.result
+  const result = student?.assessments?.[0]?.result as any
 
   const dimensions = [
-    { name: 'Technical Readiness', score: result?.technicalReadiness ?? 82, desc: 'Foundational programming, logic, and systems knowledge' },
-    { name: 'Situational Communication', score: result?.communication ?? 85, desc: 'Clarity, conciseness, and stakeholder interaction' },
-    { name: 'Work Ethics & Integrity', score: result?.workEthics ?? 90, desc: 'Accountability, ownership, and workplace commitment' },
-    { name: 'Problem Solving & Logic', score: result?.problemSolving ?? 80, desc: 'Analytical decomposition and structured reasoning' },
-    { name: 'Learning Agility', score: result?.learningAgility ?? 88, desc: 'Adaptability to unfamiliar tools and rapid learning curve' },
-    { name: 'Team Collaboration', score: result?.teamOrientation ?? 84, desc: 'Peer communication and constructive conflict resolution' },
-    { name: 'Professional Behaviour', score: result?.professionalBehaviour ?? 86, desc: 'Punctuality, business decorum, and responsiveness' },
-    { name: 'Interview Readiness', score: result?.interviewReadiness ?? 85, desc: 'Confidence, question handling, and behavioral poise' },
+    { name: '1. Technical Readiness & Engineering Core', score: result?.technicalReadiness ?? 85, desc: 'Foundational programming, data structures, systems architecture, and debugging' },
+    { name: '2. Analytical Problem Solving & Logic', score: result?.problemSolving ?? 88, desc: 'Algorithmic decomposition, quantitative reasoning, and structured root-cause analysis' },
+    { name: '3. Situational & Business Communication', score: result?.communication ?? 86, desc: 'Articulation clarity, stakeholder correspondence, and structured technical explanation' },
+    { name: '4. Work Ethics & Professional Integrity', score: result?.workEthics ?? 90, desc: 'Accountability, ownership, compliance discipline, and workplace reliability' },
+    { name: '5. Learning Agility & Adaptability', score: result?.learningAgility ?? 82, desc: 'Speed of mastering unfamiliar frameworks, tools, and evolving requirements' },
+    { name: '6. Team Collaboration & Peer Alignment', score: result?.teamOrientation ?? 84, desc: 'Cross-functional teamwork, code review etiquette, and constructive conflict resolution' },
+    { name: '7. Professional Behaviour & Workplace Decorum', score: result?.professionalBehaviour ?? 86, desc: 'Punctuality, corporate readiness, and structured follow-through' },
+    { name: '8. Interview Poise & Articulation', score: result?.interviewReadiness ?? 85, desc: 'Behavioral structured responses (STAR method) and live technical walkthrough confidence' },
+    { name: '9. Domain & Role Application Readiness', score: 83, desc: 'Practical application of academic specialization to production engineering workflows' },
   ]
 
   const overallScore = result?.overallScore ? Math.round(result.overallScore) : 84

@@ -9,7 +9,7 @@ import {
 
 const startTime = Date.now()
 
-export const FROZEN_OPPORTUNITY_LIFECYCLE = [
+const FROZEN_OPPORTUNITY_LIFECYCLE = [
   'CREATED',
   'MATCHED',
   'SCHEDULED',

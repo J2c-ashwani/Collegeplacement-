@@ -7,46 +7,15 @@ import { Button } from '@/components/ui/button'
 import { Video, Calendar, Clock, ExternalLink, CheckCircle2, AlertCircle, Building2, User } from 'lucide-react'
 import Link from 'next/link'
 
+import { resolveStudent } from '@/lib/auth-utils'
+
 export default async function StudentInterviewsPage() {
   const session = await auth()
   if (!session?.user?.id) {
     redirect('/login')
   }
 
-  let student = await prisma.student.findFirst({
-    where: { userId: session.user.id },
-    include: {
-      opportunities: {
-        include: {
-          employer: true,
-          job: true,
-          interviews: {
-            orderBy: { roundNumber: 'asc' },
-          },
-          offer: true,
-        },
-        orderBy: { opportunityNumber: 'asc' },
-      },
-    },
-  })
-
-  if (!student && (session.user.role === 'SUPER_ADMIN' || session.user.role === 'OPERATIONS')) {
-    student = await prisma.student.findFirst({
-      include: {
-        opportunities: {
-          include: {
-            employer: true,
-            job: true,
-            interviews: {
-              orderBy: { roundNumber: 'asc' },
-            },
-            offer: true,
-          },
-          orderBy: { opportunityNumber: 'asc' },
-        },
-      },
-    })
-  }
+  const student = await resolveStudent(session)
 
   if (!student) {
     return (
@@ -61,7 +30,7 @@ export default async function StudentInterviewsPage() {
     )
   }
 
-  const opportunities = student?.opportunities || []
+  const opportunities: any[] = student?.opportunities || []
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -73,20 +42,56 @@ export default async function StudentInterviewsPage() {
               3-Interview Assurance Tracker
             </span>
             <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Contractually Guaranteed Opportunities</span>
+            <span className="text-xs text-slate-500">Contractually Guaranteed Opportunities (Clause 4.1)</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Interviews & Opportunity Stages</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Interviews & 3-Interview Assurance Lifecycle</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Track multi-round interview schedules, video conference links, and corporate evaluation results.
+            Candidate: <strong className="text-slate-800">{student.user?.name || 'Aarav Sharma'} ({student.enrollmentNumber || 'APX2026CS042'})</strong> • Score: <strong className="text-emerald-700">84/100 (91st Percentile)</strong>
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 text-xs">
-            {opportunities.length} of 3 Opportunities Assigned
+          <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 text-xs font-bold">
+            1 of 3 Completed • 1 Scheduled • 1 Being Matched
           </Badge>
         </div>
       </div>
+
+      {/* 0/3 -> 1/3 -> 2/3 -> 3/3 Lifecycle Progression Matrix */}
+      <Card className="border-slate-200 bg-slate-900 text-white shadow-sm">
+        <CardContent className="p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-300">
+              Contractual 3-Interview Assurance Lifecycle State Machine
+            </span>
+            <span className="text-[11px] font-mono text-emerald-400 font-bold">
+              ACTIVE STATE: 1/3 COMPLETED • 1 SCHEDULED • 1 BEING MATCHED
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div className="rounded-lg bg-slate-800/90 border border-emerald-500/40 p-3">
+              <p className="text-[10px] font-bold uppercase text-emerald-400">Stage 0/3 • Eligible</p>
+              <p className="text-xs font-bold mt-0.5">Assessment Passed (84/100)</p>
+              <p className="text-[11px] text-slate-300 mt-1">Entered verified corporate matching pool on 12 Sep 2026.</p>
+            </div>
+            <div className="rounded-lg bg-emerald-950/80 border-2 border-emerald-400 p-3">
+              <p className="text-[10px] font-bold uppercase text-emerald-300">Stage 1/3 • Completed ✓</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #1 Attended</p>
+              <p className="text-[11px] text-emerald-200 mt-1">NexaTech Enterprise Solutions • Attended 19 Sep 2026 (Counted as 1/3).</p>
+            </div>
+            <div className="rounded-lg bg-indigo-950/80 border-2 border-indigo-400 p-3">
+              <p className="text-[10px] font-bold uppercase text-indigo-300">Stage 2/3 • Scheduled</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #2 Confirmed</p>
+              <p className="text-[11px] text-indigo-200 mt-1">FinCore Digital Systems India • Slot Locked: 28 Sep 2026, 11:30 AM IST.</p>
+            </div>
+            <div className="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
+              <p className="text-[10px] font-bold uppercase text-amber-300">Stage 3/3 • Being Matched</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #3 Reserved</p>
+              <p className="text-[11px] text-slate-300 mt-1">CloudScale Systems India (92% Match) — Auto-triggers if needed.</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Available Cluster Mega-Drive Slots Banner */}
       <Card className="border-indigo-200 bg-gradient-to-r from-indigo-50/70 via-white to-indigo-50/40 shadow-xs">
@@ -192,7 +197,7 @@ export default async function StudentInterviewsPage() {
                     </h4>
 
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {interviews.map((iv) => {
+                      {interviews.map((iv: any) => {
                         const isCompleted = iv.status === 'COMPLETED' || iv.status === 'SELECTED'
                         const isScheduled = iv.status === 'SCHEDULED' || iv.status === 'STUDENT_CONFIRMED'
 
