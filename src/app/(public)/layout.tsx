@@ -46,89 +46,85 @@ export default function PublicLayout({
       </div>
 
       {/* Main Sticky Header (lg:flex breakpoint prevents 768px tablet header collisions) */}
-      <header className="sticky top-0 w-full bg-white/95 backdrop-blur-xs border-b border-slate-200/90 z-50">
+      {/* Main Sticky Header */}
+      <header className="sticky top-0 w-full bg-white/98 backdrop-blur-md border-b border-slate-200/90 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-2.5 group">
-                <div className="h-8 w-8 rounded-[4px] bg-[#1E40AF] text-white flex items-center justify-center font-mono font-bold text-sm tracking-tight">
-                  PC
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="h-9 w-9 rounded-md bg-[#1E40AF] text-white flex items-center justify-center font-bold text-base tracking-tight shadow-2xs">
+                  <ShieldCheck className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <span className="text-lg font-bold tracking-tight text-slate-900 block leading-none">
+                  <span className="text-base font-bold tracking-tight text-slate-900 block leading-tight">
                     PlacementConnect
                   </span>
-                  <span className="text-[11px] text-slate-500 block mt-0.5">
-                    Institutional Placement Platform
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 block">
+                    Campus Placement Infrastructure
                   </span>
                 </div>
               </Link>
             </div>
 
-            <nav className="hidden lg:flex items-center space-x-7 text-sm">
+            <nav className="hidden lg:flex items-center space-x-6 text-xs font-semibold">
               <Link
                 href="/for-colleges"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
               >
                 For Colleges
               </Link>
               <Link
                 href="/for-employers"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
               >
                 For Employers
               </Link>
               <Link
                 href="/for-students"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
               >
                 For Students
               </Link>
               <Link
                 href="/placement-assurance"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
               >
-                Progressive Interview Assurance
+                Placement Assurance
+              </Link>
+              <Link
+                href="/verification-methodology"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
+              >
+                Methodology
               </Link>
               <Link
                 href="/pricing"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
+                className="text-slate-600 hover:text-[#1E40AF] transition-colors"
               >
                 Pricing
-              </Link>
-              <Link
-                href="/about"
-                className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
-              >
-                About
               </Link>
             </nav>
 
             <div className="hidden lg:flex items-center space-x-3">
               <Link
                 href="/login"
-                className="text-sm font-semibold text-slate-700 hover:text-[#1E40AF] px-3 py-2 rounded-[4px] transition-colors"
+                className="text-xs font-semibold text-slate-600 hover:text-slate-900 px-2.5 py-1.5 transition-colors"
               >
-                Sign In
+                Portal Sign In
               </Link>
               <Link
                 href="/contact"
-                className="text-sm font-semibold text-[#1E40AF] border border-blue-200 bg-blue-50/50 hover:bg-blue-100/60 px-3.5 py-2 rounded-[4px] transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#1E40AF] hover:bg-blue-900 text-white px-3.5 py-2 rounded-md shadow-2xs transition-colors"
               >
-                Request Partnership
-              </Link>
-              <Link
-                href="/register"
-                className="text-sm font-semibold bg-[#1E40AF] text-white px-4 py-2 rounded-[4px] hover:bg-blue-900 transition-colors"
-              >
-                Get Started
+                Request Walkthrough
+                <ArrowUpRight className="h-3 w-3" />
               </Link>
             </div>
 
             <div className="lg:hidden flex items-center gap-2">
               <Link
                 href="/login"
-                className="text-xs font-semibold text-[#1E40AF] px-2.5 py-1.5 rounded border border-blue-200 bg-blue-50/50"
+                className="text-xs font-semibold text-slate-700 px-2.5 py-1.5 rounded border border-slate-200 bg-slate-50"
               >
                 Sign In
               </Link>
@@ -146,79 +142,85 @@ export default function PublicLayout({
         </div>
 
         {/* Tablet & Mobile Navigation Drawer */}
+        {/* Tablet & Mobile Navigation Drawer */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-200 shadow-lg">
-            <div className="px-4 pt-3 pb-5 space-y-1.5">
-              <Link
-                href="/for-colleges"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-semibold"
-              >
-                For Colleges &amp; TPOs
-              </Link>
-              <Link
-                href="/for-employers"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-semibold"
-              >
-                For Corporate Employers
-              </Link>
-              <Link
-                href="/for-students"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-semibold"
-              >
-                For Graduating Students
-              </Link>
-              <Link
-                href="/placement-assurance"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-medium"
-              >
-                Progressive Interview Assurance
-              </Link>
-              <Link
-                href="/pricing"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-medium"
-              >
-                Pricing &amp; GST Schedule
-              </Link>
-              <Link
-                href="/verify"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-emerald-800 bg-emerald-50/70 rounded-md font-semibold"
-              >
-                Verify a Candidate Credential
-              </Link>
-              <Link
-                href="/about"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded-md font-medium"
-              >
-                About PlacementConnect
-              </Link>
-              <Link
-                href="/security"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 rounded-md font-medium"
-              >
-                Security &amp; Data Privacy
-              </Link>
-              <div className="pt-3 border-t border-slate-200 grid grid-cols-2 gap-2">
+          <div className="lg:hidden bg-white border-t border-slate-200 shadow-xl">
+            <div className="px-5 pt-4 pb-6 space-y-4">
+              <div className="space-y-1">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3">
+                  Campus Hiring Portals
+                </div>
+                <Link
+                  href="/for-colleges"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-900 hover:bg-slate-50 rounded-md font-semibold"
+                >
+                  For Colleges &amp; TPOs
+                </Link>
+                <Link
+                  href="/for-employers"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-900 hover:bg-slate-50 rounded-md font-semibold"
+                >
+                  For Corporate Employers
+                </Link>
+                <Link
+                  href="/for-students"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-900 hover:bg-slate-50 rounded-md font-semibold"
+                >
+                  For Graduating Students
+                </Link>
+              </div>
+
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3">
+                  Governance &amp; Trust
+                </div>
+                <Link
+                  href="/placement-assurance"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-md font-medium"
+                >
+                  Progressive Interview Assurance
+                </Link>
+                <Link
+                  href="/verification-methodology"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-md font-medium"
+                >
+                  Verification Methodology
+                </Link>
+                <Link
+                  href="/pricing"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-md font-medium"
+                >
+                  Pricing Schedule
+                </Link>
+                <Link
+                  href="/verify"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 text-sm text-emerald-800 bg-emerald-50/70 rounded-md font-semibold"
+                >
+                  Verify a Credential
+                </Link>
+              </div>
+
+              <div className="pt-3 border-t border-slate-200 space-y-2">
                 <Link
                   href="/contact"
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-center py-2.5 px-3 text-xs font-bold border border-blue-300 text-[#1E40AF] bg-blue-50 rounded-[4px]"
+                  className="block text-center py-2.5 px-4 text-xs font-semibold text-white bg-[#1E40AF] hover:bg-blue-900 rounded-md shadow-2xs"
                 >
-                  Request Partnership
+                  Request Institutional Walkthrough
                 </Link>
                 <Link
-                  href="/register"
+                  href="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-center py-2.5 px-3 text-xs font-bold bg-[#1E40AF] text-white rounded-[4px]"
+                  className="block text-center py-2 px-4 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-md"
                 >
-                  Get Started
+                  Portal Sign In
                 </Link>
               </div>
             </div>
