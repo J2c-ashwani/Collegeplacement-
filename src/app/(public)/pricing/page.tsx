@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/button';
 const COLLEGE_INCLUDED_SUMMARY = [
   'Dedicated TPO placement workspace & verified Campus Code (e.g., APX123) for student onboarding',
   'Student readiness evaluation across 9 competency areas before corporate interview scheduling',
-  'Employer drive coordination, interview attendance tracking (0/3 to 3/3), and MoU record keeping',
-  'Designed to support institutional placement documentation and internal NAAC/NIRF reporting workflows (CSV/PDF exports)',
+  'Employer drive coordination, progressive attempt tracking (up to 3 attempts), and MoU record keeping',
+  'Designed to support institutional placement documentation and internal accreditation reporting workflows (e.g., NAAC Criterion 5.2.1 and NIRF data tables)',
 ] as const;
 
 const INSTITUTION_PLAN_COMPARISON = [
@@ -23,18 +23,18 @@ const INSTITUTION_PLAN_COMPARISON = [
     fiveYear: '₹60,000 / 5 yrs (+ ₹10,800 GST = ₹70,800)',
   },
   {
-    feature: 'How the 1-Year (₹15,000) Waiver Applies',
-    annual: 'Year-1 fee waived (₹0) when 100+ students enroll in Year 1',
-    fiveYear: '1 year (₹15,000) already waived upfront off ₹75,000 (5 yrs for price of 4)',
+    feature: 'Refund & Enrollment Policy',
+    annual: 'Fixed, non-refundable institutional fee regardless of student enrollment count',
+    fiveYear: 'Fixed, non-refundable institutional fee regardless of student enrollment count',
   },
   {
     feature: 'Upgrade Path from 1-Year to 5-Year Membership',
-    annual: 'Start with 1-Year License (₹0 in Yr 1 with 100+ students)',
+    annual: 'Start with 1-Year License (₹15,000 + GST)',
     fiveYear: 'Pay ₹45,000 remaining during Yr 1 (1 current + 4 extended yrs) OR ₹60,000 after Yr 1 for 5 new yrs',
   },
   {
     feature: 'Effective Annual Rate (excl. GST)',
-    annual: '₹15,000 / academic year (₹0 in Year 1 with waiver)',
+    annual: '₹15,000 / academic year',
     fiveYear: '₹12,000 / academic year across 5 cohorts (Save ₹15,000 / 20%)',
   },
   {
@@ -44,8 +44,8 @@ const INSTITUTION_PLAN_COMPARISON = [
   },
   {
     feature: 'Institutional Documentation & Reporting Support',
-    annual: '✓ Single-batch CSV/PDF exports supporting internal NAAC/NIRF reporting workflows',
-    fiveYear: '✓ 5-year longitudinal archive supporting internal NAAC/NIRF reporting workflows',
+    annual: '✓ Single-batch CSV/PDF exports supporting internal accreditation reporting workflows',
+    fiveYear: '✓ 5-year longitudinal archive supporting internal accreditation reporting workflows',
   },
 ] as const;
 
@@ -71,9 +71,9 @@ const STUDENT_TRACK_COMPARISON = [
     extended: '✓ Included',
   },
   {
-    feature: '3 Corporate Interview Opportunities',
-    standard: '✓ Within 12 months of assessment completion',
-    extended: '✓ Within 12 months of assessment completion',
+    feature: 'Progressive Corporate Interview Opportunities',
+    standard: '✓ Up to 3 progressive opportunities (exit on selection)',
+    extended: '✓ Up to 3 progressive opportunities (exit on selection)',
   },
   {
     feature: 'Priority Pooled-Drive Consideration',
@@ -82,8 +82,8 @@ const STUDENT_TRACK_COMPARISON = [
   },
   {
     feature: '100% Base-Fee Refund Protection',
-    standard: '✓ ₹1,000 Base Fee Protected',
-    extended: '✓ ₹2,500 Base Fee Protected',
+    standard: '✓ ₹1,000 Base Fee Protected (if opportunities not provided)',
+    extended: '✓ ₹2,500 Base Fee Protected (if opportunities not provided)',
   },
 ] as const;
 
@@ -125,12 +125,12 @@ export default function PricingPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                {/* 1-Year Annual Plan — Primary / Recommended for New Institutions */}
+                {/* 1-Year Annual Plan — Standard Institutional Partnership */}
                 <div className="p-4 rounded-md border-2 border-[#1E40AF] bg-blue-50/25 space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-1">
                     <span className="text-xs font-bold text-slate-900">1-Year Annual</span>
                     <span className="text-[10px] font-bold text-[#1E40AF] bg-blue-100/90 border border-blue-300 px-2 py-0.5 rounded">
-                      Recommended for New Institutions
+                      Standard Partnership
                     </span>
                   </div>
                   <div className="font-mono text-2xl font-bold text-[#1E40AF]">
@@ -139,8 +139,8 @@ export default function PricingPage() {
                       + ₹2,700 GST (₹17,700 / yr)
                     </span>
                   </div>
-                  <p className="text-[11px] font-semibold text-emerald-900 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded">
-                    ₹0 Year-1 fee when 100+ students enroll
+                  <p className="text-[11px] font-semibold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1 rounded">
+                    Fixed fee • Upgrade to 5-Year during Yr 1
                   </p>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Full TPO workspace, 4-stage placement reporting, and employer drive coordination for 1 academic year.
@@ -170,9 +170,9 @@ export default function PricingPage() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-md bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 leading-relaxed">
-                <strong className="font-semibold text-emerald-900">Year-1 Waiver &amp; 5-Year Extension Rule:</strong>{' '}
-                The <strong>1-Year License (₹15,000)</strong> is waived in full when 100+ final-year students enroll in Year 1. The <strong>5-Year Agreement (₹60,000 instead of ₹75,000)</strong> already includes 1 year (₹15,000) waived upfront. If a 1-Year partner college with 100+ enrolled students wishes to upgrade, they can pay the <strong>remaining ₹45,000 (+ GST) during Year 1</strong> to extend for 4 additional years (<strong>1 current + 4 extended = 5 years</strong>), or pay <strong>₹60,000 (+ GST) after Year 1</strong> to secure a fresh 5-year membership.
+              <div className="p-3.5 rounded-md bg-blue-50/80 border border-blue-200 text-xs text-blue-950 leading-relaxed">
+                <strong className="font-semibold text-blue-900">Fixed Institutional Pricing &amp; Year-1 Upgrade Policy:</strong>{' '}
+                Institutional membership fees are fixed and non-refundable regardless of student enrollment counts. Institutions subscribing to the <strong>1-Year Annual License (₹15,000 + 18% GST = ₹17,700)</strong> may upgrade at any time during Year 1 by paying the <strong>remaining ₹45,000 (+ 18% GST = ₹53,100)</strong> to extend coverage for 4 additional academic years (<strong>1 current + 4 extended = 5 continuous years</strong>). Direct 5-Year Agreements are contracted at <strong>₹60,000 (+ 18% GST = ₹70,800)</strong>, giving 5 years for the price of 4.
               </div>
 
               <ul className="space-y-2 text-xs text-slate-600">

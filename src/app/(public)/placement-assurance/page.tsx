@@ -15,26 +15,26 @@ export default function PlacementAssurancePage() {
   return (
     <div className="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-slate-900 overflow-x-hidden">
       <div className="max-w-5xl mx-auto space-y-12">
-        {/* 1. Hero: How the 3-Interview Assurance Works */}
+        {/* 1. Hero: How the Progressive Interview Assurance Works */}
         <div className="space-y-4 border-b border-slate-200 pb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-xs font-semibold text-[#1E40AF]">
-            3-Interview Assurance &amp; Confirmed Employer Capacity
+            Progressive Interview Assurance &amp; Dynamic Capacity Reserve
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-            How the 3-Interview Assurance Works
+            How Progressive Interview Assurance Works
           </h1>
           <p className="text-base sm:text-lg text-slate-800 font-medium leading-relaxed max-w-3xl">
             A defined commitment to{' '}
             <strong className="font-bold text-[#1E40AF]">
-              3 Verified Corporate Interview Opportunities within 12 months of assessment completion
+              up to 3 progressive verified corporate interview opportunities within 12 months
             </strong>{' '}
             for eligible students.
           </p>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-3xl">
-            Complete your readiness assessment, enter the verified interview pool, and receive confirmed, role-matched corporate interview opportunities through participating employers and institutions.
+            Complete your readiness assessment, enter the verified interview pool, and receive progressive, role-matched corporate interview opportunities. You exit the assurance cycle immediately upon corporate selection; students who are not selected progress to the next opportunity, up to a maximum of three attempts.
           </p>
           <p className="text-xs font-medium text-slate-500">
-            Programme eligibility and assurance terms apply.
+            Programme eligibility and progressive assurance terms apply.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export default function PlacementAssurancePage() {
               {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailLabel}
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              We expand student intake only when sufficient confirmed employer interview capacity is available in our active hiring pipeline (maintaining at least a 1.20× capacity reserve).
+              We expand student intake only when sufficient confirmed employer interview capacity is available in our active hiring pipeline (maintaining at least a 1.20× capacity reserve over remaining unselected student demand).
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export default function PlacementAssurancePage() {
               ₹1,000 or ₹2,500 base fee refunded; statutory 18% GST excluded.
             </p>
             <p className="text-xs text-slate-600 leading-relaxed">
-              If 3 verified corporate interview opportunities are not facilitated within 12 months of assessment completion for an eligible student, 100% of the base programme fee is refunded.
+              If up to 3 progressive verified corporate interview opportunities are not facilitated within 12 months of assessment completion for an eligible unselected student, 100% of the base programme fee is refunded.
             </p>
           </div>
         </div>
@@ -92,10 +92,10 @@ export default function PlacementAssurancePage() {
               What Counts as a Verified Corporate Interview Opportunity?
             </h2>
             <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-blue-50/60 border border-blue-200 rounded p-4 font-medium">
-              A confirmed first-round corporate interview slot with a registered employer for a fresher role that matches the student&apos;s degree stream and academic eligibility criteria.
+              A confirmed corporate interview slot with a registered employer for a fresher role that matches the student&apos;s degree stream and academic eligibility criteria.
             </p>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Every scheduled and completed interview updates the student&apos;s tracked counter from <strong>0/3 through 3/3</strong> in both the student dashboard and the college TPO workspace.
+              Opportunities are provided progressively. A student exits the assurance cycle immediately upon receiving a corporate selection. Candidates who are not selected progress to subsequent opportunities up to a maximum of three total interview attempts.
             </p>
           </div>
 
@@ -106,10 +106,10 @@ export default function PlacementAssurancePage() {
               Who Qualifies?
             </div>
             <h2 className="text-lg font-bold text-slate-900">
-              Who Is Eligible for the 3-Interview Assurance?
+              Who Is Eligible for Progressive Interview Assurance?
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              The 3-Interview Assurance and 100% base-fee refund protection apply to every enrolled student who meets three straightforward requirements:
+              Progressive Interview Assurance and 100% base-fee refund protection apply to every enrolled student who meets three straightforward requirements:
             </p>
             <ul className="space-y-2 text-xs text-slate-700 pt-1">
               <li className="flex items-start gap-2">

@@ -55,11 +55,12 @@ export default function RefundPolicyPage() {
               </li>
             </ul>
             <div className="p-4 rounded-md bg-blue-50/70 border border-blue-200 text-xs text-blue-950 space-y-1.5">
-              <p className="font-bold">12-Month 3-Interview Assurance Refund Guarantee:</p>
+              <p className="font-bold">12-Month Progressive Interview Assurance Refund Policy:</p>
               <p>
-                If an enrolled student completes the 9-Dimension Employability Assessment, maintains active institutional verification, attends scheduled interviews without unexcused absences, and PlacementConnect fails to facilitate at least{' '}
-                <strong>3 verified employer interview opportunities</strong> within 12 months of assessment completion, the student is entitled to a{' '}
-                <strong>100% refund of the Base Programme Fee (₹1,000 or ₹2,500)</strong>.
+                PlacementConnect provides eligible students with up to three progressive verified corporate interview opportunities. A candidate exits the assurance cycle immediately upon corporate selection (in which case the assurance commitment is successfully concluded with no refund due). If a candidate completes three progressive interview attempts without selection, the maximum assurance cycle is completed with no refund due.
+              </p>
+              <p>
+                A <strong>100% refund of the Base Programme Fee (₹1,000 or ₹2,500)</strong> becomes payable if and only if: (1) 12 months have elapsed from assessment completion, (2) the student maintained active enrollment and attended all scheduled sessions without unexcused absences, (3) the student did not achieve corporate selection, and (4) PlacementConnect failed to facilitate the qualifying progressive interview opportunities.
               </p>
               <p className="text-[11px] text-blue-900">
                 *Statutory Tax Note: In accordance with Indian GST regulations, the 18% GST component (₹180 or ₹450) remitted to government tax authorities upon invoice issuance is non-refundable.
@@ -73,7 +74,7 @@ export default function RefundPolicyPage() {
               2. Pre-Assessment Student Cancellation Window (7 Calendar Days)
             </h2>
             <p>
-              If a student requests cancellation within <strong>7 calendar days of payment</strong> and has <strong>not yet initiated or completed</strong> the 9-Dimension Employability Assessment or issued a verifiable credential badge, the base programme fee (₹1,000 or ₹2,500) is refundable within 5–7 business days to the original payment method. Once the evaluation is initiated or a scorecard is generated, the 12-month 3-Interview Assurance Refund Guarantee governs the enrollment.
+              If a student requests cancellation within <strong>7 calendar days of payment</strong> and has <strong>not yet initiated or completed</strong> the 9-Dimension Employability Assessment or issued a verifiable credential badge, the base programme fee (₹1,000 or ₹2,500) is refundable within 5–7 business days to the original payment method. Once the evaluation is initiated or a scorecard is generated, the 12-month Progressive Interview Assurance terms govern the enrollment.
             </p>
           </section>
 
@@ -83,7 +84,7 @@ export default function RefundPolicyPage() {
               3. Institutional Partnership Plans ({INSTITUTION_COMMERCIAL_PLAN.formattedBase}/yr or {INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearBase}/5 yrs + GST)
             </h2>
             <p>
-              Colleges subscribing to our 1-Year Annual License ({INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or 5-Year Multi-Cohort Agreement ({INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}) receive a 30-day onboarding milestone commitment. {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
+              Institutional membership fees for colleges subscribing to our 1-Year Annual License ({INSTITUTION_COMMERCIAL_PLAN.formattedTotal}) or 5-Year Multi-Cohort Agreement ({INSTITUTION_COMMERCIAL_PLAN.formattedFiveYearTotal}) are <strong>fixed and non-refundable regardless of student enrollment counts</strong>. {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
             </p>
           </section>
 

@@ -87,8 +87,25 @@ export async function POST(req: NextRequest) {
       return validationError('Student does not have an active Placement Assurance programme enrolment')
     }
 
-    if (programme.opportunitiesRemaining <= 0) {
-      return validationError('Student has already consumed all qualified interview assurance opportunities')
+    // 1a. Canonical Progressive Rule: Hard prevention of Attempt 4
+    if (student.opportunities.length >= 3 || programme.opportunitiesRemaining <= 0) {
+      return validationError('Maximum 3 progressive interview assurance opportunities have already been exhausted (ASSURANCE_QUOTA_EXHAUSTED).')
+    }
+
+    // 1b. Canonical Progressive Rule: Immediate exit upon selection
+    const hasSelection = student.opportunities.some(
+      (o) => o.status === 'SELECTED' || (o.outcome && o.outcome.toLowerCase().includes('offer'))
+    )
+    if (hasSelection) {
+      return validationError('Student has already achieved corporate selection. Assurance cycle is successfully concluded (ASSURANCE_COMPLETE_SELECTED).')
+    }
+
+    // 1c. Canonical Progressive Rule: Sequential progression precondition
+    const activeUnresolvedOpp = student.opportunities.find(
+      (o) => !['REJECTED', 'CANCELLED', 'NO_SHOW', 'WITHDRAWN'].includes(o.status)
+    )
+    if (activeUnresolvedOpp) {
+      return validationError(`Opportunity #${activeUnresolvedOpp.opportunityNumber} is currently active or awaiting employer outcome. Next progressive opportunity cannot be assigned until previous attempt concludes.`)
     }
 
     // 2. Fetch Job & Employer
@@ -101,20 +118,29 @@ export async function POST(req: NextRequest) {
 
     const opportunityNumber = student.opportunities.length + 1
 
-    // 3. Create AssuranceOpportunity record
-    const opportunity = await prisma.assuranceOpportunity.create({
-      data: {
-        studentProgrammeId: programme.id,
-        studentId: student.id,
-        employerId: job.employerId,
-        jobId: job.id,
-        applicationId,
-        opportunityNumber,
-        status: 'INTERVIEW_SCHEDULED',
-        countsTowardAssurance: true,
-        assignedBy: session.user.id,
-      },
-    })
+    // 3. Atomically create AssuranceOpportunity and decrement programme quota
+    const [opportunity] = await prisma.$transaction([
+      prisma.assuranceOpportunity.create({
+        data: {
+          studentProgrammeId: programme.id,
+          studentId: student.id,
+          employerId: job.employerId,
+          jobId: job.id,
+          applicationId,
+          opportunityNumber,
+          status: 'INTERVIEW_SCHEDULED',
+          countsTowardAssurance: true,
+          assignedBy: session.user.id,
+        },
+      }),
+      prisma.studentProgramme.update({
+        where: { id: programme.id },
+        data: {
+          opportunitiesConsumed: { increment: 1 },
+          opportunitiesRemaining: { decrement: 1 },
+        },
+      }),
+    ])
 
     // 4. Create Round 1 Interview
     const interview = await prisma.interview.create({

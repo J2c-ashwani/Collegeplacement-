@@ -144,11 +144,11 @@ export default function ForCollegesPage() {
                 What Your Students Get
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-                3 Verified Corporate Interview Opportunities
+                Up to 3 Progressive Verified Corporate Interview Opportunities
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed">
                 For eligible final-year students enrolled in the{' '}
-                <strong className="text-slate-900">3 Corporate Interview Assurance Programme</strong>, subject to programme eligibility and attendance requirements. Note: PlacementConnect assures 3 verified corporate interview opportunities—final job selection always rests on candidate performance and employer evaluation.
+                <strong className="text-slate-900">Progressive Interview Assurance Programme</strong>, subject to programme eligibility and attendance requirements. Opportunities are progressive: students exit the assurance cycle immediately upon corporate selection; candidates who are not selected remain eligible for subsequent attempts, up to a maximum of three corporate interview opportunities.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-1">
@@ -156,12 +156,12 @@ export default function ForCollegesPage() {
                     100% Base Programme Fee Refund Protection
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
-                    If the 3 verified corporate interview opportunities are not facilitated within 12 months of readiness evaluation completion for an eligible student, PlacementConnect refunds 100% of their base programme fee (₹1,000 or ₹2,500).
+                    If up to 3 progressive verified corporate interview opportunities are not facilitated within 12 months of readiness evaluation completion for an eligible unselected student, PlacementConnect refunds 100% of their base programme fee (₹1,000 or ₹2,500).
                   </p>
                 </div>
                 <div className="p-4 rounded-md bg-slate-50 border border-slate-200 space-y-1">
                   <div className="text-xs font-bold text-slate-900">
-                    We Secure More Interview Capacity Than Students We Commit To
+                    Dynamic Capacity Reserve
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailExplanation}
@@ -284,10 +284,10 @@ export default function ForCollegesPage() {
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Start with the <strong>1-Year Annual License</strong> (recommended for new institutions at ₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or choose the optional <strong>5-Year Multi-Cohort Agreement</strong> (<strong>₹60,000 + 18% GST = ₹70,800</strong> — 5 years at ₹15,000/yr = ₹75,000, with <strong>1 full year / ₹15,000 already waived upfront</strong>).
+                  Start with the <strong>1-Year Annual License</strong> (₹15,000 + 18% GST = <strong>₹17,700/yr</strong>) or choose the <strong>5-Year Multi-Cohort Agreement</strong> (<strong>₹60,000 + 18% GST = ₹70,800</strong> — 5 years at ₹15,000/yr = ₹75,000, with <strong>1 full year / ₹15,000 already waived upfront</strong>).
                 </p>
-                <div className="p-3 rounded bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-medium leading-relaxed">
-                  <strong>Year-1 Waiver &amp; 5-Year Extension Rule:</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
+                <div className="p-3 rounded bg-blue-50 border border-blue-200 text-xs text-blue-950 font-medium leading-relaxed">
+                  <strong>Fixed Pricing &amp; Year-1 Upgrade Policy:</strong> {INSTITUTION_COMMERCIAL_PLAN.pilotWaiverNote}
                 </div>
                 <ul className="space-y-2 text-xs text-slate-600 pt-1">
                   <li className="flex items-start gap-2">
@@ -296,7 +296,7 @@ export default function ForCollegesPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#1E40AF] shrink-0 mt-0.5" />
-                    <span>4-stage placement documentation &amp; CSV/PDF exports supporting internal NAAC/NIRF reporting workflows</span>
+                    <span>4-stage placement documentation &amp; CSV/PDF exports supporting internal accreditation reporting workflows</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 text-[#1E40AF] shrink-0 mt-0.5" />
