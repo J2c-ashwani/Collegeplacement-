@@ -3,6 +3,7 @@ import { Role } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 import { prisma } from './prisma';
+import { CANONICAL_AARAV_OPPORTUNITIES } from '@/config/canonical-assurance-graph';
 
 export async function requireAuth(allowedRoles?: Role[]) {
   const session = await auth();
@@ -195,62 +196,35 @@ export async function resolveStudent(session: any) {
         },
       },
     ],
-    opportunities: [
-      {
-        id: 'opp-apex-01',
-        opportunityNumber: 1,
-        status: 'COMPLETED',
-        createdAt: new Date('2026-09-18T11:00:00Z'),
-        job: {
-          id: 'job-nexa-01',
-          title: 'Associate Software Engineer (Full-Stack)',
-          ctcMin: 650000,
-          ctcMax: 850000,
-          location: 'Bengaluru',
-        },
-        employer: {
-          id: 'emp-nexatech-2026',
-          companyName: 'NexaTech Enterprise Solutions Pvt. Ltd.',
-        },
-        interviews: [
-          {
-            id: 'int-01',
-            roundNumber: 1,
-            roundName: 'Technical & System Design Panel',
-            status: 'COMPLETED',
-            scheduledAt: new Date('2026-09-19T14:00:00Z'),
-          },
-        ],
-        offer: null,
+    opportunities: CANONICAL_AARAV_OPPORTUNITIES.filter((o) => o.interviews.length > 0).map((opp) => ({
+      id: opp.id,
+      opportunityNumber: opp.opportunityNumber,
+      status: opp.assuranceStage,
+      createdAt: new Date('2026-09-18T11:00:00Z'),
+      job: {
+        id: opp.jobId,
+        title: opp.jobTitle,
+        ctcMin: 650000,
+        ctcMax: 850000,
+        location: opp.location,
       },
-      {
-        id: 'opp-apex-02',
-        opportunityNumber: 2,
-        status: 'SCHEDULED',
-        createdAt: new Date('2026-09-22T15:00:00Z'),
-        job: {
-          id: 'job-fincore-02',
-          title: 'Graduate Product Analyst',
-          ctcMin: 600000,
-          ctcMax: 750000,
-          location: 'Hyderabad / Hybrid',
-        },
-        employer: {
-          id: 'emp-fincore-2026',
-          companyName: 'FinCore Digital Systems India',
-        },
-        interviews: [
-          {
-            id: 'int-02',
-            roundNumber: 1,
-            roundName: 'Analytical & Product Case Round',
-            status: 'SCHEDULED',
-            scheduledAt: new Date('2026-09-28T11:30:00Z'),
-          },
-        ],
-        offer: null,
+      employer: {
+        id: opp.employerId,
+        name: opp.employerName,
+        companyName: opp.employerName,
       },
-    ],
+      interviews: opp.interviews.map((iv) => ({
+        id: iv.id,
+        roundNumber: iv.roundNumber,
+        roundName: iv.roundName,
+        status: iv.status,
+        scheduledAt: new Date(iv.scheduledIso),
+        scheduledFullDisplay: iv.scheduledFullDisplay,
+        meetingLink: `https://${iv.meetingUrl}`,
+        panelDisplay: iv.panelDisplay,
+      })),
+      offer: null,
+    })),
     badges: [
       {
         id: 'sb-01',

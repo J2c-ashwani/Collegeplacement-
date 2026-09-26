@@ -213,3 +213,23 @@
 .dark .text-indigo-700 {
   color: oklch(0.82 0.06 260) !important;
 }
+
+/* Intentional A4 Print Pagination & Export Stylesheet */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 6mm;
+  }
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11px !important;
+  }
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  header, nav, aside {
+    display: none !important;
+  }
+}

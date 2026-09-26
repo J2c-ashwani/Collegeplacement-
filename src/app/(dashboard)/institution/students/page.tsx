@@ -235,60 +235,60 @@ export default async function InstitutionStudentsPage() {
               <div className="p-3.5 rounded border border-emerald-300 bg-emerald-50/40 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-emerald-900">
-                    OPPORTUNITY #1 OF 3
+                    OPPORTUNITY #1 OF 3 (opp-apex-01)
                   </span>
                   <Badge className="bg-emerald-700 text-white text-[10px]">
                     COMPLETED (COUNTED 1/3)
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
-                  NexaTech Enterprise Systems India
+                  NexaTech Enterprise Solutions Pvt. Ltd.
                 </div>
                 <div className="text-[11px] text-slate-700">
-                  Role: <strong>Full-Stack Software Engineer (₹8.5–12.0 LPA)</strong>
+                  Role: <strong>Associate Software Engineer — Full-Stack (₹6.5–8.5 LPA)</strong>
                 </div>
                 <div className="text-[11px] text-emerald-900 font-medium">
-                  Round 1 Attended &amp; Completed on 12 Sep 2026 (Score: 86/100 &bull; Advanced to Round 2)
+                  R1 Completed: 19 Sep 2026 (14:00–15:00 IST • 86.3/100) &rarr; R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST)
                 </div>
               </div>
 
               <div className="p-3.5 rounded border border-blue-300 bg-blue-50/40 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-[#1E40AF]">
-                    OPPORTUNITY #2 OF 3
+                    OPPORTUNITY #2 OF 3 (opp-apex-02)
                   </span>
                   <Badge className="bg-[#1E40AF] text-white text-[10px]">
-                    SCHEDULED (28 SEP 2026)
+                    SCHEDULED (03 OCT 2026)
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
                   FinCore Digital Systems India
                 </div>
                 <div className="text-[11px] text-slate-700">
-                  Role: <strong>Backend Systems Engineer (₹9.0–11.5 LPA)</strong>
+                  Role: <strong>Graduate Product &amp; Systems Analyst (₹6.0–7.5 LPA)</strong>
                 </div>
                 <div className="text-[11px] text-[#1E40AF] font-medium">
-                  Confirmed Slot: 28 Sep 2026, 11:00 AM IST &bull; Counts as 2/3 upon Panel Completion
+                  Confirmed Slot: 03 Oct 2026 • 11:30–12:30 IST &bull; Counts as 2/3 upon Panel Completion
                 </div>
               </div>
 
               <div className="p-3.5 rounded border border-slate-300 bg-slate-50 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-slate-600">
-                    OPPORTUNITY #3 OF 3
+                    OPPORTUNITY #3 OF 3 (opp-apex-03)
                   </span>
                   <Badge className="bg-slate-200 text-slate-800 text-[10px]">
-                    BEING MATCHED
+                    MATCHING (RESERVED)
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
-                  QuantGrid Analytics India
+                  CloudScale Systems India Pvt. Ltd.
                 </div>
                 <div className="text-[11px] text-slate-700">
-                  Role: <strong>Full-Stack Product Analyst (₹8.0–10.5 LPA)</strong>
+                  Role: <strong>Software Development Engineer — Cloud Infrastructure (₹7.5–9.5 LPA)</strong>
                 </div>
                 <div className="text-[11px] text-slate-600">
-                  Candidate Shortlisted in Employer Pool &bull; Awaiting Interview Slot Release
+                  92% Score Fit Reserved &bull; Auto-triggers if needed within 12-month assurance window
                 </div>
               </div>
             </div>

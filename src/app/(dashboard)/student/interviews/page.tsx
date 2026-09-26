@@ -44,9 +44,9 @@ export default async function StudentInterviewsPage() {
             <span className="text-xs text-slate-400">•</span>
             <span className="text-xs text-slate-500">Contractually Guaranteed Opportunities (Clause 4.1)</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Interviews & 3-Interview Assurance Lifecycle</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Interviews &amp; 3-Interview Assurance Lifecycle</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Candidate: <strong className="text-slate-800">{student.user?.name || 'Aarav Sharma'} ({student.enrollmentNumber || 'APX2026CS042'})</strong> • Score: <strong className="text-emerald-700">84/100 (91st Percentile)</strong>
+            Candidate: <strong className="text-slate-800">{student.user?.name || 'Aarav Sharma'} ({student.enrollmentNumber || 'APX2026CS042'})</strong> • Score: <strong className="text-emerald-700">84.0 / 100 (91st Percentile • PlacementConnect 2026 Assessment Dataset)</strong>
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default async function StudentInterviewsPage() {
         <CardContent className="p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-300">
-              Contractual 3-Interview Assurance Lifecycle State Machine
+              Contractual 3-Interview Assurance Lifecycle State Machine (Canonical Source: PlacementAssuranceOpportunity)
             </span>
             <span className="text-[11px] font-mono text-emerald-400 font-bold">
               ACTIVE STATE: 1/3 COMPLETED • 1 SCHEDULED • 1 BEING MATCHED
@@ -71,23 +71,23 @@ export default async function StudentInterviewsPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="rounded-lg bg-slate-800/90 border border-emerald-500/40 p-3">
               <p className="text-[10px] font-bold uppercase text-emerald-400">Stage 0/3 • Eligible</p>
-              <p className="text-xs font-bold mt-0.5">Assessment Passed (84/100)</p>
-              <p className="text-[11px] text-slate-300 mt-1">Entered verified corporate matching pool on 12 Sep 2026.</p>
+              <p className="text-xs font-bold mt-0.5">Assessment Passed (84.0/100)</p>
+              <p className="text-[11px] text-slate-300 mt-1">Entered verified corporate matching pool on 12 Sep 2026 (91st Percentile • N = 14,820).</p>
             </div>
             <div className="rounded-lg bg-emerald-950/80 border-2 border-emerald-400 p-3">
               <p className="text-[10px] font-bold uppercase text-emerald-300">Stage 1/3 • Completed ✓</p>
-              <p className="text-xs font-bold mt-0.5">Opportunity #1 Attended</p>
-              <p className="text-[11px] text-emerald-200 mt-1">NexaTech Enterprise Solutions • Attended 19 Sep 2026 (Counted as 1/3).</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #1 (NexaTech)</p>
+              <p className="text-[11px] text-emerald-200 mt-1">R1 Completed: 19 Sep 2026 (14:00 IST) • R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST).</p>
             </div>
             <div className="rounded-lg bg-indigo-950/80 border-2 border-indigo-400 p-3">
               <p className="text-[10px] font-bold uppercase text-indigo-300">Stage 2/3 • Scheduled</p>
-              <p className="text-xs font-bold mt-0.5">Opportunity #2 Confirmed</p>
-              <p className="text-[11px] text-indigo-200 mt-1">FinCore Digital Systems India • Slot Locked: 28 Sep 2026, 11:30 AM IST.</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #2 (FinCore)</p>
+              <p className="text-[11px] text-indigo-200 mt-1">FinCore Digital Systems India • R1 Confirmed: 03 Oct 2026 (11:30–12:30 IST).</p>
             </div>
             <div className="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
               <p className="text-[10px] font-bold uppercase text-amber-300">Stage 3/3 • Being Matched</p>
-              <p className="text-xs font-bold mt-0.5">Opportunity #3 Reserved</p>
-              <p className="text-[11px] text-slate-300 mt-1">CloudScale Systems India (92% Match) — Auto-triggers if needed.</p>
+              <p className="text-xs font-bold mt-0.5">Opportunity #3 (CloudScale)</p>
+              <p className="text-[11px] text-slate-300 mt-1">CloudScale Systems India Pvt. Ltd. (92% Score Fit Reserved).</p>
             </div>
           </div>
         </CardContent>
