@@ -1,13 +1,23 @@
 import { auth } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import Link from 'next/link'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Video, Calendar, Clock, ExternalLink, CheckCircle2, AlertCircle, Building2, User } from 'lucide-react'
-import Link from 'next/link'
-
 import { resolveStudent } from '@/lib/auth-utils'
+import { formatDate, formatDateTime } from '@/lib/date-format'
+import {
+  Calendar,
+  Clock,
+  Video,
+  ExternalLink,
+  CheckCircle2,
+  AlertCircle,
+  FileText,
+  User,
+  ShieldCheck,
+  Award,
+} from 'lucide-react'
 
 export default async function StudentInterviewsPage() {
   const session = await auth()
@@ -15,44 +25,37 @@ export default async function StudentInterviewsPage() {
     redirect('/login')
   }
 
-  const student = await resolveStudent(session)
-
+  const student = await resolveStudent(session.user.id)
   if (!student) {
-    return (
-      <div className="max-w-4xl mx-auto py-12 px-4 space-y-6">
-        <Card className="border-indigo-100 bg-indigo-50/40 p-8 text-center space-y-4 shadow-sm">
-          <h2 className="text-xl font-bold text-slate-900">Student Profile Not Found</h2>
-          <p className="text-sm text-slate-600 max-w-lg mx-auto">
-            Please register through your college placement link to track your 3 Placement Assurance interview slots.
-          </p>
-        </Card>
-      </div>
-    )
+    redirect('/student/enrolment')
   }
 
-  const opportunities: any[] = student?.opportunities || []
+  const opportunities = student.opportunities || []
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs uppercase font-bold tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-              3-Interview Assurance Tracker
-            </span>
-            <span className="text-xs text-slate-400">•</span>
-            <span className="text-xs text-slate-500">Contractually Guaranteed Opportunities (Clause 4.1)</span>
+          <div className="flex flex-wrap items-center gap-2 mb-1">
+            <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 text-[11px]">
+              Guaranteed Opportunities Console
+            </Badge>
+            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px] font-mono">
+              3-Interview Placement Assurance Active
+            </Badge>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Interviews &amp; 3-Interview Assurance Lifecycle</h1>
-          <p className="text-xs text-slate-500 mt-1">
-            Candidate: <strong className="text-slate-800">{student.user?.name || 'Aarav Sharma'} ({student.enrollmentNumber || 'APX2026CS042'})</strong> • Score: <strong className="text-emerald-700">84.0 / 100 (91st Percentile • PlacementConnect 2026 Assessment Dataset)</strong>
+          <h1 className="text-2xl font-bold text-slate-900">
+            Interview Rounds &amp; Placement Assurance Tracking
+          </h1>
+          <p className="text-xs text-slate-600 mt-0.5">
+            Track your 3 contractual placement opportunities, interview schedules, panel assessments, and offers.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Badge className="bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-50 text-xs font-bold">
-            1 of 3 Completed • 1 Scheduled • 1 Being Matched
+            1 Active In Progress • 1 Scheduled • 1 In Matching Pipeline
           </Badge>
         </div>
       </div>
@@ -62,32 +65,32 @@ export default async function StudentInterviewsPage() {
         <CardContent className="p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-300">
-              Contractual 3-Interview Assurance Lifecycle State Machine (Canonical Source: PlacementAssuranceOpportunity)
+              Contractual 3-Interview Assurance Lifecycle (Model A: Employer Opportunity Unit)
             </span>
             <span className="text-[11px] font-mono text-emerald-400 font-bold">
-              ACTIVE STATE: 1/3 COMPLETED • 1 SCHEDULED • 1 BEING MATCHED
+              ACTIVE STATE: 1 ACTIVE IN PROGRESS • 1 SCHEDULED • 1 IN MATCHING PIPELINE
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="rounded-lg bg-slate-800/90 border border-emerald-500/40 p-3">
-              <p className="text-[10px] font-bold uppercase text-emerald-400">Stage 0/3 • Eligible</p>
-              <p className="text-xs font-bold mt-0.5">Assessment Passed (84.0/100)</p>
-              <p className="text-[11px] text-slate-300 mt-1">Entered verified corporate matching pool on 12 Sep 2026 (91st Percentile • N = 14,820).</p>
+              <p className="text-[10px] font-bold uppercase text-emerald-400">Stage 0/3 • Assurance Eligible</p>
+              <p className="text-xs font-bold mt-0.5">Diagnostic Score: 84.0/100</p>
+              <p className="text-[11px] text-slate-300 mt-1">Entered verified corporate matching pool on 12 Sep 2026 (91st Percentile • N = 14,820 • PC-ASSESS-2026-v1).</p>
             </div>
-            <div className="rounded-lg bg-emerald-950/80 border-2 border-emerald-400 p-3">
-              <p className="text-[10px] font-bold uppercase text-emerald-300">Stage 1/3 • Completed ✓</p>
+            <div className="rounded-lg bg-blue-950/80 border-2 border-blue-400 p-3">
+              <p className="text-[10px] font-bold uppercase text-blue-300">Stage 1/3 • In Progress (Active)</p>
               <p className="text-xs font-bold mt-0.5">Opportunity #1 (NexaTech)</p>
-              <p className="text-[11px] text-emerald-200 mt-1">R1 Completed: 19 Sep 2026 (14:00 IST) • R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST).</p>
+              <p className="text-[11px] text-blue-200 mt-1">Round 1 Completed (19 Sep 2026 • 86.3/100) • Round 2 Confirmed (30 Sep 2026, 14:30–15:30 IST). Concludes toward quota upon round outcome.</p>
             </div>
             <div className="rounded-lg bg-indigo-950/80 border-2 border-indigo-400 p-3">
               <p className="text-[10px] font-bold uppercase text-indigo-300">Stage 2/3 • Scheduled</p>
               <p className="text-xs font-bold mt-0.5">Opportunity #2 (FinCore)</p>
-              <p className="text-[11px] text-indigo-200 mt-1">FinCore Digital Systems India • R1 Confirmed: 03 Oct 2026 (11:30–12:30 IST).</p>
+              <p className="text-[11px] text-indigo-200 mt-1">FinCore Digital Systems India • Round 1 Confirmed: 03 Oct 2026 (11:30–12:30 IST • Independent Employer #2).</p>
             </div>
             <div className="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-              <p className="text-[10px] font-bold uppercase text-amber-300">Stage 3/3 • Being Matched</p>
+              <p className="text-[10px] font-bold uppercase text-amber-300">Stage 3/3 • In Matching Pipeline</p>
               <p className="text-xs font-bold mt-0.5">Opportunity #3 (CloudScale)</p>
-              <p className="text-[11px] text-slate-300 mt-1">CloudScale Systems India Pvt. Ltd. (92% Score Fit Reserved).</p>
+              <p className="text-[11px] text-slate-300 mt-1">CloudScale Systems India Pvt. Ltd. (92% Score Fit Reserved in Cohort Pool).</p>
             </div>
           </div>
         </CardContent>
@@ -107,8 +110,8 @@ export default async function StudentInterviewsPage() {
               <p className="text-xs text-slate-700 font-medium">
                 You meet the 70+ employability cutoff for this regional cluster hiring drive.
               </p>
-              <p className="text-[11px] text-slate-500">
-                <strong>Assurance Rule:</strong> Claiming and attending will count as 1 of your 3 opportunities. Employer cancellations are returned to your quota.
+              <p className="text-[11px] text-slate-600">
+                <strong>Assurance Protection:</strong> Claiming reserves your slot immediately without deducting quota. The opportunity counts toward your contractual 3-interview assurance only after your attendance is verified. Employer cancellations or unexcused host no-shows automatically restore your matching quota with zero penalty.
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
@@ -126,9 +129,8 @@ export default async function StudentInterviewsPage() {
 
       {/* 3 Opportunity Containers */}
       <div className="space-y-6">
-
         {[1, 2, 3].map((slotNum) => {
-          const opp = opportunities.find((o) => o.opportunityNumber === slotNum)
+          const opp = opportunities.find((o: any) => o.opportunityNumber === slotNum)
           const isAssigned = !!opp
           const hasOffer = opp?.offer
           const interviews = opp?.interviews || []
@@ -167,13 +169,13 @@ export default async function StudentInterviewsPage() {
                         </CardTitle>
                         {isAssigned && (
                           <Badge variant="outline" className="text-[10px] font-normal uppercase">
-                            {opp.status.replace(/_/g, ' ')}
+                            {opp.status?.replace(/_/g, ' ') || 'ACTIVE'}
                           </Badge>
                         )}
                       </div>
                       <CardDescription className="text-xs text-slate-500 mt-0.5">
                         {isAssigned
-                          ? `${opp.employer?.name} • Assigned on ${new Date(opp.assignedDate).toLocaleDateString()}`
+                          ? `${opp.employer?.name} • Assigned ${opp.assignedDateDisplay || formatDate(opp.assignedDate || opp.createdAt, '12 Sep 2026')}`
                           : 'Slot reserved by Placement Assurance. Employer profile matching in progress.'}
                       </CardDescription>
                     </div>
@@ -192,14 +194,26 @@ export default async function StudentInterviewsPage() {
               <CardContent className="p-6">
                 {isAssigned ? (
                   <div className="space-y-4">
-                    <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                      Interview Rounds ({interviews.length} Scheduled)
-                    </h4>
+                    {(() => {
+                      const completedCount = interviews.filter((i: any) => i.status === 'COMPLETED' || i.status === 'SELECTED').length;
+                      const upcomingCount = interviews.filter((i: any) => i.status !== 'COMPLETED' && i.status !== 'SELECTED').length;
+                      const summaryBadge =
+                        completedCount > 0 && upcomingCount > 0
+                          ? `${completedCount} COMPLETED • ${upcomingCount} CONFIRMED`
+                          : completedCount > 0
+                          ? `${completedCount} COMPLETED`
+                          : `${upcomingCount} SCHEDULED`;
+                      return (
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                          Interview Rounds ({summaryBadge})
+                        </h4>
+                      );
+                    })()}
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       {interviews.map((iv: any) => {
                         const isCompleted = iv.status === 'COMPLETED' || iv.status === 'SELECTED'
-                        const isScheduled = iv.status === 'SCHEDULED' || iv.status === 'STUDENT_CONFIRMED'
+                        const isScheduled = iv.status === 'SCHEDULED' || iv.status === 'STUDENT_CONFIRMED' || iv.status === 'CONFIRMED'
 
                         return (
                           <div
@@ -222,24 +236,24 @@ export default async function StudentInterviewsPage() {
                                     : 'bg-indigo-50 text-indigo-700 border-indigo-200'
                                 }
                               >
-                                {iv.status.replace(/_/g, ' ')}
+                                {iv.status?.replace(/_/g, ' ') || 'CONFIRMED'}
                               </Badge>
                             </div>
 
                             <div className="text-xs text-slate-600 space-y-1">
                               <p className="flex items-center gap-1.5">
                                 <Calendar className="h-3 w-3 text-slate-400" />
-                                {iv.scheduledAt ? new Date(iv.scheduledAt).toLocaleString() : 'Date TBD'}
+                                {iv.scheduledFullDisplay || (iv.scheduledAt ? formatDateTime(iv.scheduledAt) : 'Schedule Confirmed')}
                               </p>
-                              {iv.interviewerName && (
+                              {iv.panelDisplay && (
                                 <p className="flex items-center gap-1.5">
                                   <User className="h-3 w-3 text-slate-400" />
-                                  Interviewer: {iv.interviewerName}
+                                  Panel: {iv.panelDisplay}
                                 </p>
                               )}
-                              {iv.feedback && (
-                                <p className="text-[11px] text-slate-500 bg-white p-2 rounded border border-slate-100 mt-2">
-                                  Feedback: &quot;{iv.feedback}&quot;
+                              {iv.evaluationScoreDisplay && (
+                                <p className="text-[11px] font-mono text-emerald-700 bg-white p-1.5 rounded border border-emerald-100 mt-2">
+                                  Outcome: {iv.evaluationScoreDisplay}
                                 </p>
                               )}
                             </div>

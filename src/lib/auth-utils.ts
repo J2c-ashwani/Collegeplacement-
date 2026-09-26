@@ -87,11 +87,15 @@ export async function resolveEmployerId(session: any): Promise<string | null> {
   return 'emp-nexatech-2026';
 }
 
-export async function resolveStudent(session: any) {
-  if (!session?.user?.id) return null;
+export async function resolveStudent(sessionOrUserId: any) {
+  const userId =
+    typeof sessionOrUserId === 'string'
+      ? sessionOrUserId
+      : sessionOrUserId?.user?.id;
+  if (!userId) return null;
   try {
     const found = await prisma.student.findFirst({
-      where: { userId: session.user.id },
+      where: { userId },
       include: {
         institution: true,
         profile: true,
@@ -128,7 +132,7 @@ export async function resolveStudent(session: any) {
 
   return {
     id: 'stu-apex-2026-01',
-    userId: session.user.id,
+    userId,
     institutionId: 'inst-apex-2026',
     enrollmentNumber: 'APX2026CS042',
     department: 'B.Tech Computer Science & Engineering',
@@ -138,9 +142,9 @@ export async function resolveStudent(session: any) {
     createdAt: new Date('2026-08-15T10:00:00Z'),
     updatedAt: new Date('2026-09-25T10:00:00Z'),
     user: {
-      id: session.user.id,
-      name: session.user.name || 'Aarav Sharma',
-      email: session.user.email || 'student1@apex.edu.in',
+      id: userId,
+      name: (typeof sessionOrUserId === 'object' && sessionOrUserId?.user?.name) || 'Aarav Sharma',
+      email: (typeof sessionOrUserId === 'object' && sessionOrUserId?.user?.email) || 'aarav.sharma@apex.edu',
     },
     institution: {
       id: 'inst-apex-2026',
@@ -200,7 +204,9 @@ export async function resolveStudent(session: any) {
       id: opp.id,
       opportunityNumber: opp.opportunityNumber,
       status: opp.assuranceStage,
-      createdAt: new Date('2026-09-18T11:00:00Z'),
+      assignedDate: opp.assignedIso,
+      assignedDateDisplay: opp.assignedDateDisplay,
+      createdAt: new Date('2026-09-12T10:00:00+05:30'),
       job: {
         id: opp.jobId,
         title: opp.jobTitle,

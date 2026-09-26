@@ -68,7 +68,7 @@ const INITIAL_CANDIDATES: ShortlistedCandidateItem[] = [
     percentile: CANONICAL_PERCENTILE_METADATA.percentileValue,
     keySkills: 'TypeScript · React · Node.js · PostgreSQL',
     funnelState: 'SELECTED FOR ROUND 2',
-    assuranceState: '1/3 Completed • R2 Confirmed (30 Sep)',
+    assuranceState: 'Opp #1 In Progress • R2 Confirmed (30 Sep)',
     consentVersion: 'DPDP-2026.09-v2',
     consentDate: '12 Sep 2026',
   },
@@ -873,8 +873,8 @@ export function RecruiterCandidateWorkspace() {
                   <div
                     key={opp.id}
                     className={
-                      opp.assuranceStage === 'COMPLETED'
-                        ? 'p-2.5 rounded bg-emerald-50 border border-emerald-300'
+                      opp.assuranceStage === 'IN_PROGRESS'
+                        ? 'p-2.5 rounded bg-blue-50 border border-blue-300'
                         : opp.assuranceStage === 'SCHEDULED'
                         ? 'p-2.5 rounded bg-indigo-100/80 border border-indigo-300'
                         : 'p-2.5 rounded bg-white border border-slate-200'
@@ -886,8 +886,8 @@ export function RecruiterCandidateWorkspace() {
                       </span>
                       <Badge
                         className={
-                          opp.assuranceStage === 'COMPLETED'
-                            ? 'bg-emerald-700 text-white text-[9px]'
+                          opp.assuranceStage === 'IN_PROGRESS'
+                            ? 'bg-blue-600 text-white text-[9px]'
                             : opp.assuranceStage === 'SCHEDULED'
                             ? 'bg-indigo-700 text-white text-[9px]'
                             : 'bg-slate-200 text-slate-800 text-[9px]'

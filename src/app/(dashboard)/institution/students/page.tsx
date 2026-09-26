@@ -1,17 +1,12 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Users,
+  UserCheck,
+  GraduationCap,
   FileCheck2,
   CheckCircle2,
   Calendar,
@@ -19,6 +14,8 @@ import {
   Briefcase,
   Award,
   Download,
+  Search,
+  Filter,
 } from 'lucide-react';
 
 const TPO_COHORT_STUDENTS = [
@@ -31,10 +28,10 @@ const TPO_COHORT_STUDENTS = [
     backlogs: 0,
     programmeTrack: 'Standard Track (₹1,180 Paid)',
     assessmentScore: '84/100 (91st %ile)',
-    interviewAssurance: '1 of 3 Completed',
+    interviewAssurance: '1 In Progress (R1 Done)',
     interviewSubLabel: '1 Scheduled • 1 Being Matched',
     attendanceRecord: '1/1 Attended (100% Punctual)',
-    candidateStatus: 'INTERVIEWING (1/3 COMPLETED)',
+    candidateStatus: 'INTERVIEWING (OPP #1 IN PROGRESS)',
     selected: true,
   },
   {
@@ -143,30 +140,38 @@ export default async function InstitutionStudentsPage() {
         </div>
       </div>
 
-      {/* Expanded Student Detail Inspector: Clicked Student = Aarav Sharma (APX2026CS042) */}
+      {/* Candidate Deep-Dive Inspector Panel (Aarav Sharma - Inspected Record) */}
       <Card className="border-2 border-[#1E40AF] shadow-xs bg-white">
-        <CardHeader className="pb-3 border-b border-slate-200 bg-blue-50/40">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+        <CardHeader className="pb-3 border-b border-slate-100 bg-blue-50/50">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <span className="text-[10px] font-mono uppercase font-bold text-[#1E40AF]">
-                SELECTED STUDENT 360° OPERATIONAL DOSSIER (CLICKED ROW: AARAV SHARMA • APX2026CS042)
-              </span>
-              <CardTitle className="text-lg font-bold text-slate-900 mt-0.5">
-                Aarav Sharma &bull; Roll No: APX2026CS042 &bull; B.Tech Computer Science &amp; Engineering (2026)
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono uppercase font-bold text-[#1E40AF]">
+                  INSPECTING CANDIDATE RECORD: APX2026CS042
+                </span>
+                <Badge className="bg-[#1E40AF] text-white text-[10px]">
+                  STANDARD TRACK (₹1,180 PAID)
+                </Badge>
+              </div>
+              <CardTitle className="text-lg font-bold text-slate-900 mt-1">
+                Aarav Sharma &bull; B.Tech Computer Science &amp; Engineering (Graduating 2026)
               </CardTitle>
+              <CardDescription className="text-xs text-slate-600">
+                Email: aarav.sharma@apex.edu &bull; Phone: +91 98765 43210 &bull; College Roll No: 22CS042 &bull; Enrolled: 18 Aug 2026
+              </CardDescription>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge className="bg-emerald-700 text-white text-[11px]">
-                Assurance Active: 1 of 3 Completed (1 Scheduled • 1 Being Matched)
-              </Badge>
-              <Badge className="bg-white text-slate-800 border-slate-300 text-[11px]">
-                Standard Track (₹1,180 Paid)
-              </Badge>
+            <div className="flex items-center gap-2">
+              <Link href="/verify/DOC-TC-88412">
+                <Button size="sm" variant="outline" className="text-xs h-8 bg-white">
+                  <FileCheck2 className="h-3.5 w-3.5 mr-1.5 text-[#1E40AF]" />
+                  View Accepted T&amp;C (DOC-TC-88412)
+                </Button>
+              </Link>
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-5 space-y-5 text-xs">
-          {/* Top 4 Operational Pillars: Academic Eligibility | Assessment Score | Attendance & SLA | Payment & Legal Record */}
+        <CardContent className="p-5 space-y-5">
+          {/* 4 Diagnostic Summary Pillars */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div className="p-3.5 rounded bg-slate-50 border border-slate-200 space-y-1">
               <span className="text-[10px] font-mono uppercase font-bold text-slate-500 block">
@@ -185,12 +190,12 @@ export default async function InstitutionStudentsPage() {
               <span className="text-[10px] font-mono uppercase font-bold text-slate-500 block">
                 2. 9-Area Assessment &amp; Score
               </span>
-              <div className="text-sm font-bold text-[#1E40AF]">84 / 100 (91st Percentile)</div>
+              <div className="text-sm font-bold text-[#1E40AF]">84 / 100 (91st Percentile • N = 14,820)</div>
               <div className="text-[11px] text-slate-700">
                 Tech: <strong>82</strong> | Comm: <strong>85</strong> | Ethics: <strong>90</strong> | Logic: <strong>80</strong>
               </div>
-              <div className="text-[10px] text-emerald-700 font-semibold">
-                Assurance Window: 18 Aug 2026 &rarr; 18 Aug 2027
+              <div className="text-[10px] text-slate-500 font-mono">
+                Dataset: PC-ASSESS-2026-v1 &bull; Window: 18 Aug 2026 &rarr; 18 Aug 2027
               </div>
             </div>
 
@@ -228,17 +233,17 @@ export default async function InstitutionStudentsPage() {
                 5. AARAV SHARMA — 3-INTERVIEW ASSURANCE OPPORTUNITY LEDGER &amp; ATTENDANCE LOG
               </span>
               <span className="text-[11px] text-slate-500 font-mono">
-                Canonical Path: Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; Completed &rarr; Counted Toward Assurance
+                Canonical Model A: Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; Round Completed &rarr; Opportunity Concluded
               </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-              <div className="p-3.5 rounded border border-emerald-300 bg-emerald-50/40 space-y-1.5">
+              <div className="p-3.5 rounded border border-blue-300 bg-blue-50/40 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-bold text-emerald-900">
+                  <span className="font-mono text-[10px] font-bold text-blue-900">
                     OPPORTUNITY #1 OF 3 (opp-apex-01)
                   </span>
-                  <Badge className="bg-emerald-700 text-white text-[10px]">
-                    COMPLETED (COUNTED 1/3)
+                  <Badge className="bg-blue-600 text-white text-[10px]">
+                    STAGE 1: IN PROGRESS
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
@@ -247,8 +252,8 @@ export default async function InstitutionStudentsPage() {
                 <div className="text-[11px] text-slate-700">
                   Role: <strong>Associate Software Engineer — Full-Stack (₹6.5–8.5 LPA)</strong>
                 </div>
-                <div className="text-[11px] text-emerald-900 font-medium">
-                  R1 Completed: 19 Sep 2026 (14:00–15:00 IST • 86.3/100) &rarr; R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST)
+                <div className="text-[11px] text-blue-900 font-medium">
+                  R1 Completed: 19 Sep 2026 (14:00–15:00 IST • 86.3/100) &rarr; R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST). Concludes toward quota upon round outcome.
                 </div>
               </div>
 
@@ -258,7 +263,7 @@ export default async function InstitutionStudentsPage() {
                     OPPORTUNITY #2 OF 3 (opp-apex-02)
                   </span>
                   <Badge className="bg-[#1E40AF] text-white text-[10px]">
-                    SCHEDULED (03 OCT 2026)
+                    STAGE 2: SCHEDULED
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
@@ -278,14 +283,14 @@ export default async function InstitutionStudentsPage() {
                     OPPORTUNITY #3 OF 3 (opp-apex-03)
                   </span>
                   <Badge className="bg-slate-200 text-slate-800 text-[10px]">
-                    MATCHING (RESERVED)
+                    STAGE 3: IN MATCHING ALLOCATION
                   </Badge>
                 </div>
                 <div className="font-bold text-slate-900">
                   CloudScale Systems India Pvt. Ltd.
                 </div>
                 <div className="text-[11px] text-slate-700">
-                  Role: <strong>Software Development Engineer — Cloud Infrastructure (₹7.5–9.5 LPA)</strong>
+                  Role: <strong>SDE — Cloud Infrastructure (₹7.5–9.5 LPA)</strong>
                 </div>
                 <div className="text-[11px] text-slate-600">
                   92% Score Fit Reserved &bull; Auto-triggers if needed within 12-month assurance window
@@ -296,9 +301,9 @@ export default async function InstitutionStudentsPage() {
         </CardContent>
       </Card>
 
-      {/* Complete Cohort Directory Table */}
+      {/* Complete Cohort Directory Table with Sticky Columns and Filter Controls */}
       <Card className="border-slate-200 shadow-2xs bg-white">
-        <CardHeader className="pb-3 border-b border-slate-100 flex flex-row items-center justify-between">
+        <CardHeader className="pb-3 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <CardTitle className="text-base font-bold text-slate-900">
               Graduating Cohort Roster (Showing 5 Representative Students of 482 Registered)
@@ -307,12 +312,28 @@ export default async function InstitutionStudentsPage() {
               Click any student row to inspect their Academic Eligibility, 9-Area Scorecard, 3-Interview Assurance Ledger, Attendance, and Accepted T&amp;C Document.
             </CardDescription>
           </div>
+          <div className="flex items-center gap-2">
+            <div className="relative">
+              <Search className="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search by name, roll no..."
+                defaultValue=""
+                className="pl-8 pr-3 py-1 text-xs border border-slate-200 rounded-md w-48 sm:w-56 focus:outline-none focus:ring-1 focus:ring-[#1E40AF]"
+              />
+            </div>
+            <Button size="sm" variant="outline" className="text-xs h-7 gap-1">
+              <Filter className="h-3 w-3" /> Filter Track
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="p-0 overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
+          <table className="w-full text-left border-collapse text-xs min-w-[850px]">
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200 text-[10px] uppercase font-bold text-slate-500">
-                <th className="py-3 px-4">Student Name &amp; Roll No</th>
+                <th className="py-3 px-4 sticky left-0 bg-slate-50 z-10 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]">
+                  Student Name &amp; Roll No
+                </th>
                 <th className="py-3 px-3">Department &amp; CGPA</th>
                 <th className="py-3 px-3">Programme Track</th>
                 <th className="py-3 px-3">9-Area Score</th>
@@ -331,7 +352,7 @@ export default async function InstitutionStudentsPage() {
                       : 'hover:bg-slate-50/80'
                   }
                 >
-                  <td className="py-3.5 px-4">
+                  <td className="py-3.5 px-4 sticky left-0 bg-inherit z-10 shadow-[1px_0_0_0_rgba(0,0,0,0.05)]">
                     <div className="font-bold text-slate-900 flex items-center gap-1.5">
                       {stu.name}
                       {stu.selected && (
@@ -368,7 +389,9 @@ export default async function InstitutionStudentsPage() {
                       className={
                         stu.candidateStatus.startsWith('OFFER')
                           ? 'bg-emerald-700 text-white text-[10px]'
-                          : 'bg-blue-50 text-[#1E40AF] border-blue-200 text-[10px]'
+                          : stu.candidateStatus.includes('IN PROGRESS')
+                          ? 'bg-blue-50 text-[#1E40AF] border-blue-300 text-[10px] font-medium'
+                          : 'bg-slate-100 text-slate-800 border-slate-300 text-[10px]'
                       }
                     >
                       {stu.candidateStatus}

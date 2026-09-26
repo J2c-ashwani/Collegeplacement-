@@ -1,93 +1,70 @@
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
 import { chromium } from 'playwright';
-import { encode } from 'next-auth/jwt';
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
 
-const WORKSPACE_DIR = '/Users/ashwanikumar/Documents/antigravity/joyful-nobel/placementconnect';
-const ARTIFACT_DIR = '/Users/ashwanikumar/.gemini/antigravity/brain/c2546591-f352-4b88-aeb1-4daf5aa51f51';
+const BASE_URL = 'http://localhost:3000';
 const DOWNLOADS_DIR = '/Users/ashwanikumar/Downloads';
 const PACKAGE_DIR = path.join(DOWNLOADS_DIR, 'PlacementConnect_Final_Review_Package');
-const PORT = 3439;
-const BASE_URL = `http://localhost:${PORT}`;
+const ARTIFACT_DIR = '/Users/ashwanikumar/.gemini/antigravity/brain/c2546591-f352-4b88-aeb1-4daf5aa51f51';
 
-function getAuthSecret() {
-  const envPath = path.join(WORKSPACE_DIR, '.env');
-  if (fs.existsSync(envPath)) {
-    const content = fs.readFileSync(envPath, 'utf8');
-    const match = content.match(/^(?:AUTH_SECRET|NEXTAUTH_SECRET)=["']?([^"'\r\n]+)["']?/m);
-    if (match) return match[1];
-  }
-  return 'super-secret-nextauth-token-for-placementconnect-2026';
-}
-
-async function mintCookie(secret, payload) {
-  return await encode({
-    token: {
-      ...payload,
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 86400,
-    },
-    secret,
-    salt: 'authjs.session-token',
-  });
-}
-
-async function waitForServer(url, timeoutMs = 25000) {
+async function waitForServer(url, timeoutMs = 30000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     try {
-      const res = await fetch(url);
-      if (res.ok || res.status === 307 || res.status === 302) return true;
+      const res = await fetch(`${url}/api/health`).catch(() => null);
+      if (res && res.status === 200) return true;
     } catch {}
-    await new Promise((r) => setTimeout(r, 400));
+    await new Promise((r) => setTimeout(r, 600));
   }
-  throw new Error(`Server did not start at ${url}`);
+  return false;
 }
 
 async function run() {
-  fs.mkdirSync(PACKAGE_DIR, { recursive: true });
   console.log('Starting Next.js production server for Cross-Screen Truth Verification...');
-  const server = spawn('npx', ['next', 'start', '-p', String(PORT)], {
-    cwd: WORKSPACE_DIR,
-    env: { ...process.env, NODE_ENV: 'production' },
-    stdio: 'ignore',
+  const server = spawn('npm', ['run', 'start', '--', '-p', '3000'], {
+    cwd: '/Users/ashwanikumar/Documents/antigravity/joyful-nobel/placementconnect',
+    stdio: 'inherit',
+    env: { ...process.env, PORT: '3000' },
   });
 
   try {
-    await waitForServer(`${BASE_URL}/login`);
-    const secret = getAuthSecret();
-
-    const tokens = {
-      STUDENT: await mintCookie(secret, {
-        id: 'usr-student-apex-01',
-        sub: 'usr-student-apex-01',
-        name: 'Aarav Sharma',
-        email: 'student1@apex.edu.in',
-        role: 'STUDENT',
-        studentId: 'stu-apex-2026-01',
-      }),
-      INSTITUTION_ADMIN: await mintCookie(secret, {
-        id: 'usr-tpo-apex-01',
-        sub: 'usr-tpo-apex-01',
-        name: 'Prof. S. Venkataraman',
-        email: 'tpo@apex.edu.in',
-        role: 'INSTITUTION_ADMIN',
-        institutionId: 'inst-apex-2026',
-      }),
-      EMPLOYER: await mintCookie(secret, {
-        id: 'usr-emp-nexa-01',
-        sub: 'usr-emp-nexa-01',
-        name: 'Vikramaditya Rao',
-        email: 'vikram.rao@nexatech.io',
-        role: 'EMPLOYER',
-        employerId: 'emp-nexatech-2026',
-      }),
-    };
+    const ready = await waitForServer(BASE_URL);
+    if (!ready) {
+      throw new Error('Server failed to start on port 3000 within timeout.');
+    }
 
     const browser = await chromium.launch({ headless: true });
 
-    // Step 1: Automated Cross-Screen Single-Truth Assertions
+    // Acquire session tokens
+    const tokens = {};
+    for (const [role, email] of [
+      ['STUDENT', 'aarav.sharma@apex.edu'],
+      ['EMPLOYER', 'recruiter@nexatech.com'],
+      ['INSTITUTION_ADMIN', 'tpo@apex.edu'],
+    ]) {
+      console.log(`Authenticating as ${role} (${email})...`);
+      const loginContext = await browser.newContext();
+      const loginPage = await loginContext.newPage();
+      await loginPage.goto(`${BASE_URL}/login`, { waitUntil: 'networkidle' });
+      await loginPage.fill('input[type="email"]', email);
+      await loginPage.fill('input[type="password"]', 'Password@123');
+      await loginPage.click('button[type="submit"]');
+      try {
+        await loginPage.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 15000 });
+      } catch (err) {
+        const errEl = await loginPage.$('[role="alert"]');
+        const errText = errEl ? await errEl.innerText() : 'No alert element found';
+        console.error(`Login failed for ${role} (${email}). Page alert: "${errText}"`);
+        throw err;
+      }
+      const cookies = await loginContext.cookies();
+      const sessionCookie = cookies.find((c) => c.name.includes('session-token'));
+      tokens[role] = sessionCookie ? sessionCookie.value : '';
+      console.log(`✓ Authenticated ${role}. Token acquired.`);
+      await loginContext.close();
+    }
+
     console.log('Executing Cross-Screen Truth Assertions across Student, TPO and Recruiter...');
 
     // A. Recruiter Candidates View
@@ -144,7 +121,16 @@ async function run() {
     if (!empIvText.includes('30 Sep 2026') || !empIvText.includes('19 Sep 2026')) {
       throw new Error('Assertion Failed: /employer/interviews missing canonical dates for Aarav Sharma');
     }
-    console.log('✓ Assertion Passed: /employer/interviews has explicit 0-100 rubric boundaries and 6-gate checklist.');
+    if (!empIvUpper.includes('ROUND 1 CERTIFIED: ATTENDED • EVALUATED • COMPLETED')) {
+      throw new Error('Assertion Failed: /employer/interviews missing explicit Round 1 scope badge');
+    }
+    if (!empIvText.includes('Opportunity #1: IN PROGRESS — Round 2 Confirmed')) {
+      throw new Error('Assertion Failed: /employer/interviews missing Model A Opportunity 1 In Progress indicator');
+    }
+    if (!empIvText.includes('Back to Shortlist Funnel')) {
+      throw new Error('Assertion Failed: /employer/interviews missing concise Back to Shortlist Funnel link');
+    }
+    console.log('✓ Assertion Passed: /employer/interviews has explicit Round 1 scope and Model A opportunity state.');
 
     // C. Student Interviews View
     const stuIvContext = await browser.newContext({ viewport: { width: 1440, height: 900 } });
@@ -155,13 +141,28 @@ async function run() {
     await stuIvPage.goto(`${BASE_URL}/student/interviews`, { waitUntil: 'networkidle' });
     const stuIvText = await stuIvPage.innerText('body');
 
-    if (!stuIvText.includes('30 Sep 2026') || !stuIvText.includes('03 Oct 2026')) {
-      throw new Error('Assertion Failed: /student/interviews dates do not match canonical graph (30 Sep / 03 Oct)');
+    if (stuIvText.includes('Invalid Date')) {
+      throw new Error('Assertion Failed: /student/interviews still contains "Invalid Date"!');
     }
     if (stuIvText.includes('28 Sep 2026')) {
       throw new Error('Assertion Failed: /student/interviews still contains old 28 Sep date');
     }
-    console.log('✓ Assertion Passed: /student/interviews displays the exact same canonical dates (30 Sep & 03 Oct).');
+    if (stuIvText.includes('Interview Rounds (2 Scheduled)')) {
+      throw new Error('Assertion Failed: /student/interviews still contains erroneous "2 Scheduled" round count');
+    }
+    if (!stuIvText.includes('1 COMPLETED • 1 CONFIRMED')) {
+      throw new Error('Assertion Failed: /student/interviews missing dynamic round breakdown "1 COMPLETED • 1 CONFIRMED"');
+    }
+    if (!stuIvText.includes('1 Active In Progress • 1 Scheduled • 1 In Matching Pipeline')) {
+      throw new Error('Assertion Failed: /student/interviews missing Model A pipeline summary status');
+    }
+    if (!stuIvText.includes('Assurance Protection: Claiming reserves your slot immediately without deducting quota')) {
+      throw new Error('Assertion Failed: /student/interviews missing unambiguous Mega-Drive quota protection copy');
+    }
+    if (!stuIvText.includes('30 Sep 2026') || !stuIvText.includes('03 Oct 2026')) {
+      throw new Error('Assertion Failed: /student/interviews dates do not match canonical graph (30 Sep / 03 Oct)');
+    }
+    console.log('✓ Assertion Passed: /student/interviews has zero "Invalid Date", dynamic rounds, and Model A lifecycle.');
 
     // D. TPO Students View
     const tpoContext = await browser.newContext({ viewport: { width: 1440, height: 900 } });
@@ -172,13 +173,28 @@ async function run() {
     await tpoPage.goto(`${BASE_URL}/institution/students`, { waitUntil: 'networkidle' });
     const tpoText = await tpoPage.innerText('body');
 
+    if (tpoText.includes('Invalid Date')) {
+      throw new Error('Assertion Failed: /institution/students contains "Invalid Date"!');
+    }
+    if (tpoText.includes('COMPLETED (COUNTED 1/3)')) {
+      throw new Error('Assertion Failed: /institution/students still shows contradictory "COMPLETED (COUNTED 1/3)" for active Opportunity #1');
+    }
+    if (!tpoText.includes('STAGE 1: IN PROGRESS')) {
+      throw new Error('Assertion Failed: /institution/students missing Model A "STAGE 1: IN PROGRESS" badge');
+    }
+    if (!tpoText.includes('INTERVIEWING (OPP #1 IN PROGRESS)')) {
+      throw new Error('Assertion Failed: /institution/students roster table missing "INTERVIEWING (OPP #1 IN PROGRESS)" candidate status');
+    }
+    if (!tpoText.includes('PC-ASSESS-2026-v1')) {
+      throw new Error('Assertion Failed: /institution/students missing assessment dataset version (PC-ASSESS-2026-v1)');
+    }
     if (!tpoText.includes('30 Sep 2026') || !tpoText.includes('03 Oct 2026')) {
       throw new Error('Assertion Failed: /institution/students dates do not match canonical graph');
     }
     if (tpoText.includes('28 Sep 2026')) {
       throw new Error('Assertion Failed: /institution/students still contains old 28 Sep date');
     }
-    console.log('✓ Assertion Passed: /institution/students displays the exact same canonical dates (30 Sep & 03 Oct).');
+    console.log('✓ Assertion Passed: /institution/students displays Model A Opportunity #1 In Progress and dataset versioning.');
 
     // Step 2: Re-render updated PDFs and 1440px PNGs with intentional print pagination
     console.log('Re-exporting updated PDFs and PNGs into Downloads...');

@@ -8,11 +8,14 @@
 
 export const CANONICAL_PERCENTILE_METADATA = {
   percentileValue: 91,
-  shortLabel: '91st Percentile (2026 Assessment Dataset)',
-  fullPopulationLabel:
-    '91st percentile among 2026 graduating candidates in the PlacementConnect assessment dataset (N = 14,820 evaluated candidates)',
+  datasetName: 'PlacementConnect 2026 Assessment Dataset',
+  datasetVersion: 'PC-ASSESS-2026-v1',
   datasetPopulationSize: 14820,
-  methodologyVersion: 'v3.2',
+  calculationDate: '12 Sep 2026',
+  methodologyVersion: 'Methodology v3.2',
+  shortLabel: '91st Percentile (PC-ASSESS-2026-v1 • N = 14,820)',
+  fullPopulationLabel:
+    '91st percentile among 2026 graduating candidates in the PlacementConnect assessment dataset (Version: PC-ASSESS-2026-v1 • N = 14,820 evaluated candidates • Calculated: 12 Sep 2026)',
 } as const;
 
 export const CANONICAL_RECRUITER_FUNNEL = {
@@ -61,7 +64,9 @@ export interface CanonicalAssuranceOpportunity {
   jobTitle: string;
   ctcDisplay: string;
   location: string;
-  assuranceStage: 'COMPLETED' | 'SCHEDULED' | 'MATCHING';
+  assignedDateDisplay: string;
+  assignedIso: string;
+  assuranceStage: 'IN_PROGRESS' | 'SCHEDULED' | 'MATCHING' | 'COMPLETED';
   assuranceBadgeText: string;
   assuranceProgressSummary: string;
   countsTowardAssuranceRule: string;
@@ -78,12 +83,14 @@ export const CANONICAL_AARAV_OPPORTUNITIES: CanonicalAssuranceOpportunity[] = [
     jobTitle: 'Associate Software Engineer (Full-Stack)',
     ctcDisplay: '₹6.5–8.5 LPA',
     location: 'Bengaluru (Hybrid)',
-    assuranceStage: 'COMPLETED',
-    assuranceBadgeText: '✓ 1 Verified (Opportunity #1)',
+    assignedDateDisplay: '12 Sep 2026',
+    assignedIso: '2026-09-12T10:00:00+05:30',
+    assuranceStage: 'IN_PROGRESS',
+    assuranceBadgeText: 'STAGE 1: IN PROGRESS (R1 Evaluated • R2 Confirmed)',
     assuranceProgressSummary:
-      'Round 1 Completed (19 Sep 2026) • Round 2 Confirmed (30 Sep 2026, 14:30–15:30 IST)',
+      'Round 1 Completed (19 Sep 2026 • 86.3/100) • Round 2 Confirmed (30 Sep 2026, 14:30–15:30 IST)',
     countsTowardAssuranceRule:
-      'Counted as Opportunity #1 of 3 after punctual attendance and completion of Round 1 on 19 Sep 2026 (Audit ID: AUD-2026-99794).',
+      'Opportunity #1 is actively in progress under Model A. Round 1 certified completed on 19 Sep 2026 (Audit: AUD-2026-99794). Round 2 confirmed for 30 Sep 2026. Concludes toward 3/3 contractual assurance quota upon final round outcome.',
     interviews: [
       {
         id: 'int-nexa-r1',
@@ -136,8 +143,10 @@ export const CANONICAL_AARAV_OPPORTUNITIES: CanonicalAssuranceOpportunity[] = [
     jobTitle: 'Graduate Product & Systems Analyst',
     ctcDisplay: '₹6.0–7.5 LPA',
     location: 'Hyderabad / Bengaluru',
+    assignedDateDisplay: '18 Sep 2026',
+    assignedIso: '2026-09-18T14:30:00+05:30',
     assuranceStage: 'SCHEDULED',
-    assuranceBadgeText: '◉ 1 Scheduled (Opportunity #2)',
+    assuranceBadgeText: 'STAGE 2: SCHEDULED (Round 1 on 03 Oct)',
     assuranceProgressSummary:
       'Round 1 Confirmed: 03 Oct 2026 • 11:30–12:30 IST (Independent Employer #2)',
     countsTowardAssuranceRule:
@@ -174,8 +183,10 @@ export const CANONICAL_AARAV_OPPORTUNITIES: CanonicalAssuranceOpportunity[] = [
     jobTitle: 'Software Development Engineer — Cloud Infrastructure',
     ctcDisplay: '₹7.5–9.5 LPA',
     location: 'Bengaluru / Pune',
+    assignedDateDisplay: '22 Sep 2026',
+    assignedIso: '2026-09-22T09:00:00+05:30',
     assuranceStage: 'MATCHING',
-    assuranceBadgeText: '○ 1 Matching (Opportunity #3)',
+    assuranceBadgeText: 'STAGE 3: IN MATCHING ALLOCATION',
     assuranceProgressSummary:
       'CloudScale Systems India • 92% Score Fit Reserved (Independent Employer #3)',
     countsTowardAssuranceRule:

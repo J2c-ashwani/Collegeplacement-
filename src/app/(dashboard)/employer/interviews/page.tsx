@@ -1,22 +1,25 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Video,
   Calendar,
+  Clock,
+  Video,
+  ExternalLink,
   CheckCircle2,
-  ClipboardCheck,
+  AlertCircle,
+  FileText,
+  User,
   ShieldCheck,
+  Award,
+  ChevronRight,
+  Filter,
+  Search,
   CheckSquare,
+  ArrowLeft,
 } from 'lucide-react';
 import {
   CANONICAL_AARAV_OPPORTUNITIES,
@@ -34,12 +37,12 @@ const SCHEDULED_AND_COMPLETED_ROUNDS = [
     enrollmentNumber: 'APX2026CS042',
     institution: 'Apex Institute of Technology (APX123)',
     roleTitle: nexaOpp.jobTitle,
-    opportunityRef: `${nexaOpp.assuranceBadgeText} (${nexaOpp.id})`,
+    opportunityRef: `Opportunity #1: IN PROGRESS (${nexaOpp.id})`,
     roundLabel: `${nexaR1.roundName} (${nexaR1.durationMinutes}m)`,
     scheduledDate: `${nexaR1.scheduledDateDisplay} • ${nexaR1.scheduledTimeDisplay}`,
     interviewerPanel: nexaR1.panelDisplay,
     attendanceStatus: nexaR1.attendanceStatus,
-    lifecycleStatus: `COMPLETED (Counted 1/3 Toward Assurance • ${nexaR1.transitionAuditId})`,
+    lifecycleStatus: `ROUND 1 COMPLETED (Evaluated 86.3/100 • ${nexaR1.transitionAuditId})`,
     evaluationScore: nexaR1.evaluationScoreDisplay,
     transitionTimestamp: nexaR1.transitionTimestampIso,
     badgeVariant: 'emerald',
@@ -50,12 +53,12 @@ const SCHEDULED_AND_COMPLETED_ROUNDS = [
     enrollmentNumber: 'APX2026CS042',
     institution: 'Apex Institute of Technology (APX123)',
     roleTitle: nexaOpp.jobTitle,
-    opportunityRef: `${nexaOpp.id} • Round 2 Advancement`,
+    opportunityRef: `Opportunity #1: IN PROGRESS (${nexaOpp.id})`,
     roundLabel: `${nexaR2.roundName} (${nexaR2.durationMinutes}m)`,
     scheduledDate: `${nexaR2.scheduledDateDisplay} • ${nexaR2.scheduledTimeDisplay}`,
     interviewerPanel: nexaR2.panelDisplay,
     attendanceStatus: nexaR2.attendanceStatus,
-    lifecycleStatus: `CONFIRMED (${nexaR2.transitionAuditId} • Candidate, Recruiter & Panel Notified)`,
+    lifecycleStatus: `ROUND 2 CONFIRMED (${nexaR2.transitionAuditId} • Candidate & Panel Notified)`,
     evaluationScore: `Scheduled — ${nexaR2.meetingPlatform} (${nexaR2.meetingUrl})`,
     transitionTimestamp: nexaR2.transitionTimestampIso,
     badgeVariant: 'blue',
@@ -100,9 +103,9 @@ export default async function EmployerInterviewsPage() {
             Corporate Interview Slots, Validation Rubric &amp; Assurance Certification
           </h1>
           <p className="text-xs text-slate-600 mt-0.5">
-            Every interview round follows the frozen canonical lifecycle:{' '}
+            Every interview round follows the canonical Model A lifecycle:{' '}
             <strong>
-              Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; Completed &rarr; Counted Toward Assurance
+              Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; Round Completed &rarr; Opportunity Concluded
             </strong>
             . Derived from <code className="font-mono">{nexaOpp.id}</code>.
           </p>
@@ -110,14 +113,15 @@ export default async function EmployerInterviewsPage() {
         <div className="flex flex-wrap items-center gap-2">
           <Link href="/employer/candidates">
             <Button size="sm" variant="outline" className="text-xs h-8">
-              Back to Shortlist Funnel ({CANONICAL_RECRUITER_FUNNEL.funnelSummaryText})
+              <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
+              Back to Shortlist Funnel
             </Button>
           </Link>
         </div>
       </div>
 
       {/* 1. Live Panel Evaluation Rubric with Explicit Validation Boundaries (0–100) + 6-Point Pre-Certification Checklist */}
-      <Card className="border-2 border-[#1E40AF] shadow-2xs bg-white break-inside-avoid">
+      <Card className="border-2 border-[#1E40AF] shadow-2xs bg-white">
         <CardHeader className="pb-3 border-b border-slate-100 bg-blue-50/40">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
@@ -128,9 +132,14 @@ export default async function EmployerInterviewsPage() {
                 Active Panel Rubric: Aarav Sharma (APX2026CS042) &bull; {nexaR1.roundName} ({nexaR1.scheduledDateDisplay}, {nexaR1.scheduledTimeDisplay})
               </CardTitle>
             </div>
-            <Badge className="bg-emerald-700 text-white text-[11px] font-mono">
-              CERTIFIED: ATTENDED &amp; COMPLETED (1/3 COUNTED • {nexaR1.transitionAuditId})
-            </Badge>
+            <div className="flex flex-col sm:items-end gap-1">
+              <Badge className="bg-emerald-700 text-white text-[11px] font-mono">
+                ROUND 1 CERTIFIED: ATTENDED • EVALUATED • COMPLETED ({nexaR1.transitionAuditId})
+              </Badge>
+              <span className="text-[10px] font-mono text-slate-600">
+                Opportunity #1: <strong className="text-[#1E40AF]">IN PROGRESS</strong> — Round 2 Confirmed ({nexaR2.scheduledDateDisplay})
+              </span>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="p-5 grid grid-cols-1 lg:grid-cols-12 gap-6 text-xs">
@@ -250,13 +259,13 @@ export default async function EmployerInterviewsPage() {
                 <div className="flex items-center gap-2 p-1.5 rounded bg-white border border-slate-200">
                   <span className="text-emerald-700 font-bold">☑</span>
                   <span>
-                    <strong>Candidate notified</strong> (Round 1 passed → Round 2 scheduled)
+                    <strong>Candidate notified</strong> (Round 1 passed &rarr; Round 2 scheduled)
                   </span>
                 </div>
                 <div className="flex items-center gap-2 p-1.5 rounded bg-emerald-50 border border-emerald-300">
                   <span className="text-emerald-700 font-bold">☑</span>
                   <span>
-                    <strong>Assurance ledger update authorized</strong> (Counts 1/3)
+                    <strong>Assurance ledger updated</strong> (Model A: Opportunity 1 Active In Progress)
                   </span>
                 </div>
               </div>
@@ -265,7 +274,7 @@ export default async function EmployerInterviewsPage() {
             <div className="pt-2 border-t border-slate-200 space-y-2">
               <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold h-9">
                 <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
-                Certify Interview Completion (ATTENDED → COMPLETED → COUNTED)
+                Certify Round 1 Completion (ATTENDED &rarr; EVALUATED &rarr; ADVANCED TO R2)
               </Button>
               <div className="text-[10px] font-mono text-slate-500 text-center">
                 Canonical Audit Ref: {nexaR1.transitionAuditId} • Synced to Student, TPO &amp; Admin Dashboards
@@ -276,7 +285,7 @@ export default async function EmployerInterviewsPage() {
       </Card>
 
       {/* 2. Scheduled & Completed Corporate Interview Rounds Ledger (Derived from CANONICAL_AARAV_OPPORTUNITIES) */}
-      <Card className="border-slate-200 shadow-2xs bg-white break-inside-avoid">
+      <Card className="border-slate-200 shadow-2xs bg-white">
         <CardHeader className="pb-3 border-b border-slate-100">
           <div className="flex items-center justify-between">
             <div>
