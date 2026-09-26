@@ -67,7 +67,7 @@ export default function ForEmployersPage() {
             Structured Graduate Hiring: Institution-Verified Cohorts, Pre-Assessed Shortlists, and Coordinated Interviews
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
-            Instead of coordinating with 20 colleges separately, PlacementConnect gives corporate recruiters a single controlled pipeline of verified fresher candidates—complete with academic eligibility, standardized 9-dimension competency scores, and guaranteed interview slot attendance.
+            Instead of coordinating with 20 colleges separately, PlacementConnect gives corporate recruiters a single controlled pipeline of verified fresher candidates—complete with academic eligibility, standardized 9-dimension competency scores, and verified interview scheduling with attendance tracking and governed no-show handling.
           </p>
 
           {/* AEO / AI Overview Direct Answer Block */}

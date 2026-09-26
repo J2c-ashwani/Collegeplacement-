@@ -73,9 +73,6 @@ export default async function PublicCollegeProfilePage({ params }: PageProps) {
         include: {
           employer: true,
           offer: true,
-          student: {
-            include: { user: true, profile: true },
-          },
         },
         orderBy: { createdAt: 'desc' },
       },

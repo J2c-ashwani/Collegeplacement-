@@ -108,7 +108,7 @@ export default function ForCollegesPage() {
             <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
               <span className="font-bold text-[#1E40AF] block">6. How to start?</span>
               <p className="text-slate-600">
-                Submit institutional onboarding details, execute partnership agreement, and go live in 48 hours.
+                Submit institutional onboarding details, execute partnership agreement; typical onboarding completes within 48 hours of approval.
               </p>
             </div>
           </div>
