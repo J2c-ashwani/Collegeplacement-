@@ -209,7 +209,7 @@ export default function PricingPage() {
               </div>
               <div className="space-y-1">
                 <h2 className="text-2xl font-bold text-slate-900">
-                  Student Career Readiness &amp; 3-Interview Programme
+                  Student Career Readiness &amp; Progressive Interview Assurance
                 </h2>
                 <p className="text-xs text-slate-600">
                   Available to final-year students enrolling through a participating partner college code.

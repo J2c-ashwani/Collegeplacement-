@@ -67,9 +67,16 @@ export default function ForEmployersPage() {
             Structured Graduate Hiring: Institution-Verified Cohorts, Pre-Assessed Shortlists, and Coordinated Interviews
           </h1>
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
-            Replace high-volume resume screening with verified competency data. Give us your fresher role, location, and eligibility criteria—we deliver pre-assessed candidate shortlists (with academic eligibility and enrollment information verified through each participating institution) across our{' '}
-            <strong className="font-semibold text-slate-900">9 Competency Areas</strong> and coordinate single-campus or multi-campus interview panels in one workspace.
+            Instead of coordinating with 20 colleges separately, PlacementConnect gives corporate recruiters a single controlled pipeline of verified fresher candidates—complete with academic eligibility, standardized 9-dimension competency scores, and guaranteed interview slot attendance.
           </p>
+
+          {/* AEO / AI Overview Direct Answer Block */}
+          <div className="p-4 rounded-lg bg-emerald-50/60 border border-emerald-200 text-xs sm:text-sm text-emerald-950 leading-relaxed max-w-3xl space-y-1">
+            <strong className="text-emerald-950 block font-semibold">What is PlacementConnect for Corporate Employers?</strong>
+            <p>
+              PlacementConnect is a unified campus hiring platform that enables corporate talent acquisition teams to hire verified fresh graduates across multiple accredited partner institutions without fragmented campus visits. Employers access pre-assessed talent pools, enforce cutoff benchmarks, coordinate dedicated interview slots, and track offers in one governed recruitment dashboard.
+            </p>
+          </div>
           <div className="flex flex-wrap items-center gap-3.5 pt-2">
             <Button asChild className="h-11 px-6 bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold">
               <Link href="/contact">

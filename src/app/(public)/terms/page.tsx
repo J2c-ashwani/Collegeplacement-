@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
 
           <section className="space-y-3 border-t border-slate-200 pt-6">
             <h2 className="text-lg font-bold text-slate-900">
-              2. Student 3-Interview Assurance &amp; Merit Selection Boundaries
+              2. Student Progressive Interview Assurance &amp; Merit Selection Boundaries
             </h2>
             <ul className="list-disc pl-5 space-y-1.5">
               {GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures.map((item) => (

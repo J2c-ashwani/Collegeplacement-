@@ -46,18 +46,18 @@ const FAQ_SECTIONS = [
     ],
   },
   {
-    category: 'For Graduating Students & 3-Interview Assurance',
+    category: 'For Graduating Students & Progressive Interview Assurance',
     items: [
       {
         q: 'Does the programme guarantee a job offer, or does it guarantee verified corporate interviews?',
-        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[0]} Every eligible student is protected by our ${GOVERNANCE_MOAT_MECHANICS.interviewQuotaLabel} (minimum of 3 verified corporate interview opportunities within 12 months).`,
+        a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[0]} Every eligible student is protected by our Progressive Interview Assurance commitment (up to 3 verified corporate interview opportunities within 12 months, progressing upon unselected outcomes and exiting upon selection).`,
       },
       {
         q: 'What is the difference between the Standard Track (₹1,180) and Extended Readiness Track (₹2,950)?',
-        a: `The ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + ₹180 GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) includes the full 9-Dimension Employability Evaluation, a verifiable digital credential, and 3 verified corporate interview opportunities within 12 months of assessment completion. The ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + ₹450 GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}) adds guided preparation modules, a second assessment attempt (keeping your higher score), and priority pooled-drive shortlist consideration.`,
+        a: `The ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + ₹180 GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) includes the full 9-Dimension Employability Evaluation, a verifiable digital credential, and up to 3 verified corporate interview opportunities within 12 months of assessment completion. The ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + ₹450 GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}) adds guided preparation modules, a second assessment attempt (keeping your higher score), and priority pooled-drive shortlist consideration.`,
       },
       {
-        q: 'How does the 100% Base Fee Refund Guarantee work if 3 interviews are not scheduled?',
+        q: 'How does the 100% Base Fee Refund Guarantee work if qualifying opportunities are not provided?',
         a: `${GOVERNANCE_MOAT_MECHANICS.assuranceBoundaryDisclosures[4]}`,
       },
     ],
@@ -77,7 +77,7 @@ export default function FAQsPage() {
             Institutional, Employer &amp; Student Programme FAQs
           </h1>
           <p className="text-base text-slate-600">
-            Clear answers on four-level placement reporting, INR pricing &amp; GST invoicing, the 9-Dimension Employability Evaluation, and our 3-Interview Assurance commitment.
+            Clear answers on four-level placement reporting, INR pricing &amp; GST invoicing, the 9-Dimension Employability Evaluation, and our Progressive Interview Assurance commitment.
           </p>
         </div>
 

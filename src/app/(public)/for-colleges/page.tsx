@@ -14,6 +14,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { FOUR_DENOMINATOR_MODEL } from '@/config/brand-system';
 import {
   INSTITUTION_COMMERCIAL_PLAN,
@@ -39,6 +40,15 @@ export default function ForCollegesPage() {
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl leading-relaxed">
             Manage your college placement process, prepare students for hiring, connect eligible students with verified corporate interview opportunities, and keep placement records organized in one platform.
           </p>
+
+          {/* AEO / AI Overview Direct Answer Block */}
+          <div className="p-4 rounded-lg bg-slate-50 border border-slate-200/90 text-xs sm:text-sm text-slate-700 leading-relaxed max-w-3xl space-y-1">
+            <strong className="text-slate-900 block font-semibold">What is PlacementConnect for Colleges?</strong>
+            <p>
+              PlacementConnect is institutional campus placement infrastructure that helps higher-education institutions coordinate visiting corporate employers, verify student eligibility, conduct campus drives, manage progressive interview assurance opportunities, and maintain auditable, inspection-ready placement evidence from one centralized system.
+            </p>
+          </div>
+
           <div className="flex flex-wrap items-center gap-3.5 pt-2">
             <Button asChild className="bg-[#1E40AF] hover:bg-blue-900 text-white font-semibold h-11 px-6 shadow-xs">
               <Link href="/contact">
@@ -49,6 +59,58 @@ export default function ForCollegesPage() {
             <Button asChild variant="outline" className="h-11 px-5 border-slate-300 text-slate-700 font-semibold bg-white">
               <a href="#how-it-works">See How It Works</a>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* 10-Second Executive Summary for Principals & Trustees */}
+      <section className="bg-slate-100/70 border-b border-slate-200/80 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
+              The 10-Second Executive Brief for Principals &amp; Directors
+            </span>
+            <Badge variant="outline" className="text-[11px] bg-white text-slate-700 font-mono">
+              Institutional Governance
+            </Badge>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">1. What is it?</span>
+              <p className="text-slate-600">
+                Institutional operating system and verified employer network replacing spreadsheets with governed workflows.
+              </p>
+            </div>
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">2. Why care?</span>
+              <p className="text-slate-600">
+                Eliminates placement documentation chaos and provides 1-click verified accreditation evidence dossiers.
+              </p>
+            </div>
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">3. What changes for TPO?</span>
+              <p className="text-slate-600">
+                Single unified workspace for drive scheduling, eligibility enforcement, and automated gap tracking.
+              </p>
+            </div>
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">4. What do students get?</span>
+              <p className="text-slate-600">
+                Standardized 9-dimension diagnostic scorecard and up to 3 progressive verified corporate interview opportunities.
+              </p>
+            </div>
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">5. Why trust this?</span>
+              <p className="text-slate-600">
+                Published 11-protocol verification methodology with immutable audit logs for every reported metric.
+              </p>
+            </div>
+            <div className="p-3.5 rounded bg-white border border-slate-200 space-y-1">
+              <span className="font-bold text-[#1E40AF] block">6. How to start?</span>
+              <p className="text-slate-600">
+                Submit institutional onboarding details, execute partnership agreement, and go live in 48 hours.
+              </p>
+            </div>
           </div>
         </div>
       </section>

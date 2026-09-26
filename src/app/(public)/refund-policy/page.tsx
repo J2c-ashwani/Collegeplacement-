@@ -22,7 +22,7 @@ export default function RefundPolicyPage() {
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
-            Refund, Cancellation &amp; 3-Interview Assurance Policy
+            Refund, Cancellation &amp; Progressive Interview Assurance Policy
           </h1>
           <p className="text-sm text-slate-600 leading-relaxed">
             This policy governs all commercial transactions, student employability programme enrollments, institutional licenses, and corporate hiring agreements across{' '}

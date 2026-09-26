@@ -108,7 +108,7 @@ export default function HomePage() {
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </div>
                 <div className="text-xs text-slate-600 mt-1">
-                  Scorecard &amp; 3-Interview Placement Assurance (<span className="font-mono font-semibold text-slate-900">Code: APX123</span>)
+                  Scorecard &amp; Progressive Placement Assurance (<span className="font-mono font-semibold text-slate-900">Code: APX123</span>)
                 </div>
               </Link>
             </div>
@@ -319,7 +319,7 @@ export default function HomePage() {
                 <GraduationCap className="h-5 w-5 text-slate-800" />
               </div>
               <h3 className="text-xl font-bold text-slate-900">
-                Digitally Verifiable Scorecard &amp; 3-Interview Placement Assurance
+                Digitally Verifiable Scorecard &amp; Progressive Placement Assurance
               </h3>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 {STUDENT_PROGRAMME_PLANS[0].deliverables.map((item) => (
