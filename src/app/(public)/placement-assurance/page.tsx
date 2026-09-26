@@ -60,7 +60,7 @@ export default function PlacementAssurancePage() {
               {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailLabel}
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              We expand student intake only when sufficient confirmed employer interview capacity is available in our active hiring pipeline (maintaining at least a 1.20× capacity reserve over remaining unselected student demand).
+              {GOVERNANCE_MOAT_MECHANICS.liquidityGuardrailExplanation}
             </p>
           </div>
 

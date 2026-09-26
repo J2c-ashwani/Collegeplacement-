@@ -171,20 +171,21 @@ export const EMPLOYER_COMMERCIAL_POLICY = {
 } as const;
 
 export const GOVERNANCE_MOAT_MECHANICS = {
-  liquidityGuardrailMultiplier: 1.2,
-  liquidityGuardrailLabel: 'Dynamic Capacity Reserve Maintained Above Remaining Cohort Demand',
+  liquidityGuardrailMultiplier: 1.2, // Internal operational capacity reserve ratio (TPO/Admin)
+  liquidityGuardrailLabel: 'Additional Employer Interview Capacity Maintained for Active Cohorts',
   liquidityGuardrailExplanation:
-    'PlacementConnect calculates capacity based on active remaining opportunity demand rather than a static 3× per enrolled student. We maintain at least a 1.20× confirmed employer capacity reserve over remaining unselected student attempts so every active candidate has verified interview access.',
+    'We maintain additional confirmed employer interview capacity in our active corporate hiring pipeline to support the active assurance cohort, expanding student intake only when verified employer slots are committed.',
   interviewQuotaMultiplier: 3,
   interviewQuotaLabel: 'Progressive Interview Assurance (Up to 3 Attempts)',
   interviewQuotaExplanation:
     'Eligible students receive up to three progressive verified corporate interview opportunities. A candidate exits the assurance cycle immediately upon selection. Students who are not selected progress to subsequent opportunities up to a maximum of three attempts.',
   assuranceBoundaryDisclosures: [
-    'PlacementConnect provides a Progressive Interview Assurance commitment (up to 3 verified corporate interview opportunities within 12 months of assessment completion for eligible students, subject to programme eligibility and attendance terms)—not a guaranteed job offer. Final selection decisions always rest on candidate merit and employer evaluation.',
-    'Definition of a Verified Corporate Interview Opportunity: A confirmed corporate interview slot with a participating employer for a role matching the student’s degree stream and academic eligibility criteria.',
-    'Definition of Progressive Assurance Cycle: Students exit immediately upon receiving a selection offer. Candidates who are not selected remain eligible for the next opportunity, up to three total interview attempts.',
+    'Process Commitment vs. Employment: PlacementConnect provides a Progressive Interview Assurance commitment (up to 3 progressive verified corporate interview opportunities within 12 months of assessment completion for eligible students, subject to programme eligibility and attendance terms)—not a guaranteed job offer. Final selection decisions always rest solely on candidate merit and employer panel evaluation.',
+    'Definition of a Verified Corporate Interview Opportunity: An employer-confirmed interview assignment in which the eligible student was provided a valid interview slot and the interview was conducted, or the student was prevented from completing it due solely to employer-side failure. Scheduled slots do not count as delivered until conducted. Employer cancellations or panel no-shows do not consume an attempt; quota is restored immediately.',
+    'Definition of Progressive Assurance Cycle: Students exit immediately upon receiving a selection offer. Candidates who are not selected remain eligible for the next opportunity, up to three total interview attempts. Opportunity N+1 cannot be scheduled until Opportunity N has officially resulted in a verified unsuccessful outcome (REJECTED).',
     'Definition of Priority Pooled Drive Consideration (Extended Track): When you meet an employer’s academic and 9-area cutoff for a multi-campus pooled hiring drive, your profile is placed in the first-wave shortlist batch presented to the hiring team.',
-    'Eligibility requires completing the 9-Area Employability Assessment, maintaining verified college enrollment, and attending scheduled interviews without unexcused absences.',
-    'If PlacementConnect does not facilitate up to 3 progressive verified corporate interview opportunities within 12 months of assessment completion for an eligible unselected student, 100% of the base programme fee (₹1,000 or ₹2,500) is refunded; statutory 18% GST remitted to tax authorities is non-refundable under Indian tax law.',
+    '12-Month Assurance Period Anchor: The 12-month assurance period commences strictly on the timestamp when the student completes the 9-Area Employability Assessment and achieves verified readiness eligibility (score >= 50/100), and expires exactly 365 calendar days thereafter.',
+    'Student Attendance & Conduct Obligations: Eligibility requires completing the 9-Area Employability Assessment, maintaining verified college enrollment, and attending scheduled interviews punctually. An unexcused student no-show results in an official warning on the first occurrence and forfeiture of that attempt slot on the second occurrence.',
+    'Contractual Shortfall Refund Condition: If PlacementConnect fails to facilitate up to 3 progressive verified corporate interview opportunities within 12 months of assessment completion for an eligible unselected student, 100% of the base programme fee (₹1,000 or ₹2,500) is refunded; statutory 18% GST remitted to tax authorities is non-refundable under Indian tax law.',
   ],
 } as const;

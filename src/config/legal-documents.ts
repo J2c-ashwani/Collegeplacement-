@@ -192,8 +192,8 @@ export function formatDualTimestamp(isoString?: string | Date | null): string {
 
 export const CANONICAL_ASSURANCE_LIFECYCLE = {
   ruleSummary:
-    'An interview opportunity is counted as Completed Toward Assurance (1 of 3 Completed) only after the interview is Attended & Completed. Confirmed upcoming slots are tracked separately as Scheduled, and active matching slots are tracked as Being Matched.',
-  stages: ['Created', 'Matched', 'Scheduled', 'Attended', 'Completed (Counted Toward Assurance)'],
+    'Opportunities are provided progressively up to a maximum of 3 attempts. A candidate exits immediately upon corporate selection (Assurance Complete). Candidates who are not selected remain eligible for subsequent attempts, up to three total attempts. Employer cancellations do not consume attempts.',
+  stages: ['Created', 'Matched', 'Scheduled', 'Attended', 'Outcome Recorded (Selected / Rejected)'],
   aaravSharmaSummary: {
     studentId: 'stu-apex-2026-01',
     name: 'Aarav Sharma',
@@ -206,15 +206,15 @@ export const CANONICAL_ASSURANCE_LIFECYCLE = {
     totalPaidInr: 1180,
     completedCount: 1,
     scheduledCount: 1,
-    matchingCount: 1,
+    matchingCount: 0,
     totalTargetCount: 3,
-    assuranceHeadline: 'Interview Assurance: 1 of 3 Completed',
-    assuranceBreakdownLabel: '1 Completed • 1 Scheduled • 1 Being Matched',
-    tpoTableBadge: '1 / 3 Completed (1 Scheduled)',
-    candidateStatusBadge: 'Interviewing (1/3 Completed)',
+    assuranceHeadline: 'Attempt 2 of 3 Active (Attempt 1: Unsuccessful)',
+    assuranceBreakdownLabel: '1 Attempt Used • 1 Scheduled • Max 3 Attempts',
+    tpoTableBadge: 'Attempt 2 in Progress (1 Used)',
+    candidateStatusBadge: 'Interviewing (Attempt 2 of 3)',
     urgentNextAction: {
       title: 'Prepare for Your Upcoming Interview — FinCore Digital Systems',
-      subtitle: 'Opportunity #2 (Graduate Product Analyst) is confirmed for 28 Sep 2026, 11:00 IST (05:30 UTC). Complete your role brief and technical checklist before joining.',
+      subtitle: 'Opportunity #2 (Graduate Product Analyst) is confirmed for 28 Sep 2026, 11:30 IST (06:00 UTC). Complete your role brief and technical checklist before joining.',
       ctaLabel: 'Prepare for Upcoming Interview',
       ctaHref: '/student/interviews',
     },
@@ -223,24 +223,24 @@ export const CANONICAL_ASSURANCE_LIFECYCLE = {
 
 export const STUDENT_PROGRAMME_TERMS_CLAUSES = [
   {
-    title: '1. Scope of the 3-Interview Assurance Programme',
-    body: 'PlacementConnect commits to facilitating 3 Verified Corporate Interview Opportunities within 12 months of assessment completion for eligible students, backed by a 100% base programme fee refund if fewer than 3 verified corporate interview opportunities are completed within the assurance window. Final hiring decisions and employment offers depend strictly on candidate merit and employer selection panels.',
+    title: '1. Scope of the Progressive Interview Assurance Programme',
+    body: 'PlacementConnect commits to facilitating up to three progressive verified corporate interview opportunities within 12 months of assessment completion for eligible students. A candidate exits the assurance cycle immediately upon receiving a corporate selection. Selection is determined solely by the employer. If PlacementConnect fails to provide the contracted qualifying progressive opportunities within 12 months to an eligible, unselected student who meets all participation obligations, a 100% refund of the base programme fee applies. PlacementConnect guarantees the verified interview opportunity process—not employment or selection.',
   },
   {
     title: '2. Programme Track & Statutory Fee Structure',
     body: `Students enroll in either the ${STUDENT_PROGRAMME_PLANS[0].name} (${STUDENT_PROGRAMME_PLANS[0].formattedBase} + 18% GST = ${STUDENT_PROGRAMME_PLANS[0].formattedTotal}) or the ${STUDENT_PROGRAMME_PLANS[1].name} (${STUDENT_PROGRAMME_PLANS[1].formattedBase} + 18% GST = ${STUDENT_PROGRAMME_PLANS[1].formattedTotal}). The selected track and fee are locked upon Cashfree payment confirmation.`,
   },
   {
-    title: '3. Student Eligibility, Canonical Lifecycle & Participation Obligations',
-    body: 'Every interview opportunity follows the canonical lifecycle: Created → Matched → Scheduled → Attended → Completed (Counted Toward Assurance). To remain eligible under the 3-Interview Assurance commitment, the student must: (a) complete the 9-Dimension Employability Assessment and achieve the baseline readiness benchmark (overall score >= 50/100); (b) maintain verified academic records and a complete placement profile; (c) attend all scheduled corporate interviews punctually with zero unexcused no-shows; and (d) not reject a verified corporate offer that meets the programme benchmark criteria.',
+    title: '3. Student Eligibility, Progressive Lifecycle & Participation Obligations',
+    body: 'Every interview opportunity follows the sequential lifecycle: Created → Matched → Scheduled → Attended → Outcome Recorded. A student cannot progress to Opportunity N+1 unless Opportunity N has officially resulted in a verified unsuccessful outcome (REJECTED). To remain eligible under the assurance commitment, the student must: (a) complete the 9-Dimension Employability Assessment and achieve the baseline readiness benchmark (overall score >= 50/100); (b) maintain verified academic records and a complete placement profile; (c) attend all scheduled corporate interviews punctually with zero unexcused no-shows; and (d) not reject a verified corporate offer that meets the programme benchmark criteria. Employer cancellations or panel no-shows do not consume an attempt. An unexcused student no-show on a confirmed slot results in an official warning for the first occurrence and forfeiture of that attempt slot on the second occurrence.',
   },
   {
     title: '4. 12-Month Assurance Window Calculation',
-    body: 'The 12-month assurance window commences strictly on the timestamp when the student completes the 9-Dimension Employability Assessment and achieves verified readiness eligibility, and expires 365 calendar days thereafter.',
+    body: 'The 12-month assurance window commences strictly on the timestamp when the student completes the 9-Dimension Employability Assessment and achieves verified readiness eligibility (score >= 50/100), and expires exactly 365 calendar days thereafter. This assessment completion date is the single canonical anchor for all SLA evaluations, dashboard telemetry, and refund eligibility.',
   },
   {
     title: '5. Refund Policy & Statutory GST Treatment',
-    body: 'If an eligible student who has fulfilled all participation and attendance obligations receives fewer than 3 verified corporate interview opportunities within 12 months of assessment completion, PlacementConnect refunds 100% of the base programme fee paid (₹1,000 for Standard Track or ₹2,500 for Extended Readiness Track) via Cashfree refund mechanics. Statutory 18% GST (₹180 or ₹450) remitted to government tax authorities is non-refundable.',
+    body: 'If an eligible student who has fulfilled all participation and attendance obligations does not achieve corporate selection and PlacementConnect fails to facilitate up to three progressive verified corporate interview opportunities within 12 months of assessment completion, PlacementConnect refunds 100% of the base programme fee paid (₹1,000 for Standard Track or ₹2,500 for Extended Readiness Track) via Cashfree refund mechanics. If a candidate achieves selection at Opportunity 1, 2, or 3, the assurance commitment is successfully fulfilled and no refund is due. If a candidate completes three progressive attempts without selection, the maximum assurance cycle is completed and no refund is due. Statutory 18% GST (₹180 or ₹450) remitted to government tax authorities is non-refundable under Indian tax law.',
   },
   {
     title: '6. Electronic Acceptance & Immutable Transaction Record Preservation',
@@ -254,8 +254,8 @@ export const INSTITUTIONAL_MOU_CLAUSES_SUMMARY = [
     body: 'PlacementConnect grants the Partner Institution an active multi-tenant Training & Placement Office (TPO) workspace, dedicated 6-character Campus Code, QR student onboarding gateway, and Placement Reporting Summary.',
   },
   {
-    title: '2. Annual & Multi-Cohort Commercial Terms & Year-1 Waiver Policy',
-    body: `The Partner Institution selects either the ${INSTITUTION_PARTNERSHIP_PLANS[0].name} (${INSTITUTION_PARTNERSHIP_PLANS[0].formattedBase} + 18% GST = ${INSTITUTION_PARTNERSHIP_PLANS[0].formattedTotal}) or the ${INSTITUTION_PARTNERSHIP_PLANS[1].name} (${INSTITUTION_PARTNERSHIP_PLANS[1].formattedBase} + 18% GST = ${INSTITUTION_PARTNERSHIP_PLANS[1].formattedTotal}, reflecting 1 full year / ₹15,000 waived upfront off the ₹75,000 5-year rate). Where an institution starts on the 1-Year Annual License and achieves 100+ verified paid student enrollments within 90 days, its ₹15,000 Year-1 base fee is waived/credited and it may upgrade to the 5-year agreement by paying the remaining ₹45,000 + GST during Year 1.`,
+    title: '2. Fixed Commercial Terms, Non-Refundable Membership & Year-1 Upgrade Policy',
+    body: `The Partner Institution selects either the ${INSTITUTION_PARTNERSHIP_PLANS[0].name} (${INSTITUTION_PARTNERSHIP_PLANS[0].formattedBase} + 18% GST = ${INSTITUTION_PARTNERSHIP_PLANS[0].formattedTotal}) or the ${INSTITUTION_PARTNERSHIP_PLANS[1].name} (${INSTITUTION_PARTNERSHIP_PLANS[1].formattedBase} + 18% GST = ${INSTITUTION_PARTNERSHIP_PLANS[1].formattedTotal}, reflecting 5 years for the price of 4 with 1 full year / ₹15,000 waived upfront). Institutional membership fees are fixed and non-refundable regardless of student enrollment counts. An institution subscribing to the 1-Year License may upgrade at any time during Year 1 by paying the remaining ₹45,000 (+ 18% GST) to extend coverage for 4 additional academic years (1 current + 4 extended = 5 continuous years).`,
   },
   {
     title: '3. Cashfree Payment Verification & MoU Approval Governance',
@@ -263,7 +263,7 @@ export const INSTITUTIONAL_MOU_CLAUSES_SUMMARY = [
   },
   {
     title: '4. Data Protection, Roster Integrity & Accreditation Reporting',
-    body: 'Student records remain isolated within the Partner Institution workspace in accordance with the Digital Personal Data Protection Act (DPDP), 2023. PlacementConnect provides structured four-stage denominator reporting (Total Graduating Cohort -> Registered -> Assessed -> Placed) to support institutional governance and NAAC/NIRF documentation.',
+    body: 'Student records remain isolated within the Partner Institution workspace in accordance with the Digital Personal Data Protection Act (DPDP), 2023. PlacementConnect provides structured four-stage denominator reporting (Total Graduating Cohort -> Registered -> Assessed -> Placed) designed to support institutional governance and internal accreditation documentation workflows (e.g., NAAC Criterion 5.2.1 and NIRF data tables).',
   },
 ];
 
