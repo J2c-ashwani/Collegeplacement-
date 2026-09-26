@@ -438,7 +438,7 @@ export default function HomePage() {
                 Schedule a walkthrough with our Institutional Partnerships Desk ({COMPANY_IDENTITY.desks.institutionalPartnerships.email}) or test our live credential verification registry.
               </p>
             </div>
-            <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+            <div className="lg:col-span-4 flex flex-col gap-3">
               <Button asChild className="h-11 bg-[#1E40AF] hover:bg-blue-800 text-white font-semibold w-full">
                 <Link href="/contact">
                   Schedule Partnership Discussion
