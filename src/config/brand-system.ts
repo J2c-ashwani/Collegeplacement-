@@ -140,13 +140,13 @@ export const FOUR_DENOMINATOR_MODEL = [
   {
     id: 'D3',
     code: '3. Enrolled in Programme',
-    label: 'Enrolled in 3-Interview Assurance',
+    label: 'Enrolled in Progressive Interview Assurance',
     sampleCount: 440,
     percentOfBatch: '73.3%',
     samplePlacedCount: 384,
     samplePlacementRate: '87.3%',
     formulaText: '384 placed ÷ 440 enrolled = 87.3%',
-    description: '440 students (73.3% of batch) enrolled in the 3 Corporate Interview Assurance track.',
+    description: '440 students (73.3% of batch) enrolled in the Progressive Interview Assurance track.',
   },
   {
     id: 'D4',

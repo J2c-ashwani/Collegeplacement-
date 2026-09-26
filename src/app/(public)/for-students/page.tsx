@@ -125,23 +125,24 @@ export default function ForStudentsPage() {
               For Final-Year Graduating Students (Engineering, Management &amp; Degree Cohorts)
             </div>
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-              Build Your Job-Ready Profile and Access 3 Corporate Interview Opportunities
+              Build Your Job-Ready Profile and Access Up to 3 Progressive Verified Corporate Interview Opportunities
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
               Build more than a resume. Complete our{' '}
               <strong className="font-semibold text-slate-900">9-Area Job-Readiness Assessment</strong>, show employers your verified readiness profile, and access{' '}
               <strong className="font-semibold text-slate-900">
-                3 verified corporate interview opportunities within 12 months of assessment completion
+                up to 3 verified corporate interview opportunities within 12 months of assessment completion
               </strong>
-              —backed by a <strong className="font-semibold text-slate-900">100% base fee refund guarantee</strong>.
+              —progressing to the next opportunity only if unselected, and exiting the cycle upon selection—backed by a{' '}
+              <strong className="font-semibold text-slate-900">100% base fee refund guarantee</strong> if qualifying opportunities are not provided.
             </p>
 
-            {/* 3-Pillar Benefit Hierarchy: 1. Interviews -> 2. Assessment -> 3. Verified Profile */}
+            {/* 3-Pillar Benefit Hierarchy: 1. Progressive Interviews -> 2. Assessment -> 3. Verified Profile */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
               <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200">
-                <div className="text-xs font-bold text-[#1E40AF]">1. 3 Corporate Interviews</div>
+                <div className="text-xs font-bold text-[#1E40AF]">1. Up to 3 Progressive Interviews</div>
                 <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                  3 verified corporate interview opportunities matched to your stream &amp; eligibility.
+                  Progressive verified interview opportunities matched to stream &amp; cutoffs. Exits cycle upon selection.
                 </p>
               </div>
               <div className="p-3.5 rounded-md bg-slate-50 border border-slate-200">
@@ -312,7 +313,7 @@ export default function ForStudentsPage() {
           {/* How Matching Works in 4 Steps */}
           <div className="bg-white rounded-lg border border-slate-200/90 p-6 space-y-4">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800">
-              How Your 3 Corporate Interview Opportunities Are Matched &amp; Tracked
+              How Your Progressive Verified Interview Opportunities Are Matched &amp; Tracked
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
               <div className="p-3.5 rounded bg-slate-50 border border-slate-200 space-y-1">
@@ -334,9 +335,9 @@ export default function ForStudentsPage() {
                 </p>
               </div>
               <div className="p-3.5 rounded bg-slate-50 border border-slate-200 space-y-1">
-                <span className="font-bold text-[#1E40AF] block">4. Tracked 0/3 to 3/3 Quota</span>
+                <span className="font-bold text-[#1E40AF] block">4. Progressive Cycle (Up to 3)</span>
                 <p className="text-slate-600 leading-relaxed">
-                  Every completed interview updates your counter (0/3 &rarr; 3/3). Priority routing continues until all 3 verified interviews are facilitated.
+                  If selected, you exit the cycle with your confirmed offer. If unselected, you advance to the next opportunity, up to 3 verified attempts.
                 </p>
               </div>
             </div>
@@ -410,7 +411,7 @@ export default function ForStudentsPage() {
                   Standard Track — ₹1,000 + 18% GST = ₹1,180
                 </div>
                 <p className="text-slate-600 leading-relaxed">
-                  <strong>Assess + Verified Profile + 3 Corporate Interview Opportunities.</strong> Best if you are confident taking the 9-area assessment right away with a single official attempt.
+                  <strong>Assess + Verified Profile + Up to 3 Progressive Verified Interview Opportunities.</strong> Best if you are confident taking the 9-area assessment right away with a single official attempt.
                 </p>
               </div>
               <div className="bg-white rounded-md border border-blue-300 p-4 space-y-1">
@@ -442,7 +443,7 @@ export default function ForStudentsPage() {
                         {plan.badge}
                       </span>
                       <span className="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">
-                        {plan.interviewQuota} Verified Corporate Interview Opportunities
+                        Up to {plan.interviewQuota} Verified Interview Opportunities
                       </span>
                     </div>
                     <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
@@ -460,7 +461,7 @@ export default function ForStudentsPage() {
                     <div className="p-3 rounded bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800">
                       {isExtended
                         ? 'Summary: Everything in Standard + Guided Prep + 2 Assessment Attempts (Best Score Kept) + Priority Pooled Drive Routing'
-                        : 'Summary: 1 Official Assessment Attempt + Verified Profile + 3 Corporate Interview Opportunities'}
+                        : 'Summary: 1 Official Assessment Attempt + Verified Profile + Up to 3 Progressive Verified Interview Opportunities'}
                     </div>
 
                     <ul className="space-y-2.5 text-xs text-slate-600 pt-1">

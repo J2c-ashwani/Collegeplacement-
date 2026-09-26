@@ -88,7 +88,7 @@ export default function PublicLayout({
                 href="/placement-assurance"
                 className="text-slate-700 hover:text-[#1E40AF] font-medium transition-colors"
               >
-                3 Corporate Interview Assurance
+                Progressive Interview Assurance
               </Link>
               <Link
                 href="/pricing"
@@ -175,7 +175,7 @@ export default function PublicLayout({
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-sm text-slate-800 hover:bg-slate-100 rounded-md font-medium"
               >
-                3 Corporate Interview Assurance
+                Progressive Interview Assurance
               </Link>
               <Link
                 href="/pricing"
@@ -271,7 +271,7 @@ export default function PublicLayout({
                 </li>
                 <li>
                   <Link href="/placement-assurance" className="hover:text-white transition">
-                    3 Corporate Interview Assurance
+                    Progressive Interview Assurance
                   </Link>
                 </li>
                 <li>
@@ -294,6 +294,11 @@ export default function PublicLayout({
                   >
                     Verify a Credential
                     <ArrowUpRight className="h-3 w-3" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/verification-methodology" className="hover:text-white transition">
+                    Verification Methodology
                   </Link>
                 </li>
                 <li>

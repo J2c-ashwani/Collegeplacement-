@@ -81,9 +81,10 @@ export function DashboardSidebar({ role, user }: DashboardSidebarProps) {
     ],
     institution: [
       {
-        group: "Overview",
+        group: "Executive Governance",
         items: [
-          { title: "Placement Dashboard", icon: LayoutDashboard, url: "/institution/overview" },
+          { title: "Principal / Board Brief", icon: Shield, url: "/institution/executive" },
+          { title: "TPO Operations Dashboard", icon: LayoutDashboard, url: "/institution/overview" },
         ],
       },
       {
@@ -107,9 +108,9 @@ export function DashboardSidebar({ role, user }: DashboardSidebarProps) {
         ],
       },
       {
-        group: "Accreditation & Reporting",
+        group: "Accreditation & Evidence",
         items: [
-          { title: "Placement Evidence & Support", icon: Award, url: "/institution/reports" },
+          { title: "Institutional Evidence Vault", icon: Award, url: "/institution/reports" },
         ],
       },
     ],
