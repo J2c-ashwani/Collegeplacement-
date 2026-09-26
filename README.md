@@ -21,11 +21,11 @@ Unlike fragmented job boards, PlacementConnect manages the entire placement life
 
 ## 🏛️ Core Architectural Pillars
 
-### 1. 🎯 Placement Assurance Engine ($3N$ Quota Model)
-* **Mathematical Quota Model**: Guarantees $\text{Required Opportunities} = \text{Active Students } (N) \times 3$ qualified interview opportunities.
-* **Capacity Control Tower**: Real-time tracking of confirmed corporate interview capacity vs active student commitments across regional corridors (Delhi NCR, Bangalore, Pune, Gurgaon).
-* **Safe Batch Onboarding Simulator**: Automated guardrail that blocks college onboarding if the employer liquidity ratio drops below $1.20\times$.
-* **Quota Conservation**: Employer-side cancellations restore candidate slots; unexcused candidate no-shows consume assurance quota.
+### 1. 🎯 Progressive Placement Assurance Engine (Up to 3 Verified Opportunities)
+* **Sequential Opportunity Model**: Eligible students receive up to three progressive verified interview opportunities. Students exit the assurance cycle immediately upon selection (`SELECTED`). Only students rejected (`REJECTED`) progress to the next attempt, up to a maximum of 3 verified interviews.
+* **Dynamic Capacity Control Tower**: Real-time tracking of confirmed corporate interview capacity vs remaining active student demand ($\sum \text{opportunitiesRemaining}$ across active cohorts) with an internal $1.20\times$ operational liquidity reserve.
+* **Non-Refundable Institutional Membership**: ₹15,000 for 1-Year access, ₹60,000 for 5-Year access, with full upgrade credit (paying remaining ₹45,000) during Year 1.
+* **Quota Conservation & Verification**: Employer-side cancellations restore candidate slots; unexcused candidate no-shows consume assurance quota; verified employer rubrics recorded authoritatively.
 
 ### 2. 📊 4 Distinct Institutional Placement Denominators
 Complies with official accreditation standards (NAAC Criterion 5.2.1 & NIRF Parameter 3):
