@@ -69,7 +69,7 @@ export function evaluateDriveAssuranceOutcome(
       outcome,
       countsTowardAssurance: false,
       remainingQuotaImpact: 0,
-      explanation: 'Employer cancelled the session before completion. This opportunity is returned to the candidate pool.',
+      explanation: 'Employer cancelled the session before completion. This opportunity is returned to the candidate quota.',
     }
   }
 
@@ -79,7 +79,7 @@ export function evaluateDriveAssuranceOutcome(
       outcome,
       countsTowardAssurance: true,
       remainingQuotaImpact: -1,
-      explanation: 'Candidate failed to attend scheduled slot without valid excusal. Consumes 1 progressive assurance opportunity.',
+      explanation: 'Candidate failed to attend scheduled slot without valid excusal. Consumes 1 of 3 assurance opportunities.',
     }
   }
 
