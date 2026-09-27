@@ -209,7 +209,7 @@ class CashfreeGateway implements PaymentGateway {
           body: JSON.stringify({
             refund_amount: Number(amount.toFixed(2)),
             refund_id: generatedRefundId,
-            refund_note: 'PlacementConnect 3-Interview Assurance Base Fee Refund (Excl. GST)',
+            refund_note: 'PlacementConnect Progressive Interview Assurance Base Fee Refund (Excl. GST)',
           }),
         }
       )

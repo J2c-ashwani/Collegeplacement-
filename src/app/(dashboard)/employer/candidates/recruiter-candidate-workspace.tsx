@@ -847,11 +847,11 @@ export function RecruiterCandidateWorkspace() {
 
           {/* Row B: Canonical PlacementAssuranceOpportunity Ledger + Enterprise Interview Scheduling Object (Both Derived from CANONICAL_AARAV_OPPORTUNITIES) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 pt-2 border-t border-slate-200">
-            {/* Left 5 Cols: Canonical 3-Interview Assurance Ledger */}
+            {/* Left 5 Cols: Canonical Progressive Interview Assurance Ledger */}
             <div className="lg:col-span-5 rounded-xl border border-indigo-200 bg-indigo-50/40 p-4 space-y-2.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-indigo-950">
-                  Canonical 3-Interview Assurance Ledger
+                  Progressive Interview Assurance Ledger
                 </span>
                 <Badge className="bg-indigo-900 text-white font-mono text-[10px]">
                   1 / 3 Completed
@@ -864,7 +864,7 @@ export function RecruiterCandidateWorkspace() {
                   What &ldquo;Counts Toward Assurance&rdquo; Means:
                 </div>
                 <p className="text-[10px] leading-relaxed">
-                  Each opportunity below derives from <code className="font-mono">PlacementAssuranceOpportunity</code>. An interview counts toward the student&apos;s <strong>3-interview independent assurance requirement</strong> upon verified attendance and completion.
+                  Each opportunity below derives from <code className="font-mono">PlacementAssuranceOpportunity</code>. An interview counts toward the student&apos;s <strong>progressive assurance requirement</strong> upon verified attendance and completion.
                 </p>
               </div>
 

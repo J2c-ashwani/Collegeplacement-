@@ -627,7 +627,7 @@ export default async function InstitutionOverviewPage() {
             <div>
               <CardTitle className="text-base font-semibold">Recent Student Enrolments</CardTitle>
               <CardDescription className="text-xs">
-                Synchronized with the canonical 3-Interview Assurance lifecycle (Completed vs. Scheduled vs. Being Matched)
+                Synchronized with the canonical Progressive Interview Assurance lifecycle (Completed vs. Scheduled vs. Being Matched)
               </CardDescription>
             </div>
             <Badge variant="secondary" className="text-xs font-mono">

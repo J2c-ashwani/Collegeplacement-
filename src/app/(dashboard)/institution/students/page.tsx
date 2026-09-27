@@ -226,11 +226,11 @@ export default async function InstitutionStudentsPage() {
             </div>
           </div>
 
-          {/* Complete 3-Interview Assurance Ledger for Aarav Sharma */}
+          {/* Progressive Interview Assurance Ledger for Aarav Sharma */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono uppercase font-bold text-slate-800">
-                5. AARAV SHARMA — 3-INTERVIEW ASSURANCE OPPORTUNITY LEDGER &amp; ATTENDANCE LOG
+                5. AARAV SHARMA — PROGRESSIVE INTERVIEW ASSURANCE OPPORTUNITY LEDGER &amp; ATTENDANCE LOG
               </span>
               <span className="text-[11px] text-slate-500 font-mono">
                 Canonical Model A: Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; Round Completed &rarr; Opportunity Concluded
@@ -253,7 +253,7 @@ export default async function InstitutionStudentsPage() {
                   Role: <strong>Associate Software Engineer — Full-Stack (₹6.5–8.5 LPA)</strong>
                 </div>
                 <div className="text-[11px] text-blue-900 font-medium">
-                  R1 Completed: 19 Sep 2026 (14:00–15:00 IST • 86.3/100) &rarr; R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST). Concludes toward quota upon round outcome.
+                  R1 Completed: 19 Sep 2026 (14:00–15:00 IST • 86.3/100) &rarr; R2 Confirmed: 30 Sep 2026 (14:30–15:30 IST). Concludes toward assurance upon round outcome.
                 </div>
               </div>
 
@@ -309,7 +309,7 @@ export default async function InstitutionStudentsPage() {
               Graduating Cohort Roster (Showing 5 Representative Students of 482 Registered)
             </CardTitle>
             <CardDescription className="text-xs text-slate-500">
-              Click any student row to inspect their Academic Eligibility, 9-Area Scorecard, 3-Interview Assurance Ledger, Attendance, and Accepted T&amp;C Document.
+              Click any student row to inspect their Academic Eligibility, 9-Area Scorecard, Progressive Assurance Ledger, Attendance, and Accepted T&amp;C Document.
             </CardDescription>
           </div>
           <div className="flex items-center gap-2">

@@ -490,7 +490,7 @@ export function CollegeGrowthCrm({ initialProspects, sequences }: CollegeGrowthC
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
                   {selectedBreakdown.icpBreakdown &&
                     Object.entries({
-                      studentVolume: { title: '1. Graduating Student Volume', weight: 15, desc: 'Cohort size potential for 3N batch assurance' },
+                      studentVolume: { title: '1. Graduating Student Volume', weight: 15, desc: 'Cohort size potential for progressive batch assurance' },
                       courseRelevancy: { title: '2. Course Diversity & Relevancy', weight: 15, desc: 'B.Tech, BCA, MCA, MBA alignment' },
                       placementGap: { title: '3. Historical Placement Gap', weight: 10, desc: 'Commercial partnership need index' },
                       employerAccessibility: { title: '4. Regional Employer Proximity', weight: 10, desc: 'Cluster alignment with corporate demand' },
@@ -500,7 +500,7 @@ export function CollegeGrowthCrm({ initialProspects, sequences }: CollegeGrowthC
                       campusInfrastructure: { title: '8. Assessment Lab Infrastructure', weight: 5, desc: 'Diagnostic test facilities on-campus' },
                       conversionPotential: { title: '9. Student Conversion Potential', weight: 5, desc: 'Assurance participation willingness' },
                       accreditationSignal: { title: '10. Accreditation Signal (NAAC/NBA)', weight: 5, desc: 'Institutional quality baseline signal' },
-                      partnershipLikelihood: { title: '11. Partnership & MoU Likelihood', weight: 5, desc: 'Strategic fit for 3N assurance ecosystem' },
+                      partnershipLikelihood: { title: '11. Partnership & MoU Likelihood', weight: 5, desc: 'Strategic fit for progressive assurance ecosystem' },
                     }).map(([key, config]) => {
                       const score = selectedBreakdown.icpBreakdown?.[key] ?? 0
                       return (

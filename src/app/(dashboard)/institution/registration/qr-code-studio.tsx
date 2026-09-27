@@ -56,7 +56,7 @@ export function QrCodeStudio({
   const shareEmail = () => {
     const subject = encodeURIComponent(`Mandatory: Placement Assurance Enrolment — ${institutionName}`)
     const body = encodeURIComponent(
-      `Dear Students,\n\nPlease register on the placement portal using our college link:\n${registrationUrl}\n\nThis is required for campus drives and 3-Interview Assurance tracking.\n\nTraining & Placement Cell\n${institutionName}`
+      `Dear Students,\n\nPlease register on the placement portal using our college link:\n${registrationUrl}\n\nThis is required for campus recruitment drives and Progressive Interview Assurance tracking.\n\nTraining & Placement Cell\n${institutionName}`
     )
     window.location.href = `mailto:?subject=${subject}&body=${body}`
   }

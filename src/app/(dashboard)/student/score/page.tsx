@@ -82,7 +82,7 @@ export default async function ScorecardPage() {
                 {student?.institution?.name || 'Apex Institute of Technology'}
               </h2>
               <p className="text-sm text-indigo-200/90 leading-relaxed max-w-xl">
-                Diagnostic score evaluated across 9 core workplace dimensions. This score determines qualified employer interview matching and Placement Assurance guarantee eligibility.
+                Diagnostic score evaluated across 9 core workplace dimensions. This score determines qualified employer interview matching and Progressive Interview Assurance eligibility.
               </p>
             </div>
 
@@ -92,7 +92,7 @@ export default async function ScorecardPage() {
                 {overallScore}<span className="text-2xl text-indigo-300 font-normal"> / 100</span>
               </div>
               <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-emerald-300 font-medium">
-                <CheckCircle2 className="h-4 w-4" /> Eligible for 3 Guaranteed Interviews
+                <CheckCircle2 className="h-4 w-4" /> Eligible for Progressive Interview Assurance (Up to 3 Opportunities)
               </div>
             </div>
           </div>

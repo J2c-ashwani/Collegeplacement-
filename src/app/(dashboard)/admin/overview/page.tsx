@@ -211,7 +211,7 @@ export default async function AdminOverview() {
               {capacityMetrics.confirmedEmployerCapacity.toLocaleString('en-IN')} confirmed slots &divide; {capacityMetrics.remainingObligation.toLocaleString('en-IN')} remaining obligation
             </p>
             <p className="mt-0.5 text-[11px] text-slate-500">
-              Gross 3N Coverage: {(capacityMetrics.confirmedEmployerCapacity / Math.max(1, capacityMetrics.requiredOpportunities)).toFixed(2)}&times; ({capacityMetrics.requiredOpportunities.toLocaleString('en-IN')} total target &bull; {completedInterviewsCount.toLocaleString('en-IN')} completed)
+              Gross Assurance Coverage: {(capacityMetrics.confirmedEmployerCapacity / Math.max(1, capacityMetrics.requiredOpportunities)).toFixed(2)}&times; ({capacityMetrics.requiredOpportunities.toLocaleString('en-IN')} total target &bull; {completedInterviewsCount.toLocaleString('en-IN')} completed)
             </p>
           </CardContent>
         </Card>
@@ -295,7 +295,7 @@ export default async function AdminOverview() {
           <div className="text-lg font-bold font-mono text-blue-900 mt-1 tabular-nums">
             {paidStudentCount}
           </div>
-          <span className="text-[10px] text-blue-600 font-mono">Paid guarantee</span>
+          <span className="text-[10px] text-blue-600 font-mono">Assurance track</span>
         </div>
 
         <div className="p-2.5 bg-white border border-slate-200/80 rounded-sm">

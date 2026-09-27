@@ -380,7 +380,7 @@ export function generateActionWhyExplanation(params: {
     estimatedAddressableCapacity: addressable,
     confidenceScore: `${confidence}%`,
     formulaBreakdown: `(${impact} Impact × ${urgency} Urgency × ${(confidence / 100).toFixed(2)} Confidence) ÷ ${effort} Effort = ${((impact * urgency * (confidence / 100)) / Math.max(1, effort)).toFixed(1)}`,
-    expectedMarketplaceImpact: `Delivers up to ${addressable} verified interview slots toward 3N assurance fulfillment.`,
+    expectedMarketplaceImpact: `Delivers up to ${addressable} verified interview slots toward progressive assurance fulfillment.`,
     impactExplanation: params.category === 'ACQUIRE_EMPLOYERS'
       ? `Acquiring employers in ${region} delivers up to ${addressable} interview slots, directly covering ${Math.min(100, Math.round((addressable / Math.max(1, deficit)) * 100))}% of the regional capacity deficit.`
       : `Acquiring partner institutions with B.Tech/BCA cohorts in ${region} satisfies active recruiter fresher demand.`,

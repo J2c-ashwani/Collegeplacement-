@@ -357,8 +357,8 @@ export function renderCanonicalMouText(submission: InstitutionalOnboardingSubmis
         content: `The Partner Institution has subscribed to the ${submission.selectedPlanName} for the period from ${start} to ${end} (${years}-Year Tenure). Verified Fee Summary: Base Fee ₹${submission.baseFeeInr.toLocaleString('en-IN')} + 18% GST (₹${submission.gstAmountInr.toLocaleString('en-IN')}) = Total ₹${submission.totalPayableInr.toLocaleString('en-IN')} (Gateway: Cashfree • Order ID: ${submission.cashfreeOrderId} • Payment Reference: ${submission.cashfreePaymentId}).`,
       },
       {
-        heading: '3. STUDENT 3-INTERVIEW ASSURANCE & FOUR-STAGE REPORTING',
-        content: `Eligible graduating students enrolled through the Partner Institution's official campus code receive access to the 9-Dimension Employability Assessment and the 3-Interview Assurance Programme (3 verified corporate interview opportunities within 12 months of assessment completion, backed by a 100% base programme fee refund if unfulfilled). The Partner Institution receives live Four-Stage Cohort Reporting (Total Cohort -> Registered -> Assessed -> Placed) and downloadable governance evidence.`,
+        heading: '3. STUDENT PROGRESSIVE INTERVIEW ASSURANCE & FOUR-STAGE REPORTING',
+        content: `Eligible graduating students enrolled through the Partner Institution's official campus code receive access to the 9-Dimension Employability Assessment and the Progressive Interview Assurance Programme (up to 3 progressive verified corporate interview opportunities within 12 months of assessment completion; immediate exit upon selection, backed by a 100% base programme fee refund if qualifying opportunities are unfulfilled). The Partner Institution receives live Four-Stage Cohort Reporting (Total Cohort -> Registered -> Assessed -> Placed) and downloadable governance evidence.`,
       },
       {
         heading: '4. ELECTRONIC EXECUTION & DIGITAL AUDIT RECORD',

@@ -92,7 +92,7 @@ export default async function InstitutionDrivesPage() {
             Create Drive &rarr; Select Employer &amp; Role &rarr; Eligibility &rarr; Students &rarr; Slots &rarr; Attendance &amp; Outcome
           </h1>
           <p className="text-xs text-slate-600 mt-0.5">
-            Coordinate corporate recruitment drives, enforce branch/CGPA/readiness-score cutoffs, allocate verified interview slots, and track attendance against the 3-Interview Assurance commitment.
+            Coordinate corporate recruitment drives, enforce branch/CGPA/readiness-score cutoffs, allocate verified interview slots, and track attendance against the Progressive Interview Assurance commitment.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

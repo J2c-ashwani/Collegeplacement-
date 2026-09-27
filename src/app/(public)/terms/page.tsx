@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
             Master Terms of Service &amp; Platform Governance
           </h1>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Governing institutional software licensing, corporate graduate hiring drives, and student employability &amp; 3-interview assurance tracks on{' '}
+            Governing institutional software licensing, corporate graduate hiring drives, and student employability &amp; progressive interview assurance tracks on{' '}
             <strong className="font-semibold text-slate-900">{COMPANY_IDENTITY.brandName}</strong>.
           </p>
         </div>

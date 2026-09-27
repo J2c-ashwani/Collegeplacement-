@@ -248,7 +248,7 @@ export function EmployerGrowthCrm({ initialProspects, sequences }: EmployerGrowt
             Employer Sourcing & Interview Slot Acquisition
           </h1>
           <p className="text-sm text-slate-600">
-            Identify fresher hiring employers, quantify candidate pool coverage, and acquire guaranteed interview slots.
+            Identify fresher hiring employers, quantify candidate pool coverage, and acquire verified corporate interview slots.
           </p>
         </div>
         <div className="flex items-center gap-3">

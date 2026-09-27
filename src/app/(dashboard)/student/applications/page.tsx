@@ -85,7 +85,7 @@ export default async function StudentApplicationsPage() {
           </div>
           <h1 className="text-2xl font-bold text-slate-900">My Job Applications</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Track open applications submitted to employers. (Note: Contractual 3-Opportunity Assurance interviews are tracked separately in the 3-Assurance workspace).
+            Track open applications submitted to employers. (Note: Progressive Corporate Interview Opportunities are tracked separately in the Progressive Assurance workspace).
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default async function StudentApplicationsPage() {
       <div className="p-3.5 bg-blue-50/60 border border-blue-200 rounded-lg text-xs text-blue-900 flex items-start gap-2.5">
         <AlertCircle className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong>Architecture Rule:</strong> Job applications here represent independent recruiter postings you applied to. They do <strong>not</strong> consume your 3 Guaranteed Placement Assurance interview slots unless an employer schedules a qualified assurance interview round.
+          <strong>Architecture Rule:</strong> Job applications here represent independent recruiter postings you applied to. They do <strong>not</strong> consume your Progressive Corporate Interview Opportunities unless an employer schedules a qualified assurance interview round.
         </p>
       </div>
 

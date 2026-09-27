@@ -258,13 +258,13 @@ export function ProductShowcaseInstrument() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-5 rounded-md border border-slate-200 bg-slate-50/60 space-y-1.5">
                 <div className="text-xs font-medium text-slate-500">
-                  Promised Student Interviews
+                  Assurance Target Capacity
                 </div>
                 <div className="text-2xl font-mono font-bold text-slate-900">
                   1,320 Interview Slots
                 </div>
                 <p className="text-xs text-slate-600">
-                  440 enrolled students &times; 3 guaranteed interview opportunities each.
+                  440 enrolled students &times; up to 3 progressive interview opportunities each.
                 </p>
               </div>
               <div className="p-5 rounded-md border border-slate-200 bg-slate-50/60 space-y-1.5">

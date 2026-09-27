@@ -204,7 +204,17 @@ export async function GET(
     if (userRole !== 'SUPER_ADMIN') {
       if (userRole === 'STUDENT') {
         const student = await resolveStudent(session);
-        const currentStudentId = student?.id || 'stu-apex-2026-01';
+        if (!student?.id) {
+          return NextResponse.json(
+            {
+              error: 'Direct storage object access denied: No active student profile linked to this session.',
+              code: 'FORBIDDEN_NO_STUDENT_PROFILE',
+              boundary: 'PRIVATE_OBJECT_STORAGE_ACL',
+            },
+            { status: 403 }
+          );
+        }
+        const currentStudentId = student.id;
         if (docObj.ownerType !== 'STUDENT' || docObj.studentId !== currentStudentId) {
           return NextResponse.json(
             {
@@ -216,7 +226,17 @@ export async function GET(
           );
         }
       } else if (userRole === 'INSTITUTION_ADMIN') {
-        const currentInstitutionId = session.user.institutionId || 'inst-apex-2026';
+        const currentInstitutionId = session.user.institutionId;
+        if (!currentInstitutionId) {
+          return NextResponse.json(
+            {
+              error: 'Direct storage object access denied: No active institution linked to this session.',
+              code: 'FORBIDDEN_NO_INSTITUTION_PROFILE',
+              boundary: 'PRIVATE_OBJECT_STORAGE_ACL',
+            },
+            { status: 403 }
+          );
+        }
         if (
           docObj.ownerType !== 'INSTITUTION' ||
           docObj.institutionId !== currentInstitutionId
@@ -232,6 +252,16 @@ export async function GET(
         }
       } else if (userRole === 'EMPLOYER' || userRole === 'EMPLOYER_HR') {
         const currentEmployerId = await resolveEmployerId(session);
+        if (!currentEmployerId) {
+          return NextResponse.json(
+            {
+              error: 'Direct storage object access denied: No active employer organization linked to this session.',
+              code: 'FORBIDDEN_NO_EMPLOYER_PROFILE',
+              boundary: 'PRIVATE_OBJECT_STORAGE_ACL',
+            },
+            { status: 403 }
+          );
+        }
         if (docObj.ownerType !== 'EMPLOYER' || docObj.employerId !== currentEmployerId) {
           return NextResponse.json(
             {

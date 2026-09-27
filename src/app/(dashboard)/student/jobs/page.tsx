@@ -50,15 +50,15 @@ export default async function StudentJobsPage() {
       {
         id: 'job-nexa-01',
         title: 'Associate Software Engineer (Full-Stack)',
-        description: 'Build scalable enterprise cloud SaaS modules using TypeScript, Next.js, Node.js, and PostgreSQL. Counts as Guaranteed 3-Interview Assurance Opportunity #1.',
+        description: 'Build scalable enterprise cloud SaaS modules using TypeScript, Next.js, Node.js, and PostgreSQL. Counts as Progressive Corporate Interview Opportunity #1.',
         location: 'Bengaluru (Hybrid)',
         jobType: 'FULL_TIME',
         ctcRange: '₹6.5 LPA – ₹8.5 LPA',
         minEmployabilityScore: 75,
         minCgpa: 7.0,
         openings: 18,
-        assuranceChannel: 'GUARANTEED_ASSURANCE_OPPORTUNITY',
-        assuranceSlotLabel: 'Assurance Opportunity #1 of 3 (Attended & Completed)',
+        assuranceChannel: 'PROGRESSIVE_ASSURANCE_OPPORTUNITY',
+        assuranceSlotLabel: 'Progressive Opportunity #1 of up to 3 (Attended & Completed)',
         employer: {
           companyName: 'NexaTech Enterprise Solutions Pvt. Ltd.',
           industry: 'Enterprise Cloud SaaS',
@@ -67,15 +67,15 @@ export default async function StudentJobsPage() {
       {
         id: 'job-fincore-02',
         title: 'Graduate Product & Systems Analyst',
-        description: 'Analyze real-time digital payment rails, reconciliation pipelines, and product telemetry. Counts as Guaranteed 3-Interview Assurance Opportunity #2.',
+        description: 'Analyze real-time digital payment rails, reconciliation pipelines, and product telemetry. Reserved as Progressive Corporate Interview Opportunity #2.',
         location: 'Hyderabad / Bengaluru',
         jobType: 'FULL_TIME',
         ctcRange: '₹6.0 LPA – ₹7.5 LPA',
         minEmployabilityScore: 75,
         minCgpa: 7.0,
         openings: 12,
-        assuranceChannel: 'GUARANTEED_ASSURANCE_OPPORTUNITY',
-        assuranceSlotLabel: 'Assurance Opportunity #2 of 3 (Scheduled: 28 Sep 2026)',
+        assuranceChannel: 'PROGRESSIVE_ASSURANCE_OPPORTUNITY',
+        assuranceSlotLabel: 'Progressive Opportunity #2 (Sequential: Unlocks if Opp #1 unselected)',
         employer: {
           companyName: 'FinCore Digital Systems India',
           industry: 'FinTech & Banking Infrastructure',
@@ -84,15 +84,15 @@ export default async function StudentJobsPage() {
       {
         id: 'job-cloudscale-03',
         title: 'Software Development Engineer — Cloud Infrastructure',
-        description: 'Distributed systems, Kubernetes automation, and high-availability telemetry pipelines. Reserved as Guaranteed 3-Interview Assurance Opportunity #3.',
+        description: 'Distributed systems, Kubernetes automation, and high-availability telemetry pipelines. Reserved as Progressive Corporate Interview Opportunity #3.',
         location: 'Bengaluru / Pune',
         jobType: 'FULL_TIME',
         ctcRange: '₹7.5 LPA – ₹9.5 LPA',
         minEmployabilityScore: 80,
         minCgpa: 7.5,
         openings: 10,
-        assuranceChannel: 'GUARANTEED_ASSURANCE_OPPORTUNITY',
-        assuranceSlotLabel: 'Assurance Opportunity #3 of 3 (Being Matched — 92% Score Fit)',
+        assuranceChannel: 'PROGRESSIVE_ASSURANCE_OPPORTUNITY',
+        assuranceSlotLabel: 'Progressive Opportunity #3 (Sequential: Unlocks if Opp #2 unselected)',
         employer: {
           companyName: 'CloudScale Systems India',
           industry: 'Cloud Native Infrastructure',
@@ -101,7 +101,7 @@ export default async function StudentJobsPage() {
       {
         id: 'job-open-campus-04',
         title: 'Graduate Trainee Engineer — Digital Operations',
-        description: 'Open Campus Drive hosted jointly with Apex Institute of Technology TPO Cell. Does NOT consume your 3-Interview Assurance quota unless converted to a formal panel slot.',
+        description: 'Open Campus Drive hosted jointly with Apex Institute of Technology TPO Cell. Does NOT consume your progressive assurance opportunities unless converted to a formal panel slot.',
         location: 'Chennai / Bengaluru',
         jobType: 'FULL_TIME',
         ctcRange: '₹5.0 LPA – ₹6.2 LPA',
@@ -132,7 +132,7 @@ export default async function StudentJobsPage() {
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Curated Employer Opportunities & Applications</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Distinguishing your <strong>3 Contractually Guaranteed Interview Opportunities</strong> from bonus <strong>Open Campus Drives</strong>.
+            Distinguishing your <strong>Progressive Corporate Interview Opportunities</strong> (up to 3 opportunities; immediate exit upon selection) from bonus <strong>Open Campus Drives</strong>.
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export default async function StudentJobsPage() {
                   <div className="space-y-3 max-w-2xl">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge className={isAssuranceChannel ? "bg-indigo-900 text-white border-indigo-900 font-bold" : "bg-slate-100 text-slate-800 border-slate-300 font-semibold"}>
-                        {job.assuranceSlotLabel || (isAssuranceChannel ? 'Guaranteed 3-Interview Assurance Opportunity' : 'Open Campus Drive Application')}
+                        {job.assuranceSlotLabel || (isAssuranceChannel ? 'Progressive Corporate Interview Opportunity' : 'Open Campus Drive Application')}
                       </Badge>
                       <Badge className={isEligible ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-amber-50 text-amber-700 border-amber-200"}>
                         <Sparkles className="h-3 w-3 mr-1" />

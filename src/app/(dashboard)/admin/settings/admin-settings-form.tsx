@@ -77,7 +77,7 @@ export function AdminSettingsForm({ initialSettings }: AdminSettingsFormProps) {
           <CardContent className="space-y-4 text-xs">
             <div className="space-y-1.5">
               <Label htmlFor="quota" className="font-semibold text-slate-700">
-                Guaranteed Interview Quota per Paid Student ($N \to 3N$)
+                Maximum Progressive Interview Opportunities per Eligible Student (Up to 3)
               </Label>
               <Input
                 id="quota"
@@ -87,7 +87,7 @@ export function AdminSettingsForm({ initialSettings }: AdminSettingsFormProps) {
                 className="h-9 text-xs"
               />
               <p className="text-[11px] text-slate-500">
-                Default: 3 verified opportunities. Defines the marketplace legal obligation formula.
+                Default: Up to 3 verified opportunities (immediate exit upon selection). Defines marketplace capacity planning.
               </p>
             </div>
 

@@ -54,9 +54,9 @@ export interface CapacityMetrics {
 
 /**
  * Calculates marketplace liquidity, interview slot balance, and operational health.
- * Enforces the rule: Required Opportunities = Active Students * 3.
- * Remaining Obligation = max(0, 3N - opportunitiesDelivered).
- * Capacity Gap = max(0, remainingObligation - confirmedEmployerCapacity).
+ * Target Opportunities = Active Students * up to 3 progressive opportunities.
+ * Remaining Obligation = max(0, requiredOpportunities - opportunitiesDelivered).
+ * Capacity Gap = max(0, obligationToCover - confirmedEmployerCapacity).
  */
 export function calculateCapacityMetrics(input: CapacityCalculationInput): CapacityMetrics {
   const slotsPerOpening = input.slotsPerOpening ?? 10
@@ -80,7 +80,11 @@ export function calculateCapacityMetrics(input: CapacityCalculationInput): Capac
 
   const requiresEmployerAcquisition = capacityGap > 0 || coverageRatio < 1.0
 
-  if (coverageRatio >= 1.2 && capacityGap === 0) {
+  if (activeStudents === 0 && confirmedEmployerCapacity === 0) {
+    status = 'BALANCED'
+    gtmAction = 'Pilot Intake Ready'
+    gtmGuidance = 'No active student obligations or corporate openings registered. System ready for inaugural pilot cohort.'
+  } else if (coverageRatio >= 1.2 && capacityGap === 0) {
     status = 'SURPLUS'
     gtmAction = 'Safe to Expand'
     const additionalStudentsCapacity = Math.floor(capacityBalance / 3)

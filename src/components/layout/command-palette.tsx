@@ -117,7 +117,7 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
                   <TrendingUp className="h-4 w-4 text-indigo-600" />
                   <span>GrowthOS Control Tower: Assurance Capacity & Deficit</span>
                   <Badge variant="outline" className="ml-auto text-[10px] bg-indigo-50 text-indigo-700">
-                    3N Liquidity
+                    Assurance Liquidity
                   </Badge>
                 </CommandItem>
 
@@ -328,7 +328,7 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
                 </CommandItem>
                 <CommandItem onSelect={() => runCommand(() => router.push("/student/interviews"))}>
                   <ShieldAlert className="h-4 w-4 text-slate-500 mr-2" />
-                  <span>3-Assurance Guaranteed Interview Slots</span>
+                  <span>Progressive Corporate Interview Opportunities</span>
                 </CommandItem>
               </CommandGroup>
             </>
@@ -347,7 +347,7 @@ export function CommandPalette({ open: controlledOpen, onOpenChange: controlledO
               </DialogTitle>
             </div>
             <DialogDescription className="text-xs text-slate-500">
-              Aggregated cross-entity snapshot linking academic profile, diagnostic scores, applications, assurance quota, and verified placement.
+              Aggregated cross-entity snapshot linking academic profile, diagnostic scores, applications, progressive assurance status, and verified placement.
             </DialogDescription>
           </DialogHeader>
 

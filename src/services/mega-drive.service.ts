@@ -53,7 +53,7 @@ export function calculateDriveCapacity(config: DriveCapacityConfig): DriveCapaci
 }
 
 /**
- * Evaluates how a Mega-Drive interview outcome impacts the student's 3-interview assurance quota.
+ * Evaluates how a Mega-Drive interview outcome impacts the student's Progressive Interview Assurance progress.
  * Reuses the platform's core assurance rules:
  * - EMPLOYER_CANCELLED: DOES NOT count against quota (returns opportunity to student).
  * - NO_SHOW: DOES count against quota (student forfeited opportunity).
@@ -69,7 +69,7 @@ export function evaluateDriveAssuranceOutcome(
       outcome,
       countsTowardAssurance: false,
       remainingQuotaImpact: 0,
-      explanation: 'Employer cancelled the session before completion. This opportunity is returned to the candidate quota.',
+      explanation: 'Employer cancelled the session before completion. This opportunity is returned to the candidate pool.',
     }
   }
 
@@ -79,7 +79,7 @@ export function evaluateDriveAssuranceOutcome(
       outcome,
       countsTowardAssurance: true,
       remainingQuotaImpact: -1,
-      explanation: 'Candidate failed to attend scheduled slot without valid excusal. Consumes 1 of 3 assurance opportunities.',
+      explanation: 'Candidate failed to attend scheduled slot without valid excusal. Consumes 1 progressive assurance opportunity.',
     }
   }
 
@@ -88,7 +88,7 @@ export function evaluateDriveAssuranceOutcome(
     outcome: 'ATTENDED',
     countsTowardAssurance: true,
     remainingQuotaImpact: -1,
-    explanation: 'Interview completed. Consumes 1 of 3 assurance opportunities.',
+    explanation: 'Interview completed. Counts as 1 progressive corporate interview opportunity.',
   }
 }
 

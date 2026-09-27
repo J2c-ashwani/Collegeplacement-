@@ -34,7 +34,7 @@ export const COMPANY_IDENTITY = {
     studentSupport: {
       label: 'Student Programme, Assessment & Assurance Desk',
       email: 'support@placementconnect.com',
-      sla: '24-Hour Ticket Resolution • Assessment & 3-Interview Assurance Support',
+      sla: '24-Hour Ticket Resolution • Assessment & Progressive Interview Assurance Support',
     },
     billingAndRefunds: {
       label: 'Commercial Billing, GST Invoicing & Assurance Refund Desk',

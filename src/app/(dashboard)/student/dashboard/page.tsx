@@ -76,7 +76,7 @@ export default async function StudentDashboard() {
           { label: 'Career Launchpad' },
         ]}
         title={`Welcome back, ${studentName}`}
-        description="Track your 3-Interview Assurance progress, scheduled employer rounds, and verified employability credentials."
+        description="Track your Progressive Corporate Interview Opportunities, scheduled employer rounds, and verified employability credentials."
         statusChips={[
           {
             label: 'Institution',
@@ -135,7 +135,7 @@ export default async function StudentDashboard() {
               <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 text-[10px]">
                 Cashfree Paid (₹1,180)
               </Badge>
-              <span className="text-[11px] text-slate-500 font-mono">3 Interviews</span>
+              <span className="text-[11px] text-slate-500 font-mono">Up to 3 Opps</span>
             </div>
           </CardContent>
         </Card>
@@ -209,18 +209,18 @@ export default async function StudentDashboard() {
         </Card>
       </div>
 
-      {/* Main Grid: 3-Interview Assurance Lifecycle Tracker & State-Aware Sidebar */}
+      {/* Main Grid: Progressive Interview Assurance Lifecycle Tracker & State-Aware Sidebar */}
       <div className="grid gap-4 lg:grid-cols-3 break-inside-avoid">
-        {/* 3 Verified Corporate Interview Opportunities Tracker (Left 2 Cols) */}
+        {/* Up to 3 Progressive Verified Corporate Interview Opportunities Tracker (Left 2 Cols) */}
         <Card className="lg:col-span-2 border-slate-200 shadow-2xs rounded-md bg-white">
           <CardHeader className="border-b border-slate-100 py-3.5 px-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <CardTitle className="text-base font-bold text-slate-900">
-                  3-Interview Assurance Tracker (Canonical Lifecycle)
+                  Progressive Interview Assurance Tracker (Canonical Lifecycle)
                 </CardTitle>
                 <CardDescription className="text-xs text-slate-500 mt-0.5">
-                  Contractual Entitlement: <strong>3 Verified Corporate Interview Opportunities</strong> within 12 months of assessment completion.
+                  Contractual Entitlement: <strong>Up to 3 Progressive Verified Corporate Interview Opportunities</strong> within 12 months of assessment completion (immediate exit upon selection).
                 </CardDescription>
               </div>
               <Badge variant="outline" className="border-blue-200 bg-blue-50 text-blue-800 text-[11px] font-mono shrink-0">
@@ -231,7 +231,7 @@ export default async function StudentDashboard() {
             <div className="mt-2.5 px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex flex-wrap items-center justify-between gap-2">
               <span className="font-mono font-semibold text-slate-700">COUNTING RULE:</span>
               <span>
-                Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; <strong className="text-emerald-800">Completed (Counted Toward 3-Interview Assurance)</strong>
+                Created &rarr; Matched &rarr; Scheduled &rarr; Attended &rarr; <strong className="text-emerald-800">Completed (Progressive Assurance Opportunity)</strong>
               </span>
             </div>
           </CardHeader>

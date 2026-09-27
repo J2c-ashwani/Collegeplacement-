@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
         },
       },
     })
-    const matchedCount = Math.max(matchingStudentsCount, 183) // Use active matching pool
+    const matchedCount = matchingStudentsCount
 
     // Evaluate 10-dimension Employer Fit
     const fit = evaluateEmployerFit({

@@ -69,7 +69,7 @@ const SCHEDULED_AND_COMPLETED_ROUNDS = [
     enrollmentNumber: 'APX2026CS018',
     institution: 'Apex Institute of Technology (APX123)',
     roleTitle: nexaOpp.jobTitle,
-    opportunityRef: 'Opportunity #2 of 3 (Counts Toward 3-Interview Assurance)',
+    opportunityRef: 'Opportunity #2 of up to 3 (Progressive Corporate Opportunity)',
     roundLabel: 'Round 2 — System Design & Architecture Panel (60m)',
     scheduledDate: '24 Sep 2026 • 15:00–16:00 IST',
     interviewerPanel: 'Ananya Sundaram (Principal Architect)',

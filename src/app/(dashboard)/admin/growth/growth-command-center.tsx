@@ -130,7 +130,7 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
           { label: "GrowthOS Control Tower" },
         ]}
         title="GrowthOS Command Center"
-        description="Autonomous marketplace telemetry balancing higher education talent supply with active corporate fresher hiring demand via contractual 3N Assurance signals."
+        description="Autonomous marketplace telemetry balancing higher education talent supply with active corporate fresher hiring demand via Progressive Assurance signals."
         statusChip={
           <span
             className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] text-xs font-semibold border ${
@@ -432,7 +432,7 @@ export function GrowthCommandCenter({ initialData }: GrowthCommandCenterProps) {
                       </div>
                       <div className="text-xs text-slate-500 flex items-center gap-3">
                         <span>Students: <strong>{cluster.activeStudents}</strong></span>
-                        <span>Quota ($3N$): <strong>{cluster.requiredQuota}</strong></span>
+                        <span>Obligation: <strong>{cluster.requiredQuota}</strong></span>
                         <span>Capacity: <strong>{cluster.confirmedCapacity}</strong></span>
                       </div>
                     </div>
