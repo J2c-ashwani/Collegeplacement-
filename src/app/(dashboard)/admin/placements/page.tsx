@@ -185,9 +185,11 @@ export default async function AdminPlacementsPage() {
               Audit log linking candidate joining to employer invoice creation
             </CardDescription>
           </div>
-          <Button variant="outline" size="sm" className="text-xs">
-            <Download className="h-3.5 w-3.5 mr-1 text-slate-500" /> Export Ledger
-          </Button>
+          <a href="/api/admin/placements/export" download className="inline-flex">
+            <Button variant="outline" size="sm" className="text-xs">
+              <Download className="h-3.5 w-3.5 mr-1 text-slate-500" /> Export Ledger
+            </Button>
+          </a>
         </CardHeader>
 
         <CardContent className="p-0">

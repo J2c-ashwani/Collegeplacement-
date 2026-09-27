@@ -156,12 +156,19 @@ export default async function StudentOffersPage() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Button variant="outline" size="sm" className="text-xs">
-                        <Download className="h-3.5 w-3.5 mr-1.5" /> Download Offer Letter
-                      </Button>
-                      <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">
-                        <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" /> Confirmed Accepted
-                      </Button>
+                      <a
+                        href={`/api/documents/${offer.offerLetterDocumentId || 'doc_offer_stu_apex_01'}?raw=1`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex"
+                      >
+                        <Button variant="outline" size="sm" className="text-xs">
+                          <Download className="h-3.5 w-3.5 mr-1.5" /> Download Offer Letter
+                        </Button>
+                      </a>
+                      <Badge className="bg-emerald-600 text-white text-xs font-semibold px-3 py-1.5 gap-1.5 h-8">
+                        <CheckCircle2 className="h-3.5 w-3.5" /> Confirmed Accepted
+                      </Badge>
                     </div>
                   </div>
                 </CardContent>

@@ -9,7 +9,7 @@ interface StoredDocumentObjectDescriptor {
   storageKey: string;
   filename: string;
   mimeType: string;
-  documentCategory: 'STUDENT_ACCEPTED_TC_PDF' | 'INSTITUTIONAL_MOU_PDF' | 'EMPLOYER_RESTRICTED_AGREEMENT_PDF';
+  documentCategory: 'STUDENT_ACCEPTED_TC_PDF' | 'INSTITUTIONAL_MOU_PDF' | 'EMPLOYER_RESTRICTED_AGREEMENT_PDF' | 'STUDENT_OFFER_LETTER_PDF';
   ownerType: 'STUDENT' | 'INSTITUTION' | 'EMPLOYER';
   studentId?: string;
   institutionId?: string;
@@ -20,6 +20,21 @@ interface StoredDocumentObjectDescriptor {
 }
 
 const CANONICAL_STORED_DOCUMENT_OBJECTS: Record<string, StoredDocumentObjectDescriptor> = {
+  doc_offer_stu_apex_01: {
+    id: 'doc_offer_stu_apex_01',
+    storageKey: 'private/students/stu-apex-2026-01/PC-OFFER-2026.09-v4.1-NEXATECH.pdf',
+    filename: 'PlacementConnect_Verified_Offer_Aarav_Sharma_NexaTech.pdf',
+    mimeType: 'application/pdf',
+    documentCategory: 'STUDENT_OFFER_LETTER_PDF',
+    ownerType: 'STUDENT',
+    studentId: 'stu-apex-2026-01',
+    institutionId: 'inst-apex-2026',
+    employerId: 'emp-nexatech-2026',
+    version: 'PC-OFFER-2026.09-v4.1',
+    executionStatus: 'OFFER_CONFIRMED_ACCEPTED',
+    contentSummary:
+      'Verified Corporate Job Offer Letter — NexaTech Enterprise Systems (₹6.50 LPA, Aarav Sharma, APX2026CS042)',
+  },
   doc_tc_stu_apex_01: {
     id: 'doc_tc_stu_apex_01',
     storageKey: 'private/students/stu-apex-2026-01/PC-STU-TC-2026.09-v4.1-APX2026CS042.pdf',

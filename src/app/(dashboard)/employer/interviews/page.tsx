@@ -25,6 +25,7 @@ import {
   CANONICAL_AARAV_OPPORTUNITIES,
   CANONICAL_RECRUITER_FUNNEL,
 } from '@/config/canonical-assurance-graph';
+import { CertifyRoundAction } from './certify-round-action';
 
 const nexaOpp = CANONICAL_AARAV_OPPORTUNITIES[0];
 const nexaR1 = nexaOpp.interviews[0];
@@ -271,15 +272,12 @@ export default async function EmployerInterviewsPage() {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-200 space-y-2">
-              <Button className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold h-9">
-                <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
-                Certify Round 1 Completion (ATTENDED &rarr; EVALUATED &rarr; ADVANCED TO R2)
-              </Button>
-              <div className="text-[10px] font-mono text-slate-500 text-center">
-                Canonical Audit Ref: {nexaR1.transitionAuditId} • Synced to Student, TPO &amp; Admin Dashboards
-              </div>
-            </div>
+            <CertifyRoundAction
+              opportunityId={nexaOpp.id}
+              interviewId={nexaR1.id}
+              candidateName="Aarav Sharma"
+              auditRef={nexaR1.transitionAuditId}
+            />
           </div>
         </CardContent>
       </Card>

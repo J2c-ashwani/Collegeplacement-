@@ -194,9 +194,15 @@ export default async function InstitutionPlacementsPage() {
               </CardDescription>
 
             </div>
-            <Button variant="outline" size="sm" className="text-xs">
-              <Download className="h-3.5 w-3.5 mr-1 text-slate-500" /> Export Official Report
-            </Button>
+            <a
+              href={`/api/institutions/${institutionId}/evidence-export`}
+              download
+              className="inline-flex"
+            >
+              <Button variant="outline" size="sm" className="text-xs">
+                <Download className="h-3.5 w-3.5 mr-1 text-slate-500" /> Export Official Report
+              </Button>
+            </a>
           </div>
         </CardHeader>
 

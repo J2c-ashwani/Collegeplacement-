@@ -587,7 +587,18 @@ export function OutreachSequenceVault({
                           <strong>AI Suggested Next Step:</strong> {reply.suggestedAction}
                         </span>
                         {isPositive && (
-                          <Button size="sm" className="bg-indigo-600 text-white text-xs h-7">
+                          <Button
+                            size="sm"
+                            onClick={() => {
+                              const bookingUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/contact?type=college-partnership`
+                              if (typeof navigator !== 'undefined' && navigator.clipboard) {
+                                navigator.clipboard.writeText(bookingUrl)
+                              }
+                              toast.success('Discovery meeting scheduler opened and booking link copied to clipboard!')
+                              window.open(bookingUrl, '_blank')
+                            }}
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs h-7 cursor-pointer"
+                          >
                             Book Discovery Meeting
                           </Button>
                         )}
